@@ -7,6 +7,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		Running,
 		Jumping,
 		Hanging,
+		Crouching,
 	};
 
 	private State _state;
@@ -19,6 +20,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	
 	}
 
+	#region state queries
 	public bool IsRunning() {
 		return (_state == State.Running);
 	}
@@ -29,6 +31,46 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public bool IsHaning() {
 		return (_state == State.Hanging);
+	}
+
+	public bool IsCrouching() {
+		return (_state == State.Hanging);
+	}
+	#endregion
+
+	#region state transitions
+	public void JumpOn() {
+		if (_state == State.Running)
+			_state = State.Jumping;
+	}
+
+	private void Grounded() {
+		if (_state == State.Jumping)
+			_state = State.Running;
+	}
+
+	public void Hang() {
+		if (_state == State.Jumping)
+			_state = State.Hanging;
+	}
+
+	public void JumpOff() {
+		if (_state == State.Hanging)
+			_state = State.Running;
+	}
+
+	public void Crouch() {
+		if (_state == State.Running)
+			_state = State.Crouching;
+	}
+
+	public void Stand() {
+		if (_state == State.Crouching)
+			_state = State.Running;
+	}
+	#endregion
+
+	public void Attack() {
 	}
 
 }
