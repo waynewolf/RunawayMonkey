@@ -68,18 +68,18 @@ public class GameManager : Singleton<GameManager> {
 	/// <summary>
 	/// Pauses the game
 	/// </summary>
-	public void Pause() {	
+	public void Pause() {
 		// if time is not already stopped		
 		if (Time.timeScale > 0.0f) {
 			Instance.SetTimeScale(0.0f);
 			Instance.Paused = true;
-			//GUIManager.Instance.SetPause(true);
+			GUIManager.Instance.SetPause(true);
 		}
 		else {
 			Instance.ResetTimeScale();	
 			Instance.Paused = false;
-			//GUIManager.Instance.SetPause(false);	
-		}	
+			GUIManager.Instance.SetPause(false);
+		}
 	}
 	
 	/// <summary>

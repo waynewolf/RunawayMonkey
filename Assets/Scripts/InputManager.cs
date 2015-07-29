@@ -23,9 +23,28 @@ public class InputManager : Singleton<InputManager> {
 			}
 		}
 
-		if (CrossPlatformInputManager.GetButtonDown("Pause")) {
+		// CrossPlatformI.M must make sure button down and up com in pair,
+		// otherwise you lose next button down, if you're going to pause,
+		// resume, restart, or load another scene, please follow this rule
+		// that is known to be working:
+		// 1. Use Event Trigger script, not Button script
+		// 2. Set both PointerDown and PointerUp event type in event trigger script
+		// 3. Call CrossPlatformInputManager.GetButtonUp, not GetButtonDown.
+		if (CrossPlatformInputManager.GetButtonUp ("MainScreen")) {
+			Application.LoadLevel("Main");
+		}
+		
+		if (CrossPlatformInputManager.GetButtonUp("Restart")) {
+			GameManager.Instance.Pause ();
+			Application.LoadLevel(Application.loadedLevel);
+		}
+		
+		if (CrossPlatformInputManager.GetButtonUp("Resume")) {
+			GameManager.Instance.Pause ();
+		}
+
+		if (CrossPlatformInputManager.GetButtonUp("Pause")) {
 			GameManager.Instance.Pause();
-			GUIManager.Instance.SetPause(true);
 		}
 		
 		if (GameManager.Instance.Paused)
@@ -33,7 +52,7 @@ public class InputManager : Singleton<InputManager> {
 		
 		if (!GameManager.Instance.CanMove)
 			return;
-		
+
 		if (CrossPlatformInputManager.GetButtonDown("Attack")) {
 			_player.Attack();
 		}
