@@ -24,7 +24,6 @@ public class InputManager : Singleton<InputManager> {
 		}
 
 		if (CrossPlatformInputManager.GetButtonDown("Pause")) {
-			Debug.Log ("Pause button down");
 			GameManager.Instance.Pause();
 		}
 		
@@ -35,16 +34,16 @@ public class InputManager : Singleton<InputManager> {
 			return;
 		
 		if (CrossPlatformInputManager.GetButtonDown("Attack")) {
-			Debug.Log ("Attack button down");
 			_player.Attack();
 		}
 
 		if (CrossPlatformInputManager.GetButtonDown ("Jump")) {
-			Debug.Log ("Jump button down");
 			if (_player.IsRunning())
-				_player.JumpOn();
-			else if (_player.IsHaning())
-				_player.JumpOff();
+				_player.ShortJump();
+			else if (_player.IsFloating())
+				_player.LongJump();
+			else if (_player.IsHanging())
+				_player.JumpOff ();
 		}
 	}	
 }
