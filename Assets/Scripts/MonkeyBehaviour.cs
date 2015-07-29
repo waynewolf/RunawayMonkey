@@ -11,7 +11,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		Falling,
 	};
 
-	private Vector2 JumpForce = new Vector2(0f, 400f);
+	private Vector2 JumpForce = new Vector2(0f, 700f);
 
 	private State _state;
 	private Animator _animator;

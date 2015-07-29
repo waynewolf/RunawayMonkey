@@ -25,6 +25,7 @@ public class InputManager : Singleton<InputManager> {
 
 		if (CrossPlatformInputManager.GetButtonDown("Pause")) {
 			GameManager.Instance.Pause();
+			GUIManager.Instance.SetPause(true);
 		}
 		
 		if (GameManager.Instance.Paused)

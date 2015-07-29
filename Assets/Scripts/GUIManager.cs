@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class GUIManager : MonoBehaviour {
+	public GameObject PauseMenu;
 
 	private static GUIManager _instance;
 
@@ -11,6 +12,10 @@ public class GUIManager : MonoBehaviour {
 				_instance = GameObject.FindObjectOfType<GUIManager>();
 			return _instance;
 		}
+	}
+
+	public void SetPause(bool state) {
+		PauseMenu.SetActive(state);
 	}
 
 }
