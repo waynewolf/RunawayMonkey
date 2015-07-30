@@ -137,4 +137,11 @@ public class MonkeyBehaviour : MonoBehaviour {
 		_boxCollider2D.enabled = true;
 	}
 
+	public void Block() {
+		LevelManager.Instance.StopMoving();
+	}
+
+	public void UnBlock() {
+		LevelManager.Instance.ResumeMoving();
+	}
 }

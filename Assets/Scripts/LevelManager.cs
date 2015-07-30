@@ -24,4 +24,12 @@ public class LevelManager : MonoBehaviour {
 		position.x -= _currentSpeed * Time.deltaTime;
 		platforms.transform.position = position;
 	}
+
+	public void StopMoving() {
+		_currentSpeed = 0;
+	}
+
+	public void ResumeMoving() {
+		_currentSpeed = GameManager.Instance.NormalSpeed;
+	}
 }
