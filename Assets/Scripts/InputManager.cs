@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -36,21 +36,25 @@ public class InputManager : Singleton<InputManager> {
 		
 		if (CrossPlatformInputManager.GetButtonUp("Restart")) {
 			GameManager.Instance.Pause ();
+			GUIManager.Instance.SetPause(false);
 			Application.LoadLevel(Application.loadedLevel);
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Resume")) {
 			GameManager.Instance.Pause ();
+			GUIManager.Instance.SetPause(false);
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("Pause")) {
 			GameManager.Instance.Pause();
+			GUIManager.Instance.SetPause(true);
+
 		}
 		
 		if (GameManager.Instance.Paused)
 			return;	
 		
-		if (!GameManager.Instance.CanMove)
+		if (!GameManager.Instance.canMove)
 			return;
 
 		if (CrossPlatformInputManager.GetButtonDown("Attack")) {

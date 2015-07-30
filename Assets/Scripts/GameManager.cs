@@ -13,13 +13,22 @@ public class GameManager : Singleton<GameManager> {
 	/// true if the game is currently paused
 	public bool Paused { get; set; } 
 	/// true if the player is not allowed to move (in a dialogue for example)
-	public bool CanMove = true;
+	public bool canMove = true;
 	/// the current player
 	public MonkeyBehaviour Player { get; set; }
 	
+	/// two speed, normal speed and fast speed
+	public float NormalSpeed { get; private set; }
+	public float FastSpeed { get; private set; }
+
 	// storage
 	private float _savedTimeScale;
 	
+	protected override void Awake() {
+		base.Awake();
+		Instance.Reset();
+	}
+
 	/// <summary>
 	/// this method resets the whole game manager
 	/// </summary>
@@ -27,9 +36,11 @@ public class GameManager : Singleton<GameManager> {
 		Points = 0;
 		TimeScale = 1f;
 		Paused = false;
-		CanMove = false;
+		canMove = true;
+		NormalSpeed = 5f;
+		FastSpeed = 1f;
 		//GUIManager.Instance.RefreshPoints ();
-	}	
+	}
 	
 	/// <summary>
 	/// Adds the points in parameters to the current game points.
@@ -73,12 +84,10 @@ public class GameManager : Singleton<GameManager> {
 		if (Time.timeScale > 0.0f) {
 			Instance.SetTimeScale(0.0f);
 			Instance.Paused = true;
-			GUIManager.Instance.SetPause(true);
 		}
 		else {
 			Instance.ResetTimeScale();	
 			Instance.Paused = false;
-			GUIManager.Instance.SetPause(false);
 		}
 	}
 	
@@ -88,7 +97,7 @@ public class GameManager : Singleton<GameManager> {
 	public void FreezeCharacter() {
 		//Player.SetHorizontalMove(0);
 		//Player.SetVerticalMove(0);
-		//Instance.CanMove = false;
+		//Instance.canMove = false;
 	}
 
 }

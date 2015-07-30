@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class GUIManager : MonoBehaviour {
-	public GameObject PauseMenu;
+	public GameObject pause;
+	public GameObject gameOver;
 
 	private static GUIManager _instance;
 
@@ -15,7 +16,11 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public void SetPause(bool state) {
-		PauseMenu.SetActive(state);
+		pause.SetActive(state);
+	}
+
+	public void SetGameOver(bool state) {
+		gameOver.SetActive(state);
 	}
 
 }
