@@ -38,7 +38,7 @@ public class GameManager : Singleton<GameManager> {
 		Paused = false;
 		canMove = true;
 		NormalSpeed = 5f;
-		FastSpeed = 1f;
+		FastSpeed = 10f;
 		//GUIManager.Instance.RefreshPoints ();
 	}
 	

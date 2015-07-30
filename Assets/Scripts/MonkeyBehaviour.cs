@@ -11,18 +11,20 @@ public class MonkeyBehaviour : MonoBehaviour {
 		Falling,
 	};
 
-	private Vector2 JumpForce = new Vector2(0f, 700f);
+	public float jumpForce = 500f;
 
 	private State _state;
 	private Animator _animator;
 	private Rigidbody2D _rigidbody2D;
 	private BoxCollider2D _boxCollider2D;
+	private Vector2 _jumpForce;
 
 	void Start () {
 		_animator = GetComponent<Animator>();
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_boxCollider2D = GetComponent<BoxCollider2D>();
 		_state = State.Falling;
+		_jumpForce = new Vector2(0, jumpForce);
 	}
 	
 	void FixedUpdate () {
@@ -71,7 +73,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	#region state transitions
 	public void ShortJump() {
 		if (_state == State.Running) {
-			_rigidbody2D.AddForce(JumpForce);
+			_rigidbody2D.AddForce(_jumpForce);
 			_animator.SetBool("Ground", false);
 			_state = State.Floating;
 		}
@@ -79,7 +81,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public void LongJump() {
 		if (_state == State.Floating) {
-			_rigidbody2D.AddForce(JumpForce);
+			_rigidbody2D.AddForce(_jumpForce);
 			_animator.SetTrigger("DoubleJump");
 			_state = State.WantHang;
 		}

@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d39347b3fff490a919ae37a5bc8ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 575
 --- !u!212 &21257168
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -125,6 +126,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: jumpForce
+      value: 575
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
