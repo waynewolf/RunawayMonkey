@@ -7,8 +7,8 @@ public class LevelManager : MonoBehaviour {
 
 	public MonkeyBehaviour PlayerPrefab ;
 	public GameObject background;
-	public GameObject platforms;
-	
+	public GameObject foreground;
+
 	private MonkeyBehaviour _player;
 	private float _currentSpeed;
 
@@ -20,9 +20,9 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	void Update() {
-		Vector3 position = platforms.transform.position;
+		Vector3 position = foreground.transform.position;
 		position.x -= _currentSpeed * Time.deltaTime;
-		platforms.transform.position = position;
+		foreground.transform.position = position;
 	}
 
 	public void StopMoving() {
@@ -31,5 +31,10 @@ public class LevelManager : MonoBehaviour {
 
 	public void ResumeMoving() {
 		_currentSpeed = GameManager.Instance.NormalSpeed;
+	}
+
+	public void LevelComplete () {
+		GameManager.Instance.Pause();
+		GUIManager.Instance.SetLevelComplete(true);
 	}
 }

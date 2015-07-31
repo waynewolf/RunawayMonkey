@@ -48,9 +48,19 @@ public class InputManager : Singleton<InputManager> {
 		if (CrossPlatformInputManager.GetButtonUp("Pause")) {
 			GameManager.Instance.Pause();
 			GUIManager.Instance.SetPause(true);
-
 		}
-		
+
+		if (CrossPlatformInputManager.GetButtonUp("Replay")) {
+			GameManager.Instance.Pause ();
+			GUIManager.Instance.SetPause(false);
+			Application.LoadLevel(Application.loadedLevel);
+		}
+
+		if (CrossPlatformInputManager.GetButtonUp("NextLevel")) {
+			GameManager.Instance.Pause();
+			Application.LoadLevel(Application.loadedLevel + 1);
+		}
+
 		if (GameManager.Instance.Paused)
 			return;	
 		

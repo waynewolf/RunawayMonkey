@@ -4,6 +4,7 @@ using System.Collections;
 public class GUIManager : MonoBehaviour {
 	public GameObject pause;
 	public GameObject gameOver;
+	public GameObject levelComplete;
 
 	private static GUIManager _instance;
 
@@ -23,4 +24,7 @@ public class GUIManager : MonoBehaviour {
 		gameOver.SetActive(state);
 	}
 
+	public void SetLevelComplete (bool state) {
+		levelComplete.SetActive(state);
+	}
 }
