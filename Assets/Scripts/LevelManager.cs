@@ -37,4 +37,12 @@ public class LevelManager : MonoBehaviour {
 		GameManager.Instance.Pause();
 		GUIManager.Instance.SetLevelComplete(true);
 	}
+
+	public void RestartLevel () {
+		Application.LoadLevel(Application.loadedLevel);
+	}
+
+	public void NextLevel () {
+		Application.LoadLevel (Application.loadedLevel + 1);
+	}
 }

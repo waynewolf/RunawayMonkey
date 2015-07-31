@@ -37,7 +37,7 @@ public class InputManager : Singleton<InputManager> {
 		if (CrossPlatformInputManager.GetButtonUp("Restart")) {
 			GameManager.Instance.Pause ();
 			GUIManager.Instance.SetPause(false);
-			Application.LoadLevel(Application.loadedLevel);
+			LevelManager.Instance.RestartLevel();
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Resume")) {
@@ -53,12 +53,12 @@ public class InputManager : Singleton<InputManager> {
 		if (CrossPlatformInputManager.GetButtonUp("Replay")) {
 			GameManager.Instance.Pause ();
 			GUIManager.Instance.SetPause(false);
-			Application.LoadLevel(Application.loadedLevel);
+			LevelManager.Instance.RestartLevel();
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("NextLevel")) {
 			GameManager.Instance.Pause();
-			Application.LoadLevel(Application.loadedLevel + 1);
+			LevelManager.Instance.NextLevel();
 		}
 
 		if (GameManager.Instance.Paused)
