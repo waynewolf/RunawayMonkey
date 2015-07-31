@@ -11,12 +11,14 @@ public class LevelManager : MonoBehaviour {
 
 	private MonkeyBehaviour _player;
 	private float _currentSpeed;
+	private int _bananaNumber;
 
 	void Awake() {
 		Instance = this;
 		_player = Instantiate(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity) as MonkeyBehaviour;
 		GameManager.Instance.Player = _player;
 		_currentSpeed = GameManager.Instance.NormalSpeed;
+		_bananaNumber = 0;
 	}
 
 	void Update() {
@@ -44,5 +46,10 @@ public class LevelManager : MonoBehaviour {
 
 	public void NextLevel () {
 		Application.LoadLevel (Application.loadedLevel + 1);
+	}
+
+	public void EatBanana () {
+		_bananaNumber++;
+		GUIManager.Instance.SetBananaNumber(_bananaNumber);
 	}
 }

@@ -37,6 +37,10 @@ public class MonkeyBehaviour : MonoBehaviour {
 			Ground();
 		else if (otherTag == "Hook")
 			Hang();
+		else if (otherTag == "Banana") {
+			Destroy(other.gameObject);
+			LevelManager.Instance.EatBanana();
+		}
 	}
 
 	void OnCollisionExit2D(Collision2D other) {
