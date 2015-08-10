@@ -12,14 +12,17 @@ public class MonkeyBehaviour : MonoBehaviour {
 	};
 
 	public float jumpForce = 500f;
+	public GameObject bananaPeelPrefab;
 
 	private State _state;
 	private Animator _animator;
 	private Rigidbody2D _rigidbody2D;
 	private BoxCollider2D _boxCollider2D;
 	private Vector2 _jumpForce;
+	private GameObject _hunter;
 
 	void Start () {
+		_hunter = GameObject.Find ("Hunter");
 		_animator = GetComponent<Animator>();
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_boxCollider2D = GetComponent<BoxCollider2D>();
@@ -134,6 +137,25 @@ public class MonkeyBehaviour : MonoBehaviour {
 	#endregion
 
 	public void Attack() {
+		if (IsRunning()) {
+			_animator.SetTrigger ("Attack");
+			Vector3 bananaSpawnPos = transform.position;
+			bananaSpawnPos.x -= 1;
+			GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
+			StartCoroutine (ThrowBanana(bananaPeel, _hunter));
+		}
+	}
+
+	private IEnumerator ThrowBanana(GameObject bananaPeel, GameObject hunter) {
+		Vector3 initPos = bananaPeel.transform.position;
+		Vector3 targetPos = hunter.transform.position;
+		targetPos.y += 1f;
+
+		for (float t = 0f; t < 0.5f; t += 0.05f) {
+			bananaPeel.transform.position = Vector3.Lerp (initPos, targetPos, t / 0.5f);
+			yield return new WaitForSeconds(0.01f);
+		}
+		yield return null;
 	}
 
 	private void ResetPhysics() {
