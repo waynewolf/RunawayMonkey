@@ -322,7 +322,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 495376, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
@@ -594,7 +594,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!114 &1343404430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -830,8 +830,8 @@ GameObject:
   - 95: {fileID: 1905648548}
   - 212: {fileID: 1905648547}
   - 61: {fileID: 1905648550}
-  - 114: {fileID: 1905648551}
   - 58: {fileID: 1905648552}
+  - 114: {fileID: 1905648551}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -862,7 +862,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!95 &1905648548
@@ -889,11 +889,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1905648546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.53000021, y: -.769999981, z: 0}
+  m_LocalPosition: {x: -7.53000021, y: -.769999981, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!61 &1905648550
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -918,6 +918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65d4859aa1904d8ea9b6ececb4c8b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackedEffect: {fileID: 100000, guid: 0f5b14db72cc9478c9ac760476519727, type: 2}
 --- !u!58 &1905648552
 CircleCollider2D:
   m_ObjectHideFlags: 0

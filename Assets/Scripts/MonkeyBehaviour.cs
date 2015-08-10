@@ -147,14 +147,15 @@ public class MonkeyBehaviour : MonoBehaviour {
 	}
 
 	private IEnumerator ThrowBanana(GameObject bananaPeel, GameObject hunter) {
-		Vector3 initPos = bananaPeel.transform.position;
-		Vector3 targetPos = hunter.transform.position;
+		Vector2 initPos = bananaPeel.transform.position;
+		Vector2 targetPos = hunter.transform.position;
 		targetPos.y += 1f;
 
 		for (float t = 0f; t < 0.5f; t += 0.05f) {
-			bananaPeel.transform.position = Vector3.Lerp (initPos, targetPos, t / 0.5f);
+			bananaPeel.transform.position = Vector2.Lerp (initPos, targetPos, t / 0.5f);
 			yield return new WaitForSeconds(0.01f);
 		}
+
 		yield return null;
 	}
 
