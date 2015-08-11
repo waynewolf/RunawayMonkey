@@ -22,7 +22,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	private GameObject _hunter;
 
 	void Start () {
-		_hunter = GameObject.Find ("Hunter");
+		_hunter = LevelManager.Instance.Hunter.gameObject;
 		_animator = GetComponent<Animator>();
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_boxCollider2D = GetComponent<BoxCollider2D>();
@@ -142,21 +142,8 @@ public class MonkeyBehaviour : MonoBehaviour {
 			Vector3 bananaSpawnPos = transform.position;
 			bananaSpawnPos.x -= 1;
 			GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
-			StartCoroutine (ThrowBanana(bananaPeel, _hunter));
+			bananaPeel.GetComponent<BananaBehaviour>().Throw(_hunter);
 		}
-	}
-
-	private IEnumerator ThrowBanana(GameObject bananaPeel, GameObject hunter) {
-		Vector2 initPos = bananaPeel.transform.position;
-		Vector2 targetPos = hunter.transform.position;
-		targetPos.y += 1f;
-
-		for (float t = 0f; t < 0.5f; t += 0.05f) {
-			bananaPeel.transform.position = Vector2.Lerp (initPos, targetPos, t / 0.5f);
-			yield return new WaitForSeconds(0.01f);
-		}
-
-		yield return null;
 	}
 
 	private void ResetPhysics() {

@@ -5,18 +5,24 @@ public class LevelManager : MonoBehaviour {
 	// LevelManager is singleton, but it cannot survive from scene switch
 	public static LevelManager Instance { get; private set; }
 
-	public MonkeyBehaviour PlayerPrefab ;
+	public MonkeyBehaviour playerPrefab ;
+	public HunterBehaviour hunterPrefab;
 	public GameObject background;
 	public GameObject foreground;
 
-	private MonkeyBehaviour _player;
+	[HideInInspector]
+	public MonkeyBehaviour Player { get; private set; }
+	[HideInInspector]
+	public HunterBehaviour Hunter { get; private set; }
+
 	private float _currentSpeed;
 	private int _bananaNumber;
 
 	void Awake() {
 		Instance = this;
-		_player = Instantiate(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity) as MonkeyBehaviour;
-		GameManager.Instance.Player = _player;
+		Player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity) as MonkeyBehaviour;
+		Hunter = Instantiate(hunterPrefab, new Vector3(-7.5f, -0.7f, 0), Quaternion.identity) as HunterBehaviour;
+		GameManager.Instance.Player = Player;
 		_currentSpeed = GameManager.Instance.NormalSpeed;
 		_bananaNumber = 0;
 	}
