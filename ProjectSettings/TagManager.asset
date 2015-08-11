@@ -7,6 +7,7 @@ TagManager:
   - Platform
   - Hook
   - Banana
+  - BananaPeel
   layers:
   - Default
   - TransparentFX

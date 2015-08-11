@@ -13,10 +13,11 @@ GameObject:
   - 61: {fileID: 6109208}
   - 58: {fileID: 5845262}
   - 114: {fileID: 11468070}
+  - 50: {fileID: 5046578}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -27,11 +28,27 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.88999987, y: -2.48000002, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!50 &5046578
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140298}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &5845262
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -42,9 +59,9 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 1.67999995}
+  m_Offset: {x: 0, y: .730000019}
   serializedVersion: 2
-  m_Radius: .379999995
+  m_Radius: 1.20000005
 --- !u!61 &6109208
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -53,11 +70,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 140298}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: -.119999997, y: -.389999986}
+  m_Offset: {x: -.119999997, y: -1.88999999}
   serializedVersion: 2
-  m_Size: {x: 1.86000001, y: 3.36999989}
+  m_Size: {x: 1.86000001, y: .460000008}
 --- !u!95 &9525068
 Animator:
   serializedVersion: 3
@@ -111,7 +128,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 5ff2e072787894270af1adb215a525e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
@@ -119,7 +136,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 140298}

@@ -142,7 +142,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 			Vector3 bananaSpawnPos = transform.position;
 			bananaSpawnPos.x -= 1;
 			GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
-			bananaPeel.GetComponent<BananaBehaviour>().Throw(_hunter);
+			bananaPeel.GetComponent<BananaPeelBehaviour>().Throw(_hunter);
 		}
 	}
 

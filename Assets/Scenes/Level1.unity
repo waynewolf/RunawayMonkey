@@ -322,7 +322,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 495376, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
@@ -1053,6 +1053,7 @@ MonoBehaviour:
   hunterPrefab: {fileID: 11468070, guid: 20b7e62d9942f425fb6d06873e72354a, type: 2}
   background: {fileID: 1821141295}
   foreground: {fileID: 1467643342}
+  catchMonkeyTime: 2
 --- !u!4 &2101581366
 Transform:
   m_ObjectHideFlags: 0

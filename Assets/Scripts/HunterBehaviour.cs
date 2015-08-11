@@ -10,9 +10,15 @@ public class HunterBehaviour : MonoBehaviour {
 		_animator = GetComponent<Animator>();
 	}
 
+	public void Advance (float advanceDistance) {
+		Vector3 hunterPos = transform.position;
+		hunterPos.x += advanceDistance;
+		transform.position = hunterPos;
+	}
+
 	void OnTriggerEnter2D(Collider2D other) {
-		if (other.gameObject.tag == "Banana") {
-			other.gameObject.GetComponent<BananaBehaviour>().DestroyMe();
+		if (other.gameObject.tag == "BananaPeel") {
+			other.gameObject.GetComponent<BananaPeelBehaviour>().DestroyMe();
 			Vector3 spawnPos = transform.position;
 			spawnPos.y += 1f;
 			spawnPos.z = 0;
