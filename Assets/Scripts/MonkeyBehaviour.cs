@@ -158,4 +158,17 @@ public class MonkeyBehaviour : MonoBehaviour {
 	public void UnBlock() {
 		LevelManager.Instance.ResumeMoving();
 	}
+
+	public void MoveToHunter (Transform target) {
+		StartCoroutine(SmoothMovement(transform, target));
+	}
+
+	private IEnumerator SmoothMovement(Transform start, Transform end) {
+		yield return null;
+	}
+
+	public void Caught () {
+		_animator.SetBool("Caught", true);
+	}
+
 }

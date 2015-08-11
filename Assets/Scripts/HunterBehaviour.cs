@@ -5,6 +5,7 @@ public class HunterBehaviour : MonoBehaviour {
 	public GameObject attackedEffect;
 
 	private Animator _animator;
+	private bool _catching = true;
 
 	void Start() {
 		_animator = GetComponent<Animator>();
@@ -27,8 +28,22 @@ public class HunterBehaviour : MonoBehaviour {
 		}
 	}
 
+	void OnCollisionEnter2D(Collision2D other) {
+		if (other.gameObject.tag == "Player") {
+			_catching = false;
+			_animator.SetBool("Catch", true);
+			MonkeyBehaviour monkey = other.gameObject.GetComponent<MonkeyBehaviour>();
+			monkey.MoveToHunter(transform);
+			monkey.Caught();
+		}
+	}
+
 	// called by animation event
 	void ExitHitByBanana() {
 		_animator.SetBool("Hit", false);
+	}
+
+	public bool IsCatching() {
+		return _catching;
 	}
 }

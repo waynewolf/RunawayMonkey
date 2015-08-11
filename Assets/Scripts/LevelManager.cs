@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour {
 			Vector3 position = foreground.transform.position;
 			position.x -= _currentSpeed * Time.deltaTime;
 			foreground.transform.position = position;
-		} else {
+		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
 			float advanceDistance = Mathf.Abs (_distanceToHunter) * Time.deltaTime / catchMonkeyTime;
 			Hunter.Advance(advanceDistance);
