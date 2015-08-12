@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour {
 	private int _bananaNumber = 0;
 	private const float _distanceToHunter = -7.5f;
 	private const float _initHunterYOffset = -0.7f;
+	private const float _hunterHitBackwardDistance = 1.5f;
+	private float _currentDistanceToHunter;
 
 	void Awake() {
 		Instance = this;
@@ -28,6 +30,7 @@ public class LevelManager : MonoBehaviour {
 					_initHunterYOffset, 0), Quaternion.identity) as HunterBehaviour;
 		GameManager.Instance.Player = Player;
 		_currentSpeed = GameManager.Instance.NormalSpeed;
+		_currentDistanceToHunter = -_distanceToHunter;
 	}
 
 	void Update() {
@@ -38,7 +41,8 @@ public class LevelManager : MonoBehaviour {
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
 			float advanceDistance = Mathf.Abs (_distanceToHunter) * Time.deltaTime / catchMonkeyTime;
-			Hunter.Advance(advanceDistance);
+			_currentDistanceToHunter -= advanceDistance;
+			Hunter.Forward(advanceDistance);
 		}
 	}
 
@@ -66,5 +70,13 @@ public class LevelManager : MonoBehaviour {
 	public void EatBanana () {
 		_bananaNumber++;
 		GUIManager.Instance.SetBananaNumber(_bananaNumber);
+	}
+
+	public void HunterHit() {
+		Debug.Log (_currentDistanceToHunter);
+		if (_currentDistanceToHunter + _hunterHitBackwardDistance < 12f) {
+			_currentDistanceToHunter += _hunterHitBackwardDistance;
+			Hunter.Backward(_hunterHitBackwardDistance);
+		}
 	}
 }

@@ -11,10 +11,14 @@ public class HunterBehaviour : MonoBehaviour {
 		_animator = GetComponent<Animator>();
 	}
 
-	public void Advance (float advanceDistance) {
+	public void Forward (float distance) {
 		Vector3 hunterPos = transform.position;
-		hunterPos.x += advanceDistance;
+		hunterPos.x += distance;
 		transform.position = hunterPos;
+	}
+
+	public void Backward(float distance) {
+		Forward (-distance);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -25,6 +29,7 @@ public class HunterBehaviour : MonoBehaviour {
 			spawnPos.z = 0;
 			Instantiate(attackedEffect, spawnPos, Quaternion.identity);
 			_animator.SetBool("Hit", true);
+			LevelManager.Instance.HunterHit();
 		}
 	}
 
