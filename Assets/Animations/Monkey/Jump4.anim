@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Jump4
+  m_Name: jump4
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -18,7 +18,7 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: c3d5b19d52f77e249b6da2c54729cd76, type: 3}
+      value: {fileID: 21300000, guid: 28a05f1e47db5473f95062684167ad78, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -37,7 +37,7 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: c3d5b19d52f77e249b6da2c54729cd76, type: 3}
+    - {fileID: 21300000, guid: 28a05f1e47db5473f95062684167ad78, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0

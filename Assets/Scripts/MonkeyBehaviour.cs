@@ -32,6 +32,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	
 	void FixedUpdate () {
 		_animator.SetFloat("VSpeed", _rigidbody2D.velocity.y);
+		Debug.Log ("vspeed: " + _rigidbody2D.velocity.y);
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
