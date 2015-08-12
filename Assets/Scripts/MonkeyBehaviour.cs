@@ -32,7 +32,6 @@ public class MonkeyBehaviour : MonoBehaviour {
 	
 	void FixedUpdate () {
 		_animator.SetFloat("VSpeed", _rigidbody2D.velocity.y);
-		Debug.Log ("vspeed: " + _rigidbody2D.velocity.y);
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
@@ -83,6 +82,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		if (_state == State.Running) {
 			_rigidbody2D.AddForce(_jumpForce);
 			_animator.SetBool("Ground", false);
+			_animator.SetTrigger ("Jump");
 			_state = State.Floating;
 		}
 	}
@@ -139,12 +139,17 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public void Attack() {
 		if (IsRunning()) {
-			_animator.SetTrigger ("Attack");
+			_animator.SetBool ("Attack", true);
 			Vector3 bananaSpawnPos = transform.position;
 			bananaSpawnPos.x -= 1;
 			GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
 			bananaPeel.GetComponent<BananaPeelBehaviour>().Throw(_hunter);
 		}
+	}
+
+	// called by animation event
+	void ExitAttack() {
+		_animator.SetBool("Attack", false);
 	}
 
 	private void ResetPhysics() {
