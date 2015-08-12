@@ -21,6 +21,12 @@ public class HunterBehaviour : MonoBehaviour {
 		Forward (-distance);
 	}
 
+	public void MoveToX(float xpos) {
+		Vector3 hunterPos = transform.position;
+		hunterPos.x = xpos;
+		transform.position = hunterPos;
+	}
+
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "BananaPeel") {
 			other.gameObject.GetComponent<BananaPeelBehaviour>().DestroyMe();

@@ -15,22 +15,28 @@ public class LevelManager : MonoBehaviour {
 	public MonkeyBehaviour Player { get; private set; }
 	[HideInInspector]
 	public HunterBehaviour Hunter { get; private set; }
+	
+	private const float DISTANCE_TO_HUNTER = -7.5f;
+	private const float INIT_HUNTER_Y_OFFSET = -0.7f;
+	private const float HUNTER_HIT_BACKWARD_DISTANCE = 1.5f;
+	private const float MAX_TIMEOUT_WHEN_HUNTER_OUT_OF_SCREEN = 2f;
 
+	private float _halfScreenWidthInUnit;
 	private float _currentSpeed;
 	private int _bananaNumber = 0;
-	private const float _distanceToHunter = -7.5f;
-	private const float _initHunterYOffset = -0.7f;
-	private const float _hunterHitBackwardDistance = 1.5f;
 	private float _currentDistanceToHunter;
+	private float _elapsedTimeWhenHunterOutOfScreen;
 
 	void Awake() {
 		Instance = this;
 		Player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity) as MonkeyBehaviour;
-		Hunter = Instantiate(hunterPrefab, new Vector3(_distanceToHunter,
-					_initHunterYOffset, 0), Quaternion.identity) as HunterBehaviour;
+		Hunter = Instantiate(hunterPrefab, new Vector3(DISTANCE_TO_HUNTER,
+					INIT_HUNTER_Y_OFFSET, 0), Quaternion.identity) as HunterBehaviour;
 		GameManager.Instance.Player = Player;
 		_currentSpeed = GameManager.Instance.NormalSpeed;
-		_currentDistanceToHunter = -_distanceToHunter;
+		_currentDistanceToHunter = -DISTANCE_TO_HUNTER;
+		_elapsedTimeWhenHunterOutOfScreen = 0f;
+		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 	}
 
 	void Update() {
@@ -40,9 +46,19 @@ public class LevelManager : MonoBehaviour {
 			foreground.transform.position = position;
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
-			float advanceDistance = Mathf.Abs (_distanceToHunter) * Time.deltaTime / catchMonkeyTime;
+			float advanceDistance = Mathf.Abs (DISTANCE_TO_HUNTER) * Time.deltaTime / catchMonkeyTime;
 			_currentDistanceToHunter -= advanceDistance;
 			Hunter.Forward(advanceDistance);
+		}
+
+		if (_currentDistanceToHunter > _halfScreenWidthInUnit) {
+			_elapsedTimeWhenHunterOutOfScreen += Time.deltaTime;
+		}
+
+		if (_elapsedTimeWhenHunterOutOfScreen > MAX_TIMEOUT_WHEN_HUNTER_OUT_OF_SCREEN) {
+			_elapsedTimeWhenHunterOutOfScreen = 0f;
+			_currentDistanceToHunter = -DISTANCE_TO_HUNTER;
+			Hunter.MoveToX(DISTANCE_TO_HUNTER);
 		}
 	}
 
@@ -73,10 +89,9 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void HunterHit() {
-		Debug.Log (_currentDistanceToHunter);
-		if (_currentDistanceToHunter + _hunterHitBackwardDistance < 12f) {
-			_currentDistanceToHunter += _hunterHitBackwardDistance;
-			Hunter.Backward(_hunterHitBackwardDistance);
+		if (_currentDistanceToHunter < 1.1f * _halfScreenWidthInUnit) {
+			_currentDistanceToHunter += HUNTER_HIT_BACKWARD_DISTANCE;
+			Hunter.Backward(HUNTER_HIT_BACKWARD_DISTANCE);
 		}
 	}
 }
