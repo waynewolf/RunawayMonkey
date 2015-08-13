@@ -90,7 +90,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 			_state = State.WantHang;
 			Vector3 position = transform.position;
 			position.y -= 1f;
-			GameObject effect = Instantiate(longJumpEffectPrefab, position, Quaternion.identity) as GameObject;
+			Instantiate(longJumpEffectPrefab, position, Quaternion.identity);
 		}
 	}
 	
