@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
 	public GameObject shadowPrefab;
 	public GameObject background;
 	public GameObject foreground;
+	public Transform bananaPlaceHolder;
 	public float catchMonkeyTime = 2f;
 
 	[HideInInspector]
@@ -104,9 +105,25 @@ public class LevelManager : MonoBehaviour {
 		Application.LoadLevel (Application.loadedLevel + 1);
 	}
 
-	public void EatBanana () {
+	public void EatBanana (Transform bananaTransform) {
 		_bananaNumber++;
 		GUIManager.Instance.SetBananaNumber(_bananaNumber);
+		StartCoroutine(SmoothMovement(bananaTransform, bananaPlaceHolder));
+	}
+
+	private IEnumerator SmoothMovement(Transform bananaTransform, Transform end) {
+		Vector2 initPos = bananaTransform.position;
+		Vector2 targetPos = end.position;
+		targetPos.y += 2f;
+		targetPos.x -= 1.5f;
+		
+		for (float t = 0f; t < 1f; t += 0.05f) {
+			bananaTransform.position = Vector2.Lerp (initPos, targetPos, t / 1f);
+			yield return new WaitForSeconds(0.01f);
+		}
+
+		Destroy(bananaTransform.gameObject);
+		yield return null;
 	}
 
 	public void HunterHit() {
