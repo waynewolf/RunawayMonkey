@@ -40,7 +40,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		string otherTag = other.gameObject.tag;
 		if (otherTag == "Platform")
 			Ground();
-		else if (otherTag == "Hook")
+		else if (otherTag == "TreeBranch")
 			Hang();
 	}
 
@@ -48,8 +48,6 @@ public class MonkeyBehaviour : MonoBehaviour {
 		string otherTag = other.gameObject.tag;
 		if (otherTag == "Platform")
 			Fall();
-		//else if (otherTag == "Hook")
-		//	NoHang();
 	}
 
 	#region state queries
@@ -128,13 +126,14 @@ public class MonkeyBehaviour : MonoBehaviour {
 	}
 
 	// called when nothing to hang in hanging state, OnCollision{Enter,Exit}2D notification
-	// keeps coming when the rigidbody is moving, we cannot rely on this
-//	public void NoHang() {
-//		if (_state == State.Hanging) {
-//			ResetPhysics();
-//			_state = State.Falling;
-//		}
-//	}
+	// keeps coming when the rigidbody is moving, we cannot rely on this,
+	// now this function is called from trigger in BranchTipCheck
+	public void NoHang() {
+		if (_state == State.Hanging) {
+			ResetPhysics();
+			_state = State.Falling;
+		}
+	}
 
 	#endregion
 
