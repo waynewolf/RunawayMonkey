@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour {
 
 	public MonkeyBehaviour playerPrefab ;
 	public HunterBehaviour hunterPrefab;
+	public GameObject shadowPrefab;
 	public GameObject background;
 	public GameObject foreground;
 	public float catchMonkeyTime = 2f;
@@ -26,19 +27,33 @@ public class LevelManager : MonoBehaviour {
 	private int _bananaNumber = 0;
 	private float _currentDistanceToHunter;
 	private float _elapsedTimeWhenHunterOutOfScreen;
+	private GameObject _shadow;
+	private Vector3 _shadowScale = Vector3.one;
 
 	void Awake() {
 		Instance = this;
 		Player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as MonkeyBehaviour;
 		Hunter = Instantiate(hunterPrefab, new Vector3(DISTANCE_TO_HUNTER,
 					INIT_HUNTER_Y_OFFSET, 0), Quaternion.identity) as HunterBehaviour;
+		_shadow = Instantiate(shadowPrefab, new Vector3(0, -3f, 5f), Quaternion.identity) as GameObject;
 		GameManager.Instance.Player = Player;
 		_currentSpeed = GameManager.Instance.NormalSpeed;
 		_currentDistanceToHunter = -DISTANCE_TO_HUNTER;
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 	}
-	
+
+	void FixedUpdate() {
+		RaycastHit2D hit = Physics2D.Raycast(Player.transform.position, Vector2.down, Mathf.Infinity,
+		                                     1 << LayerMask.NameToLayer("Platform"));
+		if (hit && hit.transform.gameObject.tag == "Platform") {
+			_shadow.transform.position = new Vector3(hit.point.x, hit.point.y, _shadow.transform.position.z);
+			_shadow.SetActive(true);
+		} else {
+			_shadow.SetActive(false);
+		}
+	}
+
 	void Update() {
 		if (_currentSpeed > 0.01f) {
 			Vector3 position = foreground.transform.position;
@@ -59,6 +74,12 @@ public class LevelManager : MonoBehaviour {
 			_elapsedTimeWhenHunterOutOfScreen = 0f;
 			_currentDistanceToHunter = -DISTANCE_TO_HUNTER;
 			Hunter.MoveToX(DISTANCE_TO_HUNTER);
+		}
+
+		if (_shadow.activeInHierarchy) {
+			_shadowScale.x = 1f - (Player.transform.position.y - (-3f)) / 10f;
+			_shadowScale.y = 1f - (Player.transform.position.y - (-3f)) / 10f;
+			_shadow.transform.localScale = _shadowScale;
 		}
 	}
 
