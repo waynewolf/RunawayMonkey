@@ -162,11 +162,27 @@ public class MonkeyBehaviour : MonoBehaviour {
 	}
 
 	public void MoveToHunter (Transform target) {
+		DisablePhysics();
 		StartCoroutine(SmoothMovement(transform, target));
 	}
 
 	private IEnumerator SmoothMovement(Transform start, Transform end) {
+		Vector2 initPos = start.position;
+		Vector2 targetPos = end.position;
+		targetPos.y += 2f;
+		targetPos.x -= 1.5f;
+		
+		for (float t = 0f; t < 0.1f; t += 0.05f) {
+			start.position = Vector2.Lerp (initPos, targetPos, t / 0.1f);
+			yield return new WaitForSeconds(0.01f);
+		}
+		
 		yield return null;
+	}
+
+	private void DisablePhysics() {
+		_rigidbody2D.isKinematic = true;
+		_boxCollider2D.enabled = false;
 	}
 
 	public void Caught () {
