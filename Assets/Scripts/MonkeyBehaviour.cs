@@ -13,6 +13,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public float jumpForce = 500f;
 	public GameObject bananaPeelPrefab;
+	public GameObject longJumpEffectPrefab;
 
 	private State _state;
 	private Animator _animator;
@@ -89,6 +90,9 @@ public class MonkeyBehaviour : MonoBehaviour {
 			_rigidbody2D.AddForce(_jumpForce);
 			_animator.SetTrigger("DoubleJump");
 			_state = State.WantHang;
+			Vector3 position = transform.position;
+			position.y -= 1f;
+			GameObject effect = Instantiate(longJumpEffectPrefab, position, Quaternion.identity) as GameObject;
 		}
 	}
 	
