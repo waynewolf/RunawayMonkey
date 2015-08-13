@@ -8,6 +8,7 @@ TagManager:
   - Hook
   - Banana
   - BananaPeel
+  - Hunter
   layers:
   - Default
   - TransparentFX

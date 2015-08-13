@@ -7,6 +7,9 @@ public class BlockCheck : MonoBehaviour {
 		if (other.gameObject.tag == "Player") {
 			MonkeyBehaviour player = other.gameObject.GetComponent<MonkeyBehaviour>();
 			player.Block();
+		} else if (other.gameObject.tag == "Hunter") {
+			HunterBehaviour hunter = other.gameObject.GetComponent<HunterBehaviour>();
+			hunter.Jump();
 		}
 	}
 

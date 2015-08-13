@@ -3,12 +3,15 @@ using System.Collections;
 
 public class HunterBehaviour : MonoBehaviour {
 	public GameObject attackedEffect;
+	public float jumpForce = 800f;
 
 	private Animator _animator;
 	private bool _catching = true;
+	private Vector2 _jumpForce;
 
 	void Start() {
 		_animator = GetComponent<Animator>();
+		_jumpForce = new Vector2(0, jumpForce);
 	}
 
 	public void Forward (float distance) {
@@ -56,5 +59,9 @@ public class HunterBehaviour : MonoBehaviour {
 
 	public bool IsCatching() {
 		return _catching;
+	}
+
+	public void Jump () {
+		GetComponent<Rigidbody2D>().AddForce(_jumpForce);
 	}
 }
