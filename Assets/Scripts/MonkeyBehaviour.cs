@@ -193,7 +193,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	public void Revived () {
 		_animator.SetBool("Caught", false);
 		_animator.SetTrigger("Revived");
-		StartCoroutine(DelayedResumeFunctioning(2f));
+		StartCoroutine(DelayedResumeFunctioning(0.1f));
 	}
 
 	private IEnumerator DelayedResumeFunctioning(float delaySecond) {
