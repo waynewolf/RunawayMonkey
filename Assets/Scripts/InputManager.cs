@@ -23,7 +23,7 @@ public class InputManager : Singleton<InputManager> {
 			}
 		}
 
-		// CrossPlatformI.M must make sure button down and up com in pair,
+		// CrossPlatformI.M must make sure button down and up come in pair,
 		// otherwise you lose next button down, if you're going to pause,
 		// resume, restart, or load another scene, please follow this rule
 		// that is known to be working:
@@ -59,6 +59,15 @@ public class InputManager : Singleton<InputManager> {
 		if (CrossPlatformInputManager.GetButtonUp("NextLevel")) {
 			GameManager.Instance.Pause();
 			LevelManager.Instance.NextLevel();
+		}
+
+		if (CrossPlatformInputManager.GetButtonUp("Revive")) {
+			LevelManager.Instance.Revive();
+		}
+
+		if (CrossPlatformInputManager.GetButtonUp("NoThanks")) {
+			GUIManager.Instance.SetRevive(false);
+			LevelManager.Instance.RestartLevel();
 		}
 
 		if (GameManager.Instance.Paused)

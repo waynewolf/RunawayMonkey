@@ -28,6 +28,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		_boxCollider2D = GetComponent<BoxCollider2D>();
 		_state = State.Falling;
 		_jumpForce = new Vector2(0, jumpForce);
+		ResetPhysics();
 	}
 	
 	void FixedUpdate () {
@@ -153,6 +154,11 @@ public class MonkeyBehaviour : MonoBehaviour {
 		_boxCollider2D.enabled = true;
 	}
 
+	private void DisablePhysics() {
+		_rigidbody2D.isKinematic = true;
+		_boxCollider2D.enabled = false;
+	}
+
 	public void Block() {
 		LevelManager.Instance.StopMoving();
 	}
@@ -180,13 +186,19 @@ public class MonkeyBehaviour : MonoBehaviour {
 		yield return null;
 	}
 
-	private void DisablePhysics() {
-		_rigidbody2D.isKinematic = true;
-		_boxCollider2D.enabled = false;
-	}
-
 	public void Caught () {
 		_animator.SetBool("Caught", true);
 	}
 
+	public void Revived () {
+		_animator.SetBool("Caught", false);
+		_animator.SetTrigger("Revived");
+		StartCoroutine(DelayedResumeFunctioning(2f));
+	}
+
+	private IEnumerator DelayedResumeFunctioning(float delaySecond) {
+		yield return new WaitForSeconds(delaySecond);
+		ResetPhysics();
+		yield return null;
+	}
 }

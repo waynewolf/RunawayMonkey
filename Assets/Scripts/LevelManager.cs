@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour {
 
 	void Awake() {
 		Instance = this;
-		Player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity) as MonkeyBehaviour;
+		Player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as MonkeyBehaviour;
 		Hunter = Instantiate(hunterPrefab, new Vector3(DISTANCE_TO_HUNTER,
 					INIT_HUNTER_Y_OFFSET, 0), Quaternion.identity) as HunterBehaviour;
 		GameManager.Instance.Player = Player;
@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour {
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 	}
-
+	
 	void Update() {
 		if (_currentSpeed > 0.01f) {
 			Vector3 position = foreground.transform.position;
@@ -94,4 +94,20 @@ public class LevelManager : MonoBehaviour {
 			Hunter.Backward(HUNTER_HIT_BACKWARD_DISTANCE);
 		}
 	}
+
+	public void ReviveScreen() {
+		GUIManager.Instance.DisableButtons();
+		GUIManager.Instance.SetRevive(true);
+	}
+
+	public void Revive() {
+		GUIManager.Instance.SetRevive(false);
+		GUIManager.Instance.EnableButtons();
+		Player.transform.position = Vector3.zero;
+		Player.Revived();
+		Hunter.MoveToX(DISTANCE_TO_HUNTER);
+		Hunter.MonkeyRunaway();
+		_currentDistanceToHunter = -DISTANCE_TO_HUNTER;
+	}
+	
 }

@@ -6,6 +6,8 @@ public class GUIManager : MonoBehaviour {
 	public GameObject pause;
 	public GameObject gameOver;
 	public GameObject levelComplete;
+	public GameObject buttons;
+	public GameObject revive;
 	public Text bananaNumberText;
 
 	private static GUIManager _instance;
@@ -32,5 +34,17 @@ public class GUIManager : MonoBehaviour {
 
 	public void SetBananaNumber(int number) {
 		bananaNumberText.text = "x " + number.ToString();		
+	}
+
+	public void DisableButtons() {
+		buttons.SetActive(false);
+	}
+
+	public void EnableButtons() {
+		buttons.SetActive(true);
+	}
+
+	public void SetRevive(bool state) {
+		revive.SetActive(state);
 	}
 }

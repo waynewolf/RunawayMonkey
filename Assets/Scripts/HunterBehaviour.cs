@@ -45,6 +45,7 @@ public class HunterBehaviour : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Player") {
 			_catching = false;
+			LevelManager.Instance.ReviveScreen();
 			_animator.SetBool("Catch", true);
 			MonkeyBehaviour monkey = other.gameObject.GetComponent<MonkeyBehaviour>();
 			monkey.MoveToHunter(transform);
@@ -63,5 +64,10 @@ public class HunterBehaviour : MonoBehaviour {
 
 	public void Jump () {
 		GetComponent<Rigidbody2D>().AddForce(_jumpForce);
+	}
+
+	public void MonkeyRunaway () {
+		_animator.SetBool("Catch", false);
+		_animator.SetTrigger("Runaway");
 	}
 }
