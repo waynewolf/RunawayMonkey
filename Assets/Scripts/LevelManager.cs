@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour {
 	private const float INIT_HUNTER_Y_OFFSET = -0.7f;
 	private const float HUNTER_HIT_BACKWARD_DISTANCE = 1.5f;
 	private const float MAX_TIMEOUT_WHEN_HUNTER_OUT_OF_SCREEN = 2f;
+	private const float BACKGROUND_SPEED_FACTOR = 0.01f;
 
 	private float _halfScreenWidthInUnit;
 	private float _currentSpeed;
@@ -57,9 +58,15 @@ public class LevelManager : MonoBehaviour {
 
 	void Update() {
 		if (_currentSpeed > 0.01f) {
+			// move the foreground
 			Vector3 position = foreground.transform.position;
 			position.x -= _currentSpeed * Time.deltaTime;
 			foreground.transform.position = position;
+
+			// move the background
+			float xOffset = Mathf.Repeat (_currentSpeed * Time.time * BACKGROUND_SPEED_FACTOR, 1);
+			Vector2 offset = new Vector2 (xOffset, 0);
+			background.GetComponent<Renderer>().sharedMaterial.SetTextureOffset ("_MainTex", offset);
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
 			float advanceDistance = Mathf.Abs (DISTANCE_TO_HUNTER) * Time.deltaTime / catchMonkeyTime;
