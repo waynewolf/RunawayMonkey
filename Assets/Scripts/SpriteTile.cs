@@ -15,8 +15,8 @@ public class SpriteTile : MonoBehaviour {
 		Vector3 originalTileSize = new Vector3(spriteRenderer.bounds.size.x / transform.localScale.x,
 		                                 	   spriteRenderer.bounds.size.y / transform.localScale.y,
 		                                       1);
-		int xTileNumber = (int)Mathf.Floor(transform.localScale.x);
-		int yTileNumber = (int)Mathf.Floor(transform.localScale.y);
+		int xTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.x));
+		int yTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.y));
 		Vector3 tileScale = Vector3.one;
 		tileScale.x = transform.localScale.x / xTileNumber;
 		tileScale.y = transform.localScale.y / yTileNumber;
