@@ -119,7 +119,7 @@ public class SpriteTile : MonoBehaviour {
 		if (Mathf.Abs (sinz) - Mathf.Abs (cosz) < float.Epsilon) {
 			if (x - y < float.Epsilon) {
 				Debug.LogWarning("Infinite solutions");
-				return new Vector2(x * 1.414213f, x * 1.414213f);
+				return new Vector2(x * 0.7071067f, x * 0.7071067f);
 			} else {
 				Debug.LogError("No solutions");
 				return Vector2.zero;
@@ -127,8 +127,6 @@ public class SpriteTile : MonoBehaviour {
 		}
 		float sinzSquare = sinz * sinz;
 		float coszSquare = cosz * cosz;
-		
-
 		float w = (x * cosz - y * sinz) / (coszSquare - sinzSquare);
 		float h = (y * cosz - x * sinz) / (coszSquare - sinzSquare);
 

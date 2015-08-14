@@ -8,7 +8,7 @@ namespace UnitTest {
 		[Test]
 		public void SizeFromBoundingVolume() {
 			Vector2 size = SpriteTile.VisualSizeFromBoundingVolume(new Vector2(20, 20), 45f);
-			Assert.False (false);
+			Assert.AreEqual(20 * 0.7071067f, size.x);
 		}
 	}
 }
