@@ -12,9 +12,15 @@ public class SpriteTile : MonoBehaviour {
 		                       spriteRenderer.sprite.rect.center) != SpriteAlignment.Center) {
 			Debug.LogError("You forgot change the sprite pivot to Center.");
 		}
+
+		// Clear rotation before creating child gameobjects
+		Quaternion orignalRotation = transform.rotation;
+		transform.rotation = Quaternion.identity;
+
 		Vector3 originalTileSize = new Vector3(spriteRenderer.bounds.size.x / transform.localScale.x,
 		                                 	   spriteRenderer.bounds.size.y / transform.localScale.y,
 		                                       1);
+
 		int xTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.x));
 		int yTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.y));
 		Vector3 tileScale = Vector3.one;
@@ -22,7 +28,7 @@ public class SpriteTile : MonoBehaviour {
 		tileScale.y = transform.localScale.y / yTileNumber;
 		Vector3 stretchedTileSize = Vector3.Scale(originalTileSize, tileScale);
 
-		Vector3 startPos = transform.position - 0.5f * spriteRenderer.bounds.size;
+		Vector3 startPos = transform.position - 0.5f * originalTileSize;
 
 		// Generate a child prefab of the sprite renderer
 		GameObject childPrefab = new GameObject();
@@ -32,7 +38,7 @@ public class SpriteTile : MonoBehaviour {
 		childSprite.sortingLayerID = spriteRenderer.sortingLayerID;
 		childSprite.sortingOrder = spriteRenderer.sortingOrder;
 
-		// Loop through and spit out repeated tiles
+		// Loop through and create repeated tiles in original size
 		GameObject child;
 		for (int i = 0; i < yTileNumber; i++) {
 			for (int j = 0; j < xTileNumber; j++) {
@@ -42,8 +48,10 @@ public class SpriteTile : MonoBehaviour {
 				child.transform.parent = transform;
 			}
 		}
-
 		Destroy(childPrefab);
+
+		// Restore original rotation to the root game object
+		transform.rotation = orignalRotation;
 		spriteRenderer.enabled = false;
 	}
 
@@ -101,5 +109,28 @@ public class SpriteTile : MonoBehaviour {
 			return (SpriteAlignment.Custom);
 	}
 
+	public static Vector2 VisualSizeFromBoundingVolume (Vector3 size, float eulerAngleZ) {
+		eulerAngleZ = Mathf.Repeat(eulerAngleZ, 360f);
+		float x = size.x, y = size.y;
+		float sinz = Mathf.Sin (Mathf.Deg2Rad * eulerAngleZ);
+		float cosz = Mathf.Cos (Mathf.Deg2Rad * eulerAngleZ);
+		if (Mathf.Abs (sinz) - Mathf.Abs (cosz) < float.Epsilon) {
+			if (x - y < float.Epsilon) {
+				Debug.LogWarning("Infinite solutions");
+				return new Vector2(x * 1.414213f, x * 1.414213f);
+			} else {
+				Debug.LogError("No solutions");
+				return Vector2.zero;
+			}
+		}
+		float sinzSquare = sinz * sinz;
+		float coszSquare = cosz * cosz;
+		
+
+		float w = (x * cosz - y * sinz) / (coszSquare - sinzSquare);
+		float h = (y * cosz - x * sinz) / (coszSquare - sinzSquare);
+
+		return new Vector2(w, h);
+	}
 }
 
