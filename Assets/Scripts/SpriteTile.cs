@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Sprite tile. Drag this script to a game object, the sprite tiles
+/// will be generated based on the scale of the game object.
+/// </summary>
 [RequireComponent (typeof (SpriteRenderer))]
 public class SpriteTile : MonoBehaviour {
 	private SpriteRenderer spriteRenderer;
@@ -20,8 +24,6 @@ public class SpriteTile : MonoBehaviour {
 		Vector3 originalTileSize = new Vector3(spriteRenderer.bounds.size.x / transform.localScale.x,
 		                                 	   spriteRenderer.bounds.size.y / transform.localScale.y,
 		                                       1);
-		Debug.Log (spriteRenderer.bounds.size);
-		Debug.Log (originalTileSize);
 
 		int xTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.x));
 		int yTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.y));
