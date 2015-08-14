@@ -20,6 +20,8 @@ public class SpriteTile : MonoBehaviour {
 		Vector3 originalTileSize = new Vector3(spriteRenderer.bounds.size.x / transform.localScale.x,
 		                                 	   spriteRenderer.bounds.size.y / transform.localScale.y,
 		                                       1);
+		Debug.Log (spriteRenderer.bounds.size);
+		Debug.Log (originalTileSize);
 
 		int xTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.x));
 		int yTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.y));
@@ -28,7 +30,7 @@ public class SpriteTile : MonoBehaviour {
 		tileScale.y = transform.localScale.y / yTileNumber;
 		Vector3 stretchedTileSize = Vector3.Scale(originalTileSize, tileScale);
 
-		Vector3 startPos = transform.position - 0.5f * originalTileSize;
+		Vector3 startPos = transform.position - 0.5f * spriteRenderer.bounds.size;
 
 		// Generate a child prefab of the sprite renderer
 		GameObject childPrefab = new GameObject();
