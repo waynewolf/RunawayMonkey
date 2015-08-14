@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 430220}
   - 212: {fileID: 21256280}
   - 61: {fileID: 6188220}
+  - 114: {fileID: 11462758}
   m_Layer: 8
   m_Name: BottomPlatform
   m_TagString: Platform
@@ -25,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 181866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3, z: 10}
-  m_LocalScale: {x: 20, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,6 +43,17 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.27999997, y: .319999993}
+--- !u!114 &11462758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ab99cecc89b4c9a9a3df62b6b0641c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21256280
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -87,6 +99,11 @@ Prefab:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5303acff1fed44b81bc6049f8ec01c52,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 181866}
