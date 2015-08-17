@@ -8,8 +8,9 @@ public class LevelManager : MonoBehaviour {
 	public MonkeyBehaviour playerPrefab ;
 	public HunterBehaviour hunterPrefab;
 	public GameObject shadowPrefab;
-	public GameObject background;
+	public GameObject sky;
 	public GameObject foreground;
+	public Transform background;
 	public Transform bananaPlaceHolder;
 	public float catchMonkeyTime = 2f;
 
@@ -22,8 +23,8 @@ public class LevelManager : MonoBehaviour {
 	private const float INIT_HUNTER_Y_OFFSET = -0.7f;
 	private const float HUNTER_HIT_BACKWARD_DISTANCE = 1.5f;
 	private const float MAX_TIMEOUT_WHEN_HUNTER_OUT_OF_SCREEN = 2f;
-	private const float BACKGROUND_SPEED_FACTOR = 0.01f;
-
+	private const float SKY_TEXTURE_MOVE_FACTOR = 0.01f;
+	private const float GROUND_SPEED_FACTOR = 0.5f;
 	private float _halfScreenWidthInUnit;
 	private float _currentSpeed;
 	private int _bananaNumber = 0;
@@ -31,6 +32,7 @@ public class LevelManager : MonoBehaviour {
 	private float _elapsedTimeWhenHunterOutOfScreen;
 	private GameObject _shadow;
 	private Vector3 _shadowScale = Vector3.one;
+	private Vector3 _bgStartPos;
 
 	void Awake() {
 		Instance = this;
@@ -43,6 +45,7 @@ public class LevelManager : MonoBehaviour {
 		_currentDistanceToHunter = -DISTANCE_TO_HUNTER;
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
+		_bgStartPos = background.transform.position;
 	}
 
 	void FixedUpdate() {
@@ -63,10 +66,14 @@ public class LevelManager : MonoBehaviour {
 			position.x -= _currentSpeed * Time.deltaTime;
 			foreground.transform.position = position;
 
-			// move the background
-			float xOffset = Mathf.Repeat (_currentSpeed * Time.time * BACKGROUND_SPEED_FACTOR, 1);
+			// move the sky
+			float xOffset = Mathf.Repeat (_currentSpeed * Time.time * SKY_TEXTURE_MOVE_FACTOR, 1);
 			Vector2 offset = new Vector2 (xOffset, 0);
-			background.GetComponent<Renderer>().sharedMaterial.SetTextureOffset ("_MainTex", offset);
+			sky.GetComponent<Renderer>().sharedMaterial.SetTextureOffset ("_MainTex", offset);
+
+			// move the background, including mountain, grass, trees
+			float newPosition = Mathf.Repeat(_currentSpeed * Time.time * GROUND_SPEED_FACTOR, 20.48f);
+			background.position = _bgStartPos + Vector3.left * newPosition;
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
 			float advanceDistance = Mathf.Abs (DISTANCE_TO_HUNTER) * Time.deltaTime / catchMonkeyTime;
