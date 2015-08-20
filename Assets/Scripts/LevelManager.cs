@@ -18,7 +18,9 @@ public class LevelManager : MonoBehaviour {
 	public MonkeyBehaviour Player { get; private set; }
 	[HideInInspector]
 	public HunterBehaviour Hunter { get; private set; }
-	
+	[HideInInspector]
+	public int BananaNumber { get; set; }
+
 	private const float OFFSET_TO_HUNTER = -7.5f;
 	private const float INIT_HUNTER_Y_OFFSET = -0.7f;
 	private const float HUNTER_HIT_BACKWARD_DISTANCE = 1.5f;
@@ -27,7 +29,7 @@ public class LevelManager : MonoBehaviour {
 	private const float GROUND_SPEED_FACTOR = 0.5f;
 	private float _halfScreenWidthInUnit;
 	private float _currentSpeed;
-	private int _bananaNumber = 0;
+
 	private float _elapsedTimeWhenHunterOutOfScreen;
 	private GameObject _shadow;
 	private Vector3 _shadowScale = Vector3.one;
@@ -44,6 +46,7 @@ public class LevelManager : MonoBehaviour {
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 		_bgStartPos = background.transform.position;
+		BananaNumber = 0;
 	}
 
 	void FixedUpdate() {
@@ -120,9 +123,14 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void EatBanana (Transform bananaTransform) {
-		_bananaNumber++;
-		GUIManager.Instance.SetBananaNumber(_bananaNumber);
+		BananaNumber++;
+		GUIManager.Instance.SetBananaNumber(BananaNumber);
 		StartCoroutine(SmoothMovement(bananaTransform, bananaPlaceHolder));
+	}
+
+	public void AttackWithBananaPeel() {
+		BananaNumber--;
+		GUIManager.Instance.SetBananaNumber(BananaNumber);
 	}
 
 	private IEnumerator SmoothMovement(Transform bananaTransform, Transform end) {

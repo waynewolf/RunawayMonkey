@@ -139,11 +139,15 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public void Attack() {
 		if (IsRunning()) {
+			// we animate no matter have or have not banana while running
 			_animator.SetBool ("Attack", true);
-			Vector3 bananaSpawnPos = transform.position;
-			bananaSpawnPos.x -= 1;
-			GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
-			bananaPeel.GetComponent<BananaPeelBehaviour>().Throw(_hunter);
+			if (LevelManager.Instance.BananaNumber > 0) {
+				Vector3 bananaSpawnPos = transform.position;
+				bananaSpawnPos.x -= 1;
+				GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
+				bananaPeel.GetComponent<BananaPeelBehaviour>().Throw(_hunter);
+				LevelManager.Instance.AttackWithBananaPeel();
+			}
 		}
 	}
 
