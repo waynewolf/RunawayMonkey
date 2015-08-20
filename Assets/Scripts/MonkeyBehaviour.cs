@@ -85,7 +85,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public void LongJump() {
 		if (_state == State.Floating) {
-			_rigidbody2D.AddForce(_jumpForce);
+			_rigidbody2D.AddForce(0.7f * _jumpForce);
 			_animator.SetTrigger("DoubleJump");
 			_state = State.WantHang;
 			Vector3 position = transform.position;
