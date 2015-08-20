@@ -41,7 +41,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		if (otherTag == "Platform")
 			Ground();
 		else if (otherTag == "TreeBranch")
-			Hang();
+			Hang(other.gameObject.transform);
 	}
 
 	void OnCollisionExit2D(Collision2D other) {
@@ -101,12 +101,17 @@ public class MonkeyBehaviour : MonoBehaviour {
 		}
 	}
 
-	private void Hang() {
+	private void Hang(Transform hangeOn) {
 		// notify hang success only in WantHang state, to avoid 
 		// continuously hang on the hook.
 		if (_state == State.WantHang) {
 			_animator.SetTrigger("HangSuccess");
 			_rigidbody2D.isKinematic = true;
+			Vector3 newPos = hangeOn.position;
+			newPos.y -= 0.5f * GetComponent<SpriteRenderer>().bounds.size.y;
+			newPos.x = transform.position.x;
+			newPos.z = transform.position.z;
+			transform.position = newPos;
 			_state = State.Hanging;
 		}
 	}
