@@ -132,6 +132,8 @@ public class LevelManager : MonoBehaviour {
 		targetPos.x -= 1.5f;
 		
 		for (float t = 0f; t < 1f; t += 0.05f) {
+			if (bananaTransform == null)
+				yield break;
 			bananaTransform.position = Vector2.Lerp (initPos, targetPos, t / 1f);
 			yield return new WaitForSeconds(0.01f);
 		}
