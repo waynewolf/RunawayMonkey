@@ -17,7 +17,7 @@ public class AddBlockTriggerAtHead : MonoBehaviour {
 		// scale of the attached game object, otherwise, monkey may be
 		// blocked far away which causes confusion. This is the reason
 		// why we don't use a child gameobject like 'block check' thing.
-		boxCollider.size = new Vector2(0.03f, boxColliderAttached.size.y);
+		boxCollider.size = new Vector2(0.03f, boxColliderAttached.size.y - 0.02f);
 		boxCollider.offset = new Vector2(-0.5f * boxColliderAttached.size.x + 0.01f, 0f);
 	}
 
