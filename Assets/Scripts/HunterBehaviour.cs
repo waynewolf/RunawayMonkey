@@ -69,5 +69,6 @@ public class HunterBehaviour : MonoBehaviour {
 	public void MonkeyRunaway () {
 		_animator.SetBool("Catch", false);
 		_animator.SetTrigger("Runaway");
+		_catching = true;
 	}
 }
