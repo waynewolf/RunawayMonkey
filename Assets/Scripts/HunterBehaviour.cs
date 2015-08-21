@@ -2,16 +2,16 @@
 using System.Collections;
 
 public class HunterBehaviour : MonoBehaviour {
-	public GameObject attackedEffect;
-	public float jumpForce = 800f;
+	public GameObject _attackedEffect;
+	public float _jumpForce = 800f;
 
 	private Animator _animator;
 	private bool _catching = true;
-	private Vector2 _jumpForce;
+	private Vector2 _jumpForceVector;
 
 	void Awake() {
 		_animator = GetComponent<Animator>();
-		_jumpForce = new Vector2(0, jumpForce);
+		_jumpForceVector = new Vector2(0, _jumpForce);
 	}
 
 	public void Forward (float distance) {
@@ -36,7 +36,7 @@ public class HunterBehaviour : MonoBehaviour {
 			Vector3 spawnPos = transform.position;
 			spawnPos.y += 1f;
 			spawnPos.z = 0;
-			Instantiate(attackedEffect, spawnPos, Quaternion.identity);
+			Instantiate(_attackedEffect, spawnPos, Quaternion.identity);
 			_animator.SetBool("Hit", true);
 			LevelManager.Instance.HunterHit();
 		}
@@ -63,7 +63,7 @@ public class HunterBehaviour : MonoBehaviour {
 	}
 
 	public void Jump () {
-		GetComponent<Rigidbody2D>().AddForce(_jumpForce);
+		GetComponent<Rigidbody2D>().AddForce(_jumpForceVector);
 	}
 
 	public void MonkeyRunaway () {

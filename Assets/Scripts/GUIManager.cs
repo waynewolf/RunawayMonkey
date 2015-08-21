@@ -3,16 +3,16 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour {
-	public GameObject pause;
-	public GameObject levelComplete;
-	public GameObject buttons;
-	public GameObject revive;
-	public Text bananaNumberText;
-	public Text strawberryNumberText;
-	public Text scoreText;
+	public GameObject _pause;
+	public GameObject _levelComplete;
+	public GameObject _buttons;
+	public GameObject _revive;
+	public Text _bananaNumberText;
+	public Text _strawberryNumberText;
+	public Text _scoreText;
 
 	private static GUIManager _instance;
-	private bool modalDialogAlreadyPoppedUp;
+	private bool _modalDialogAlreadyPoppedUp;
 
 	public static GUIManager Instance {
 		get {
@@ -23,44 +23,44 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public void SetPause(bool state) {
-		ToggleModalDialog(pause, state);
+		ToggleModalDialog(_pause, state);
 	}
 
 	public void SetLevelComplete (bool state) {
-		ToggleModalDialog(levelComplete, state);
+		ToggleModalDialog(_levelComplete, state);
 	}
 
 	public void SetBananaNumber(int number) {
-		bananaNumberText.text = "x " + number.ToString();
+		_bananaNumberText.text = "x " + number.ToString();
 	}
 
 	public void SetStrawberryNumber (int number) {
-		strawberryNumberText.text = "x " + number.ToString();
+		_strawberryNumberText.text = "x " + number.ToString();
 	}
 
 	public void RefreshScore(int number) {
-		scoreText.text = "Score: " + number.ToString();
+		_scoreText.text = "Score: " + number.ToString();
 	}
 
 	public void DisableButtons() {
-		buttons.SetActive(false);
+		_buttons.SetActive(false);
 	}
 
 	public void EnableButtons() {
-		buttons.SetActive(true);
+		_buttons.SetActive(true);
 	}
 
 	public void SetRevive(bool state) {
-		ToggleModalDialog(revive, state);
+		ToggleModalDialog(_revive, state);
 	}
 
 	private void ToggleModalDialog(GameObject dialog, bool state) {
-		if (!modalDialogAlreadyPoppedUp && state) {
+		if (!_modalDialogAlreadyPoppedUp && state) {
 			dialog.SetActive(true);
-			modalDialogAlreadyPoppedUp = true;
-		} else if (modalDialogAlreadyPoppedUp && !state && dialog.activeInHierarchy) {
+			_modalDialogAlreadyPoppedUp = true;
+		} else if (_modalDialogAlreadyPoppedUp && !state && dialog.activeInHierarchy) {
 			dialog.SetActive(false);
-			modalDialogAlreadyPoppedUp = false;
+			_modalDialogAlreadyPoppedUp = false;
 		}
 	}
 }

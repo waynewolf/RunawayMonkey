@@ -735,13 +735,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885e72bde41f848aaa96dc2b152adc0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pause: {fileID: 175958}
-  levelComplete: {fileID: 131988}
-  buttons: {fileID: 101884}
-  revive: {fileID: 187286}
-  bananaNumberText: {fileID: 11457658}
-  strawberryNumberText: {fileID: 11411074}
-  scoreText: {fileID: 11497072}
+  _pause: {fileID: 175958}
+  _levelComplete: {fileID: 131988}
+  _buttons: {fileID: 101884}
+  _revive: {fileID: 187286}
+  _bananaNumberText: {fileID: 11457658}
+  _strawberryNumberText: {fileID: 11411074}
+  _scoreText: {fileID: 11497072}
 --- !u!114 &11420524
 MonoBehaviour:
   m_ObjectHideFlags: 1

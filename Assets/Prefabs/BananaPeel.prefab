@@ -83,10 +83,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4435dc87c73df4e2684a3c000296727f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyOnAwake: 1
-  awakeDestroyDelay: .300000012
-  findChild: 0
-  namedChild: 
+  _destroyOnAwake: 1
+  _awakeDestroyDelay: 1
+  _findChild: 0
+  _namedChild: 
 --- !u!212 &21263872
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -147,6 +147,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _destroyOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _awakeDestroyDelay
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -11,22 +11,22 @@ public class MonkeyBehaviour : MonoBehaviour {
 		Falling,
 	};
 
-	public float jumpForce = 500f;
-	public GameObject bananaPeelPrefab;
-	public GameObject longJumpEffectPrefab;
+	public float _jumpForce = 500f;
+	public GameObject _bananaPeelPrefab;
+	public GameObject _longJumpEffectPrefab;
 
 	private State _state;
 	private Animator _animator;
 	private Rigidbody2D _rigidbody2D;
 	private BoxCollider2D _boxCollider2D;
-	private Vector2 _jumpForce;
+	private Vector2 _jumpForceVector;
 
 	void Awake () {
 		_animator = GetComponent<Animator>();
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_boxCollider2D = GetComponent<BoxCollider2D>();
 		_state = State.Falling;
-		_jumpForce = new Vector2(0, jumpForce);
+		_jumpForceVector = new Vector2(0, _jumpForce);
 		ResetPhysics();
 	}
 	
@@ -74,7 +74,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	#region state transitions
 	public void ShortJump() {
 		if (_state == State.Running) {
-			_rigidbody2D.AddForce(_jumpForce);
+			_rigidbody2D.AddForce(_jumpForceVector);
 			_animator.SetBool("Ground", false);
 			_animator.SetTrigger ("Jump");
 			_state = State.Floating;
@@ -83,12 +83,12 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public void LongJump() {
 		if (_state == State.Floating) {
-			_rigidbody2D.AddForce(0.7f * _jumpForce);
+			_rigidbody2D.AddForce(0.7f * _jumpForceVector);
 			_animator.SetTrigger("DoubleJump");
 			_state = State.WantHang;
 			Vector3 position = transform.position;
 			position.y -= 1f;
-			Instantiate(longJumpEffectPrefab, position, Quaternion.identity);
+			Instantiate(_longJumpEffectPrefab, position, Quaternion.identity);
 		}
 	}
 	
@@ -147,7 +147,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 			if (LevelManager.Instance.BananaNumber > 0) {
 				Vector3 bananaSpawnPos = transform.position;
 				bananaSpawnPos.x -= 1;
-				GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
+				GameObject bananaPeel = Instantiate(_bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
 				bananaPeel.GetComponent<BananaPeelItem>().Throw(LevelManager.Instance.Hunter.gameObject);
 				LevelManager.Instance.AttackWithBananaPeel();
 			}

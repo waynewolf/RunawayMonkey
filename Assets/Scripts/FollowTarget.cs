@@ -3,12 +3,12 @@ using System.Collections;
 
 public class FollowTarget : MonoBehaviour {
 
-	public Transform target;
-	public bool followX = true;
-	public bool followY = false;
+	public Transform _target;
+	public bool _followX = true;
+	public bool _followY = false;
 
-	public float xOffset = 0f;
-	public float yOffset = 0f;
+	public float _xOffset = 0f;
+	public float _yOffset = 0f;
 
 	private float _savedCameraX;
 	private float _savedCameraY;
@@ -21,21 +21,21 @@ public class FollowTarget : MonoBehaviour {
 	}
 
 	void Update () {
-		if (!target) {
+		if (!_target) {
 			MonkeyBehaviour player = GameManager.Instance.Player;
-			if (player) target = player.gameObject.transform;
+			if (player) _target = player.gameObject.transform;
 		}
 
-		if (!target) return;
+		if (!_target) return;
 
-		Vector3 position = target.position;
-		if (followX)
-			position.x += xOffset;
+		Vector3 position = _target.position;
+		if (_followX)
+			position.x += _xOffset;
 		else
 			position.x = _savedCameraX;
 
-		if (followY)
-			position.y += yOffset;
+		if (_followY)
+			position.y += _yOffset;
 		else
 			position.y = _savedCameraY;
 

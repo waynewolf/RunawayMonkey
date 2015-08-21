@@ -7,13 +7,13 @@ using System.Collections;
 /// </summary>
 [RequireComponent (typeof (SpriteRenderer))]
 public class SpriteTile : MonoBehaviour {
-	private SpriteRenderer spriteRenderer;
+	private SpriteRenderer _spriteRenderer;
 
 	void Awake () {
-		spriteRenderer = GetComponent<SpriteRenderer>();
+		_spriteRenderer = GetComponent<SpriteRenderer>();
 
-		if (GetSpriteAlignment(spriteRenderer.sprite.pivot, 
-		                       spriteRenderer.sprite.rect.center) != SpriteAlignment.Center) {
+		if (GetSpriteAlignment(_spriteRenderer.sprite.pivot, 
+		                       _spriteRenderer.sprite.rect.center) != SpriteAlignment.Center) {
 			Debug.LogError("You forgot change the sprite pivot to Center.");
 		}
 
@@ -21,8 +21,8 @@ public class SpriteTile : MonoBehaviour {
 		Quaternion orignalRotation = transform.rotation;
 		transform.rotation = Quaternion.identity;
 
-		Vector3 originalTileSize = new Vector3(spriteRenderer.bounds.size.x / transform.localScale.x,
-		                                 	   spriteRenderer.bounds.size.y / transform.localScale.y,
+		Vector3 originalTileSize = new Vector3(_spriteRenderer.bounds.size.x / transform.localScale.x,
+		                                 	   _spriteRenderer.bounds.size.y / transform.localScale.y,
 		                                       1);
 
 		int xTileNumber = (int)Mathf.Floor(Mathf.Abs (transform.localScale.x));
@@ -32,15 +32,15 @@ public class SpriteTile : MonoBehaviour {
 		tileScale.y = transform.localScale.y / yTileNumber;
 		Vector3 stretchedTileSize = Vector3.Scale(originalTileSize, tileScale);
 
-		Vector3 startPos = transform.position - 0.5f * spriteRenderer.bounds.size;
+		Vector3 startPos = transform.position - 0.5f * _spriteRenderer.bounds.size;
 
 		// Generate a child prefab of the sprite renderer
 		GameObject childPrefab = new GameObject();
 		SpriteRenderer childSprite = childPrefab.AddComponent<SpriteRenderer>();
 		childPrefab.transform.position = transform.position;
-		childSprite.sprite = spriteRenderer.sprite;
-		childSprite.sortingLayerID = spriteRenderer.sortingLayerID;
-		childSprite.sortingOrder = spriteRenderer.sortingOrder;
+		childSprite.sprite = _spriteRenderer.sprite;
+		childSprite.sortingLayerID = _spriteRenderer.sortingLayerID;
+		childSprite.sortingOrder = _spriteRenderer.sortingOrder;
 
 		// Loop through and create repeated tiles in original size
 		GameObject child;
@@ -56,7 +56,7 @@ public class SpriteTile : MonoBehaviour {
 
 		// Restore original rotation to the root game object
 		transform.rotation = orignalRotation;
-		spriteRenderer.enabled = false;
+		_spriteRenderer.enabled = false;
 	}
 
 	// this is old fashioned code from internet, use the one down below in unity 5

@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class AutoDestroyParticleSystem : MonoBehaviour 
 {
-	public bool destroyParent = false;
+	public bool _destroyParent = false;
 	
 	private ParticleSystem _particleSystem;
 
@@ -19,7 +19,7 @@ public class AutoDestroyParticleSystem : MonoBehaviour
 			return;
 		
 		if (transform.parent != null) {
-			if(destroyParent) {	
+			if(_destroyParent) {	
 				Destroy(transform.parent.gameObject);	
 			}
 		}

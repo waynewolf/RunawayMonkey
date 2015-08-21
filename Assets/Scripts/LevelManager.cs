@@ -5,14 +5,13 @@ public class LevelManager : MonoBehaviour {
 	// LevelManager is singleton, but it cannot survive from scene switch
 	public static LevelManager Instance { get; private set; }
 
-	public MonkeyBehaviour playerPrefab ;
-	public HunterBehaviour hunterPrefab;
-	public GameObject shadowPrefab;
-	public GameObject sky;
-	public GameObject foreground;
-	public Transform background;
-	public Transform hudItemsPlaceHolder;
-	public float catchMonkeyTime = 2f;
+	public MonkeyBehaviour _playerPrefab ;
+	public HunterBehaviour _hunterPrefab;
+	public GameObject _shadowPrefab;
+	public GameObject _foreground;
+	public Transform _background;
+	public Transform _hudItemsPlaceHolder;
+	public float _catchMonkeyTime = 2f;
 	public int _backgroundLayerWidth;
 
 	[HideInInspector]
@@ -43,16 +42,16 @@ public class LevelManager : MonoBehaviour {
 
 	void Awake() {
 		Instance = this;
-		Player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as MonkeyBehaviour;
-		Hunter = Instantiate(hunterPrefab, new Vector3(OFFSET_TO_HUNTER,
+		Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity) as MonkeyBehaviour;
+		Hunter = Instantiate(_hunterPrefab, new Vector3(OFFSET_TO_HUNTER,
 					INIT_HUNTER_Y_OFFSET, 0), Quaternion.identity) as HunterBehaviour;
-		_shadow = Instantiate(shadowPrefab, new Vector3(0, -3f, 5f), Quaternion.identity) as GameObject;
+		_shadow = Instantiate(_shadowPrefab, new Vector3(0, -3f, 5f), Quaternion.identity) as GameObject;
 		GameManager.Instance.Player = Player;
 		_currentSpeed = GameManager.Instance.NormalSpeed;
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 		_bgLayerWidthInUnit = 1.0f * _backgroundLayerWidth / GameManager.Instance.PixelsPerUnit;
-		_bgStartPos = background.transform.position;
+		_bgStartPos = _background.transform.position;
 		BananaNumber = 0;
 		StrawberryNumber = 0;
 	}
@@ -71,16 +70,16 @@ public class LevelManager : MonoBehaviour {
 	void Update() {
 		if (_currentSpeed > 0.01f) {
 			// move the foreground
-			Vector3 position = foreground.transform.position;
+			Vector3 position = _foreground.transform.position;
 			position.x -= _currentSpeed * Time.deltaTime;
-			foreground.transform.position = position;
+			_foreground.transform.position = position;
 
 			// move the background, including sky, mountain, grass, trees
 			float newPosition = Mathf.Repeat(_currentSpeed * Time.time * GROUND_SPEED_FACTOR, _bgLayerWidthInUnit);
-			background.position = _bgStartPos + Vector3.left * newPosition;
+			_background.position = _bgStartPos + Vector3.left * newPosition;
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
-			float advanceDistance = Mathf.Abs (OFFSET_TO_HUNTER) * Time.deltaTime / catchMonkeyTime;
+			float advanceDistance = Mathf.Abs (OFFSET_TO_HUNTER) * Time.deltaTime / _catchMonkeyTime;
 			Hunter.Forward(advanceDistance);
 		}
 
@@ -126,14 +125,14 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void EatBanana (Transform transform) {
-		StartCoroutine(SmoothMovement(transform, hudItemsPlaceHolder));
+		StartCoroutine(SmoothMovement(transform, _hudItemsPlaceHolder));
 		BananaNumber++;
 		GUIManager.Instance.SetBananaNumber(BananaNumber);
 		GameManager.Instance.AddPoints(BANANA_POINTS);
 	}
 
 	public void EatStrawberry (Transform transform) {
-		StartCoroutine(SmoothMovement(transform, hudItemsPlaceHolder));
+		StartCoroutine(SmoothMovement(transform, _hudItemsPlaceHolder));
 		StrawberryNumber++;
 		GUIManager.Instance.SetStrawberryNumber(StrawberryNumber);
 		GameManager.Instance.AddPoints(STRAWBERRY_POINTS);

@@ -6564,14 +6564,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f9d474ba6b24a829e84bb8ffd00be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 11417806, guid: 70804ca3390924420846c00ddf4f219e, type: 2}
-  hunterPrefab: {fileID: 11468070, guid: 20b7e62d9942f425fb6d06873e72354a, type: 2}
-  shadowPrefab: {fileID: 154632, guid: 29445a0b8870141888d98a9afec2e8c0, type: 2}
-  sky: {fileID: 0}
-  foreground: {fileID: 1467643342}
-  background: {fileID: 450133367}
-  hudItemsPlaceHolder: {fileID: 1173946462}
-  catchMonkeyTime: 2
+  _playerPrefab: {fileID: 11417806, guid: 70804ca3390924420846c00ddf4f219e, type: 2}
+  _hunterPrefab: {fileID: 11468070, guid: 20b7e62d9942f425fb6d06873e72354a, type: 2}
+  _shadowPrefab: {fileID: 154632, guid: 29445a0b8870141888d98a9afec2e8c0, type: 2}
+  _foreground: {fileID: 1467643342}
+  _background: {fileID: 450133367}
+  _hudItemsPlaceHolder: {fileID: 1173946462}
+  _catchMonkeyTime: 2
   _backgroundLayerWidth: 2048
 --- !u!4 &2101581366
 Transform:

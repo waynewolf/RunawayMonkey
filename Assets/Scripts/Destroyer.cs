@@ -3,29 +3,29 @@ using System.Collections;
 
 public class Destroyer : MonoBehaviour
 {
-	public bool destroyOnAwake;
-	public float awakeDestroyDelay;
-	public bool findChild = false;
-	public string namedChild;
+	public bool _destroyOnAwake;
+	public float _awakeDestroyDelay;
+	public bool _findChild = false;
+	public string _namedChild;
 
 	void Awake () {
-		if(destroyOnAwake) {
-			if(findChild){
-				Destroy (transform.Find(namedChild).gameObject);
+		if(_destroyOnAwake) {
+			if(_findChild){
+				Destroy (transform.Find(_namedChild).gameObject);
 			} else {
-				Destroy(gameObject, awakeDestroyDelay);
+				Destroy(gameObject, _awakeDestroyDelay);
 			}
 		}
 	}
 	
 	void DestroyChildGameObject () {
-		if(transform.Find(namedChild).gameObject != null)
-			Destroy (transform.Find(namedChild).gameObject);
+		if(transform.Find(_namedChild).gameObject != null)
+			Destroy (transform.Find(_namedChild).gameObject);
 	}
 	
 	void DisableChildGameObject () {
-		if(transform.Find(namedChild).gameObject.activeSelf == true)
-			transform.Find(namedChild).gameObject.SetActive(false);
+		if(transform.Find(_namedChild).gameObject.activeSelf == true)
+			transform.Find(_namedChild).gameObject.SetActive(false);
 	}
 
 	// can be called by animation event

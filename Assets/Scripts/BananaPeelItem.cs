@@ -3,13 +3,13 @@ using System.Collections;
 
 public class BananaPeelItem : MonoBehaviour {
 
-	private Coroutine throwCo;
+	private Coroutine _throwCoroutine;
 
 	public void Throw(GameObject target) {
-		if (throwCo != null) {
-			StopCoroutine(throwCo);
+		if (_throwCoroutine != null) {
+			StopCoroutine(_throwCoroutine);
 		}
-		throwCo = StartCoroutine (DoThrow(gameObject, target));
+		_throwCoroutine = StartCoroutine (DoThrow(gameObject, target));
 	}
 
 	private IEnumerator DoThrow(GameObject start, GameObject target) {
@@ -26,8 +26,8 @@ public class BananaPeelItem : MonoBehaviour {
 	}
 
 	public void DestroyMe() {
-		if (throwCo != null) {
-			StopCoroutine(throwCo);
+		if (_throwCoroutine != null) {
+			StopCoroutine(_throwCoroutine);
 		}
 		Destroy(gameObject);
 	}
