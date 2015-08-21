@@ -72,12 +72,7 @@ public class LevelManager : MonoBehaviour {
 			position.x -= _currentSpeed * Time.deltaTime;
 			foreground.transform.position = position;
 
-			// move the sky
-			float xOffset = Mathf.Repeat (_currentSpeed * Time.time * SKY_TEXTURE_MOVE_FACTOR, 1);
-			Vector2 offset = new Vector2 (xOffset, 0);
-			sky.GetComponent<Renderer>().sharedMaterial.SetTextureOffset ("_MainTex", offset);
-
-			// move the background, including mountain, grass, trees
+			// move the background, including sky, mountain, grass, trees
 			float newPosition = Mathf.Repeat(_currentSpeed * Time.time * GROUND_SPEED_FACTOR, 20.48f);
 			background.position = _bgStartPos + Vector3.left * newPosition;
 		} else if (Hunter.IsCatching()) {
