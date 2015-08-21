@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour {
 	public GameObject sky;
 	public GameObject foreground;
 	public Transform background;
-	public Transform bananaPlaceHolder;
+	public Transform hudItemsPlaceHolder;
 	public float catchMonkeyTime = 2f;
 
 	[HideInInspector]
@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour {
 	public HunterBehaviour Hunter { get; private set; }
 	[HideInInspector]
 	public int BananaNumber { get; set; }
+	[HideInInspector]
+	public int StrawberryNumber { get; set; }
 
 	private const float OFFSET_TO_HUNTER = -7.5f;
 	private const float INIT_HUNTER_Y_OFFSET = -0.7f;
@@ -27,6 +29,8 @@ public class LevelManager : MonoBehaviour {
 	private const float MAX_TIMEOUT_WHEN_HUNTER_OUT_OF_SCREEN = 2f;
 	private const float SKY_TEXTURE_MOVE_FACTOR = 0.01f;
 	private const float GROUND_SPEED_FACTOR = 0.5f;
+	private const int BANANA_POINTS = 2;
+	private const int STRAWBERRY_POINTS = 1;
 	private float _halfScreenWidthInUnit;
 	private float _currentSpeed;
 
@@ -47,6 +51,7 @@ public class LevelManager : MonoBehaviour {
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 		_bgStartPos = background.transform.position;
 		BananaNumber = 0;
+		StrawberryNumber = 0;
 	}
 
 	void FixedUpdate() {
@@ -122,10 +127,18 @@ public class LevelManager : MonoBehaviour {
 		Application.LoadLevel (Application.loadedLevel + 1);
 	}
 
-	public void EatBanana (Transform bananaTransform) {
+	public void EatBanana (Transform transform) {
+		StartCoroutine(SmoothMovement(transform, hudItemsPlaceHolder));
 		BananaNumber++;
 		GUIManager.Instance.SetBananaNumber(BananaNumber);
-		StartCoroutine(SmoothMovement(bananaTransform, bananaPlaceHolder));
+		GameManager.Instance.AddPoints(BANANA_POINTS);
+	}
+
+	public void EatStrawberry (Transform transform) {
+		StartCoroutine(SmoothMovement(transform, hudItemsPlaceHolder));
+		StrawberryNumber++;
+		GUIManager.Instance.SetStrawberryNumber(StrawberryNumber);
+		GameManager.Instance.AddPoints(STRAWBERRY_POINTS);
 	}
 
 	public void AttackWithBananaPeel() {

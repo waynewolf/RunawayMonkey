@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BananaPeelBehaviour : MonoBehaviour {
+public class BananaPeelItem : MonoBehaviour {
 
 	private Coroutine throwCo;
 

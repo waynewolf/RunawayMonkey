@@ -32,7 +32,7 @@ public class HunterBehaviour : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "BananaPeel") {
-			other.gameObject.GetComponent<BananaPeelBehaviour>().DestroyMe();
+			other.gameObject.GetComponent<BananaPeelItem>().DestroyMe();
 			Vector3 spawnPos = transform.position;
 			spawnPos.y += 1f;
 			spawnPos.z = 0;
