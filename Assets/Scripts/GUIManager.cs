@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour {
 	public GameObject pause;
-	public GameObject gameOver;
 	public GameObject levelComplete;
 	public GameObject buttons;
 	public GameObject revive;
@@ -25,10 +24,6 @@ public class GUIManager : MonoBehaviour {
 
 	public void SetPause(bool state) {
 		ToggleModalDialog(pause, state);
-	}
-
-	public void SetGameOver(bool state) {
-		ToggleModalDialog(gameOver, state);
 	}
 
 	public void SetLevelComplete (bool state) {
