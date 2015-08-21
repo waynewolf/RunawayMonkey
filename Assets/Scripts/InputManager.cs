@@ -72,9 +72,6 @@ public class InputManager : Singleton<InputManager> {
 
 		if (GameManager.Instance.Paused)
 			return;	
-		
-		if (!GameManager.Instance.canMove)
-			return;
 
 		if (CrossPlatformInputManager.GetButtonDown("Attack")) {
 			_player.Attack();

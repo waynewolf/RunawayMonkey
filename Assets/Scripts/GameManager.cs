@@ -8,7 +8,6 @@ using System.Collections;
 public class GameManager : Singleton<GameManager> {
 	public float TimeScale { get; private set; }
 	public bool Paused { get; set; } 
-	public bool canMove = true;
 	public MonkeyBehaviour Player { get; set; }
 	public float NormalSpeed { get; private set; }
 	public float FastSpeed { get; private set; }
@@ -25,7 +24,6 @@ public class GameManager : Singleton<GameManager> {
 		_score = PlayerPrefs.GetInt("score");
 		TimeScale = 1f;
 		Paused = false;
-		canMove = true;
 		NormalSpeed = 5f;
 		FastSpeed = 10f;
 		GUIManager.Instance.RefreshScore (_score);
