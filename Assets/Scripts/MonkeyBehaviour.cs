@@ -11,7 +11,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		Falling,
 	};
 
-	public float _jumpForce = 500f;
+	public float _jumpForce = 575f;
 	public GameObject _bananaPeelPrefab;
 	public GameObject _longJumpEffectPrefab;
 
