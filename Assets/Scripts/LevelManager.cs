@@ -1,7 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
+public class BackgroundSlot {
+	public Transform _layer = null;
+	public float _speedFactor = 0.5f;
+	[HideInInspector]
+	public Vector3 _initPosition;
+};
+
 public class LevelManager : MonoBehaviour {
+
+	private const float OFFSET_TO_HUNTER = -7.5f;
+	private const float INIT_HUNTER_Y_OFFSET = -0.7f;
+	private const float HUNTER_HIT_BACKWARD_DISTANCE = 1.5f;
+	private const float MAX_TIMEOUT_WHEN_HUNTER_OUT_OF_SCREEN = 2f;
+	private const float BACKGROUND_SPEED_FACTOR = 0.5f;
+	private const int BANANA_POINTS = 2;
+	private const int STRAWBERRY_POINTS = 1;
+	private const int MAX_BACKGROUND_SLOTS = 4;
+
 	// LevelManager is singleton, but it cannot survive from scene switch
 	public static LevelManager Instance { get; private set; }
 
@@ -9,7 +27,7 @@ public class LevelManager : MonoBehaviour {
 	public HunterBehaviour _hunterPrefab;
 	public GameObject _shadowPrefab;
 	public GameObject _foreground;
-	public Transform _background;
+	public BackgroundSlot[] _backgroundSlot = new BackgroundSlot[MAX_BACKGROUND_SLOTS];
 	public Transform _hudItemsPlaceHolder;
 	public float _catchMonkeyTime = 2f;
 	public int _backgroundLayerWidth;
@@ -23,14 +41,6 @@ public class LevelManager : MonoBehaviour {
 	[HideInInspector]
 	public int StrawberryNumber { get; set; }
 
-	private const float OFFSET_TO_HUNTER = -7.5f;
-	private const float INIT_HUNTER_Y_OFFSET = -0.7f;
-	private const float HUNTER_HIT_BACKWARD_DISTANCE = 1.5f;
-	private const float MAX_TIMEOUT_WHEN_HUNTER_OUT_OF_SCREEN = 2f;
-	private const float SKY_TEXTURE_MOVE_FACTOR = 0.01f;
-	private const float GROUND_SPEED_FACTOR = 0.5f;
-	private const int BANANA_POINTS = 2;
-	private const int STRAWBERRY_POINTS = 1;
 	private float _halfScreenWidthInUnit;
 	private float _currentSpeed;
 
@@ -51,7 +61,11 @@ public class LevelManager : MonoBehaviour {
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 		_bgLayerWidthInUnit = 1.0f * _backgroundLayerWidth / GameManager.Instance.PixelsPerUnit;
-		_bgStartPos = _background.transform.position;
+		foreach(BackgroundSlot backgroundSlot in _backgroundSlot) {
+			if (backgroundSlot != null) {
+				backgroundSlot._initPosition = backgroundSlot._layer.position;
+			}
+		}
 		BananaNumber = 0;
 		StrawberryNumber = 0;
 	}
@@ -74,9 +88,13 @@ public class LevelManager : MonoBehaviour {
 			position.x -= _currentSpeed * Time.deltaTime;
 			_foreground.transform.position = position;
 
-			// move the background, including sky, mountain, grass, trees
-			float newPosition = Mathf.Repeat(_currentSpeed * Time.time * GROUND_SPEED_FACTOR, _bgLayerWidthInUnit);
-			_background.position = _bgStartPos + Vector3.left * newPosition;
+			// move the backgrounds with parallax effect. support maximum 4 backgroud layers.
+			for (int i = 0; i < _backgroundSlot.Length; i++) {
+				if (_backgroundSlot[i] != null) {
+					float newPosition = Mathf.Repeat(_currentSpeed * Time.time * _backgroundSlot[i]._speedFactor, _bgLayerWidthInUnit);
+					_backgroundSlot[i]._layer.position = _backgroundSlot[i]._initPosition + Vector3.left * newPosition;
+				}
+			}
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
 			float advanceDistance = Mathf.Abs (OFFSET_TO_HUNTER) * Time.deltaTime / _catchMonkeyTime;

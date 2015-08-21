@@ -6568,7 +6568,19 @@ MonoBehaviour:
   _hunterPrefab: {fileID: 11468070, guid: 20b7e62d9942f425fb6d06873e72354a, type: 2}
   _shadowPrefab: {fileID: 154632, guid: 29445a0b8870141888d98a9afec2e8c0, type: 2}
   _foreground: {fileID: 1467643342}
-  _background: {fileID: 450133367}
+  _backgroundSlot:
+  - _layer: {fileID: 1725448768}
+    _speedFactor: .5
+    _initPosition: {x: 0, y: 0, z: 0}
+  - _layer: {fileID: 482852662}
+    _speedFactor: .600000024
+    _initPosition: {x: 0, y: 0, z: 0}
+  - _layer: {fileID: 999492874}
+    _speedFactor: .600000024
+    _initPosition: {x: 0, y: 0, z: 0}
+  - _layer: {fileID: 1692747691}
+    _speedFactor: .699999988
+    _initPosition: {x: 0, y: 0, z: 0}
   _hudItemsPlaceHolder: {fileID: 1173946462}
   _catchMonkeyTime: 2
   _backgroundLayerWidth: 2048
