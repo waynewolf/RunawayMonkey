@@ -35,42 +35,32 @@ public class InputManager : Singleton<InputManager> {
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Restart")) {
-			GameManager.Instance.Pause ();
+			GameManager.Instance.ResumeGame ();
 			GUIManager.Instance.SetPause(false);
 			LevelManager.Instance.RestartLevel();
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Resume")) {
-			GameManager.Instance.Pause ();
+			GameManager.Instance.ResumeGame ();
 			GUIManager.Instance.SetPause(false);
-		}
-
-		if (CrossPlatformInputManager.GetButtonUp("Replay")) {
-			GameManager.Instance.Pause ();
-			GUIManager.Instance.SetPause(false);
-			LevelManager.Instance.RestartLevel();
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("NextLevel")) {
-			GameManager.Instance.Pause();
+			GameManager.Instance.ResumeGame();
 			LevelManager.Instance.NextLevel();
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("Revive")) {
+			GameManager.Instance.ResumeGame ();
 			LevelManager.Instance.Revive();
-		}
-
-		if (CrossPlatformInputManager.GetButtonUp("NoThanks")) {
-			GUIManager.Instance.SetRevive(false);
-			LevelManager.Instance.RestartLevel();
 		}
 
 		if (GameManager.Instance.Paused)
 			return;	
 
 		if (CrossPlatformInputManager.GetButtonUp("Pause")) {
-			GameManager.Instance.Pause();
 			GUIManager.Instance.SetPause(true);
+			GameManager.Instance.PauseGame();
 		}
 
 		if (CrossPlatformInputManager.GetButtonDown("Attack")) {

@@ -113,8 +113,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void LevelComplete () {
-		GameManager.Instance.Pause();
 		GUIManager.Instance.SetLevelComplete(true);
+		GameManager.Instance.PauseGame();
 	}
 
 	public void RestartLevel () {

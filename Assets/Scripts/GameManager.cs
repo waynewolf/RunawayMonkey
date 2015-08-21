@@ -52,15 +52,18 @@ public class GameManager : Singleton<GameManager> {
 		Time.timeScale = _savedTimeScale;
 	}
 	
-	public void Pause() {
+	public void PauseGame() {
 		// if time is not already stopped		
-		if (Time.timeScale > 0.0f) {
-			Instance.SetTimeScale(0.0f);
-			Instance.Paused = true;
+		if (!Paused) {
+			SetTimeScale(0.0f);
+			Paused = true;
 		}
-		else {
-			Instance.ResetTimeScale();	
-			Instance.Paused = false;
+	}
+
+	public void ResumeGame() {
+		if (Paused) {
+			ResetTimeScale();	
+			Paused = false;
 		}
 	}
 
