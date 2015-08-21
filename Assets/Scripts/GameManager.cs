@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Game manager manages points, time, persistence. Also a centralized place to
+/// Game manager manages points, time, persistence, settings. Also a centralized place to
 /// gain acccess to the Player.
 /// </summary>
 public class GameManager : Singleton<GameManager> {
@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager> {
 	public MonkeyBehaviour Player { get; set; }
 	public float NormalSpeed { get; private set; }
 	public float FastSpeed { get; private set; }
+	public int PixelsPerUnit { get; private set; }
 
 	// storage
 	private float _savedTimeScale;
@@ -26,6 +27,7 @@ public class GameManager : Singleton<GameManager> {
 		Paused = false;
 		NormalSpeed = 5f;
 		FastSpeed = 10f;
+		PixelsPerUnit = 100;
 		GUIManager.Instance.RefreshScore (_score);
 	}
 

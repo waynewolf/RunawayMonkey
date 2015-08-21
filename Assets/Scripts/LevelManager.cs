@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour {
 	public Transform background;
 	public Transform hudItemsPlaceHolder;
 	public float catchMonkeyTime = 2f;
+	public int _backgroundLayerWidth;
 
 	[HideInInspector]
 	public MonkeyBehaviour Player { get; private set; }
@@ -38,6 +39,7 @@ public class LevelManager : MonoBehaviour {
 	private GameObject _shadow;
 	private Vector3 _shadowScale = Vector3.one;
 	private Vector3 _bgStartPos;
+	private float _bgLayerWidthInUnit;
 
 	void Awake() {
 		Instance = this;
@@ -49,6 +51,7 @@ public class LevelManager : MonoBehaviour {
 		_currentSpeed = GameManager.Instance.NormalSpeed;
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
+		_bgLayerWidthInUnit = 1.0f * _backgroundLayerWidth / GameManager.Instance.PixelsPerUnit;
 		_bgStartPos = background.transform.position;
 		BananaNumber = 0;
 		StrawberryNumber = 0;
@@ -73,7 +76,7 @@ public class LevelManager : MonoBehaviour {
 			foreground.transform.position = position;
 
 			// move the background, including sky, mountain, grass, trees
-			float newPosition = Mathf.Repeat(_currentSpeed * Time.time * GROUND_SPEED_FACTOR, 20.48f);
+			float newPosition = Mathf.Repeat(_currentSpeed * Time.time * GROUND_SPEED_FACTOR, _bgLayerWidthInUnit);
 			background.position = _bgStartPos + Vector3.left * newPosition;
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds

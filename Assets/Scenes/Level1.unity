@@ -969,7 +969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bdb5207312b4ceab7928ce19500367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
 --- !u!4 &325035679
 Transform:
   m_ObjectHideFlags: 0
@@ -6573,6 +6572,7 @@ MonoBehaviour:
   background: {fileID: 450133367}
   hudItemsPlaceHolder: {fileID: 1173946462}
   catchMonkeyTime: 2
+  _backgroundLayerWidth: 2048
 --- !u!4 &2101581366
 Transform:
   m_ObjectHideFlags: 0
