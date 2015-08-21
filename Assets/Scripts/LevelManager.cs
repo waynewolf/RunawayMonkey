@@ -143,14 +143,14 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void EatBanana (Transform transform) {
-		StartCoroutine(SmoothMovement(transform, _hudItemsPlaceHolder));
+		StartCoroutine(ItemSmoothMovement(transform, _hudItemsPlaceHolder));
 		BananaNumber++;
 		GUIManager.Instance.SetBananaNumber(BananaNumber);
 		GameManager.Instance.AddPoints(BANANA_POINTS);
 	}
 
 	public void EatStrawberry (Transform transform) {
-		StartCoroutine(SmoothMovement(transform, _hudItemsPlaceHolder));
+		StartCoroutine(ItemSmoothMovement(transform, _hudItemsPlaceHolder));
 		StrawberryNumber++;
 		GUIManager.Instance.SetStrawberryNumber(StrawberryNumber);
 		GameManager.Instance.AddPoints(STRAWBERRY_POINTS);
@@ -161,20 +161,20 @@ public class LevelManager : MonoBehaviour {
 		GUIManager.Instance.SetBananaNumber(BananaNumber);
 	}
 
-	private IEnumerator SmoothMovement(Transform bananaTransform, Transform end) {
-		Vector2 initPos = bananaTransform.position;
+	private IEnumerator ItemSmoothMovement(Transform start, Transform end) {
+		Vector2 initPos = start.position;
 		Vector2 targetPos = end.position;
 		targetPos.y += 2f;
 		targetPos.x -= 1.5f;
 		
 		for (float t = 0f; t < 1f; t += 0.05f) {
-			if (bananaTransform == null)
+			if (start == null)
 				yield break;
-			bananaTransform.position = Vector2.Lerp (initPos, targetPos, t / 1f);
+			start.position = Vector2.Lerp (initPos, targetPos, t / 1f);
 			yield return new WaitForSeconds(0.01f);
 		}
 
-		Destroy(bananaTransform.gameObject);
+		Destroy(start.gameObject);
 		yield return null;
 	}
 
@@ -196,6 +196,29 @@ public class LevelManager : MonoBehaviour {
 		Player.Revived();
 		Hunter.MoveToX(OFFSET_TO_HUNTER);
 		Hunter.MonkeyRunaway();
+
+		// Find a safe place for monkey to stand
+		Vector2 origin = new Vector2(0f, 10f);
+		bool foundAPlaceToStand = false;
+		for (float x = 0; x > -_halfScreenWidthInUnit; x -= 0.5f) {
+			origin.x = x;
+			RaycastHit2D hit = Physics2D.Raycast(origin,
+			                                     Vector2.down, 50f,
+			                                     1 << LayerMask.NameToLayer("Platform"));
+			if (hit && hit.transform.gameObject.tag == "Platform") {
+				// rewind to the center of the hit platform
+				//float newXPos = x - hit.transform.GetComponent<SpriteRenderer>().bounds.size.x;
+				float newXPos = hit.transform.position.x;
+				Vector3 newPos = _foreground.transform.position;
+				newPos.x += -newXPos;
+				_foreground.transform.position = newPos;
+				foundAPlaceToStand = true;
+				break;
+			}
+		}
+
+		if (!foundAPlaceToStand) {
+			Debug.LogError("No place to stand, need to redesign the level"); 
+		}
 	}
-	
 }
