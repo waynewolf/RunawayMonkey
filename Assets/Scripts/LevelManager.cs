@@ -220,5 +220,7 @@ public class LevelManager : MonoBehaviour {
 		if (!foundAPlaceToStand) {
 			Debug.LogError("No place to stand, need to redesign the level"); 
 		}
+
+		ResumeMoving();
 	}
 }
