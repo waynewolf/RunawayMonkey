@@ -45,11 +45,6 @@ public class InputManager : Singleton<InputManager> {
 			GUIManager.Instance.SetPause(false);
 		}
 
-		if (CrossPlatformInputManager.GetButtonUp("Pause")) {
-			GameManager.Instance.Pause();
-			GUIManager.Instance.SetPause(true);
-		}
-
 		if (CrossPlatformInputManager.GetButtonUp("Replay")) {
 			GameManager.Instance.Pause ();
 			GUIManager.Instance.SetPause(false);
@@ -72,6 +67,11 @@ public class InputManager : Singleton<InputManager> {
 
 		if (GameManager.Instance.Paused)
 			return;	
+
+		if (CrossPlatformInputManager.GetButtonUp("Pause")) {
+			GameManager.Instance.Pause();
+			GUIManager.Instance.SetPause(true);
+		}
 
 		if (CrossPlatformInputManager.GetButtonDown("Attack")) {
 			_player.Attack();
