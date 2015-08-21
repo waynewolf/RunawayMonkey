@@ -13,6 +13,7 @@ public class GUIManager : MonoBehaviour {
 	public Text scoreText;
 
 	private static GUIManager _instance;
+	private bool modalDialogAlreadyPoppedUp;
 
 	public static GUIManager Instance {
 		get {
@@ -23,15 +24,15 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public void SetPause(bool state) {
-		pause.SetActive(state);
+		ToggleModalDialog(pause, state);
 	}
 
 	public void SetGameOver(bool state) {
-		gameOver.SetActive(state);
+		ToggleModalDialog(gameOver, state);
 	}
 
 	public void SetLevelComplete (bool state) {
-		levelComplete.SetActive(state);
+		ToggleModalDialog(levelComplete, state);
 	}
 
 	public void SetBananaNumber(int number) {
@@ -55,6 +56,16 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public void SetRevive(bool state) {
-		revive.SetActive(state);
+		ToggleModalDialog(revive, state);
+	}
+
+	private void ToggleModalDialog(GameObject dialog, bool state) {
+		if (!modalDialogAlreadyPoppedUp && state) {
+			dialog.SetActive(true);
+			modalDialogAlreadyPoppedUp = true;
+		} else if (modalDialogAlreadyPoppedUp && !state && dialog.activeInHierarchy) {
+			dialog.SetActive(false);
+			modalDialogAlreadyPoppedUp = false;
+		}
 	}
 }
