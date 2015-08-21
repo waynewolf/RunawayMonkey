@@ -9,7 +9,7 @@ public class HunterBehaviour : MonoBehaviour {
 	private bool _catching = true;
 	private Vector2 _jumpForce;
 
-	void Start() {
+	void Awake() {
 		_animator = GetComponent<Animator>();
 		_jumpForce = new Vector2(0, jumpForce);
 	}
@@ -71,4 +71,5 @@ public class HunterBehaviour : MonoBehaviour {
 		_animator.SetTrigger("Runaway");
 		_catching = true;
 	}
+
 }

@@ -20,10 +20,8 @@ public class MonkeyBehaviour : MonoBehaviour {
 	private Rigidbody2D _rigidbody2D;
 	private BoxCollider2D _boxCollider2D;
 	private Vector2 _jumpForce;
-	private GameObject _hunter;
 
-	void Start () {
-		_hunter = LevelManager.Instance.Hunter.gameObject;
+	void Awake () {
 		_animator = GetComponent<Animator>();
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_boxCollider2D = GetComponent<BoxCollider2D>();
@@ -150,7 +148,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 				Vector3 bananaSpawnPos = transform.position;
 				bananaSpawnPos.x -= 1;
 				GameObject bananaPeel = Instantiate(bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
-				bananaPeel.GetComponent<BananaPeelItem>().Throw(_hunter);
+				bananaPeel.GetComponent<BananaPeelItem>().Throw(LevelManager.Instance.Hunter.gameObject);
 				LevelManager.Instance.AttackWithBananaPeel();
 			}
 		}
