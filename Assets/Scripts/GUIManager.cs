@@ -7,6 +7,7 @@ public class GUIManager : MonoBehaviour {
 	public GameObject _levelComplete;
 	public GameObject _buttons;
 	public GameObject _revive;
+	public GameObject _countDown;
 	public Text _bananaNumberText;
 	public Text _strawberryNumberText;
 	public Text _scoreText;
@@ -52,6 +53,10 @@ public class GUIManager : MonoBehaviour {
 
 	public void SetRevive(bool state) {
 		ToggleModalDialog(_revive, state);
+	}
+
+	public void ShowCountDown() {
+		_countDown.SetActive(true);
 	}
 
 	private void ToggleModalDialog(GameObject dialog, bool state) {
