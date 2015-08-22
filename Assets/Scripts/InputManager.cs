@@ -39,9 +39,6 @@ public class InputManager : Singleton<InputManager> {
 			GameManager.Instance.ResumeGame ();
 			GUIManager.Instance.SetPause(false);
 			LevelManager.Instance.RestartLevel();
-			// FIXME: buggy
-			LevelManager.Instance.FreezeCharacters();
-			GUIManager.Instance.SetCountDown(true);
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Resume")) {

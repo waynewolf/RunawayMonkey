@@ -71,6 +71,10 @@ public class LevelManager : MonoBehaviour {
 
 	void Start() {
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
+		// whenever the level starts, free the characters, stop scene scrolling
+		// show the count down timer, to give the user some time to prepare
+		FreezeCharacters();
+		GUIManager.Instance.SetCountDown(true);
 	}
 
 	void FixedUpdate() {
