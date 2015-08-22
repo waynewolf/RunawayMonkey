@@ -55,8 +55,8 @@ public class GUIManager : MonoBehaviour {
 		ToggleModalDialog(_revive, state);
 	}
 
-	public void ShowCountDown() {
-		_countDown.SetActive(true);
+	public void SetCountDown(bool state) {
+		ToggleModalDialog(_countDown, state);
 	}
 
 	private void ToggleModalDialog(GameObject dialog, bool state) {

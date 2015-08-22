@@ -24,12 +24,10 @@ public class CountDown : MonoBehaviour {
 			yield return new WaitForSeconds(1f);
 		}
 
-		gameObject.SetActive(false);
+		GUIManager.Instance.SetCountDown(false);
+		LevelManager.Instance.ThawCharacters();
+
 		yield return null;
 	}
 
-	void OnDisable() {
-		Debug.Log ("OnDisable");
-		LevelManager.Instance.ThawCharacters();
-	}
 }

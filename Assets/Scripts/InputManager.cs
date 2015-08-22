@@ -41,14 +41,14 @@ public class InputManager : Singleton<InputManager> {
 			LevelManager.Instance.RestartLevel();
 			// FIXME: buggy
 			LevelManager.Instance.FreezeCharacters();
-			GUIManager.Instance.ShowCountDown();
+			GUIManager.Instance.SetCountDown(true);
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Resume")) {
 			GameManager.Instance.ResumeGame ();
 			GUIManager.Instance.SetPause(false);
 			LevelManager.Instance.FreezeCharacters();
-			GUIManager.Instance.ShowCountDown();
+			GUIManager.Instance.SetCountDown(true);
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("NextLevel")) {
@@ -60,7 +60,7 @@ public class InputManager : Singleton<InputManager> {
 			GameManager.Instance.ResumeGame ();
 			LevelManager.Instance.Revive();
 			LevelManager.Instance.FreezeCharacters();
-			GUIManager.Instance.ShowCountDown();
+			GUIManager.Instance.SetCountDown(true);
 		}
 
 		if (GameManager.Instance.Paused)
