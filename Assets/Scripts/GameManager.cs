@@ -12,35 +12,33 @@ public class GameManager : Singleton<GameManager> {
 	public float NormalSpeed { get; private set; }
 	public float FastSpeed { get; private set; }
 	public int PixelsPerUnit { get; private set; }
+	public int Score { get; private set; }
 
 	// storage
 	private float _savedTimeScale;
-	private int _score;
+
 	protected override void Awake() {
 		base.Awake();
 		Instance.LoadValue();
 	}
 	
 	public void LoadValue() {
-		_score = PlayerPrefs.GetInt("score");
+		Score = PlayerPrefs.GetInt("score");
 		TimeScale = 1f;
 		Paused = false;
 		NormalSpeed = 5f;
 		FastSpeed = 10f;
 		PixelsPerUnit = 100;
-		GUIManager.Instance.RefreshScore (_score);
 	}
 
 	public void AddPoints(int pointsToAdd) {
-		_score += pointsToAdd;
-		PlayerPrefs.SetInt("score", _score);
-		GUIManager.Instance.RefreshScore (_score);
+		Score += pointsToAdd;
+		PlayerPrefs.SetInt("score", Score);
 	}
 
 	public void SetPoints(int points) {
-		_score = points;
-		PlayerPrefs.SetInt("score", _score);
-		GUIManager.Instance.RefreshScore (_score);
+		Score = points;
+		PlayerPrefs.SetInt("score", Score);
 	}
 	
 	public void SetTimeScale(float newTimeScale) {

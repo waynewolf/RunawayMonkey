@@ -70,6 +70,10 @@ public class LevelManager : MonoBehaviour {
 		StrawberryNumber = 0;
 	}
 
+	void Start() {
+		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
+	}
+
 	void FixedUpdate() {
 		RaycastHit2D hit = Physics2D.Raycast(Player.transform.position, Vector2.down, Mathf.Infinity,
 		                                     1 << LayerMask.NameToLayer("Platform"));
@@ -147,6 +151,7 @@ public class LevelManager : MonoBehaviour {
 		BananaNumber++;
 		GUIManager.Instance.SetBananaNumber(BananaNumber);
 		GameManager.Instance.AddPoints(BANANA_POINTS);
+		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
 	}
 
 	public void EatStrawberry (Transform transform) {
@@ -154,6 +159,7 @@ public class LevelManager : MonoBehaviour {
 		StrawberryNumber++;
 		GUIManager.Instance.SetStrawberryNumber(StrawberryNumber);
 		GameManager.Instance.AddPoints(STRAWBERRY_POINTS);
+		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
 	}
 
 	public void AttackWithBananaPeel() {
