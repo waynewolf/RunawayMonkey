@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager> {
 	public float FastSpeed { get; private set; }
 	public int PixelsPerUnit { get; private set; }
 	public int Score { get; private set; }
+	// 1 <= level <= UnlockedLevel are unlocked, 0 is reserved for Main scene
+	public int UnlockedLevel { get; private set; }
 
 	// storage
 	private float _savedTimeScale;
@@ -24,6 +26,11 @@ public class GameManager : Singleton<GameManager> {
 	
 	public void LoadValue() {
 		Score = PlayerPrefs.GetInt("score");
+		UnlockedLevel = PlayerPrefs.GetInt ("unlockedLevel");
+		if (UnlockedLevel == 0) {
+			UnlockedLevel = 1;
+			PlayerPrefs.SetInt("unlockedLevel", UnlockedLevel);
+		}
 		TimeScale = 1f;
 		Paused = false;
 		NormalSpeed = 5f;
@@ -65,4 +72,7 @@ public class GameManager : Singleton<GameManager> {
 		}
 	}
 
+	public void LoadLevel (int level) {
+		Application.LoadLevel (level);
+	}
 }
