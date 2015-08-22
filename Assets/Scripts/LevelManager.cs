@@ -139,11 +139,15 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void RestartLevel () {
-		Application.LoadLevel(Application.loadedLevel);
+		GameManager.Instance.LoadLevel(Application.loadedLevel);
 	}
 
 	public void NextLevel () {
-		Application.LoadLevel (Application.loadedLevel + 1);
+		if (Application.loadedLevel + 1 > GameManager.Instance.UnlockedLevel) {
+			GameManager.Instance.LoadLevel (0);
+		} else {
+			GameManager.Instance.LoadLevel (Application.loadedLevel + 1);
+		}
 	}
 
 	public void EatBanana (Transform transform) {

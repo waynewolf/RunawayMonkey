@@ -31,7 +31,7 @@ public class InputManager : Singleton<InputManager> {
 		// 2. Set both PointerDown and PointerUp event type in event trigger script
 		// 3. Call CrossPlatformInputManager.GetButtonUp, not GetButtonDown.
 		if (CrossPlatformInputManager.GetButtonUp ("MainScreen")) {
-			Application.LoadLevel("Main");
+			GameManager.Instance.LoadLevel(0);
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Restart")) {
