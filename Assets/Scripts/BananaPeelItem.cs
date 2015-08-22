@@ -14,10 +14,10 @@ public class BananaPeelItem : MonoBehaviour {
 
 	private IEnumerator DoThrow(GameObject start, GameObject target) {
 		Vector2 initPos = start.transform.position;
-		Vector2 targetPos = target.transform.position;
-		targetPos.y += 1f;
-		
+
 		for (float t = 0f; t < 0.5f; t += 0.05f) {
+			Vector2 targetPos = target.transform.position;
+			targetPos.y += 1f;
 			start.transform.position = Vector2.Lerp (initPos, targetPos, t / 0.5f);
 			yield return new WaitForSeconds(0.01f);
 		}

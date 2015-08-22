@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _destroyOnAwake: 1
-  _awakeDestroyDelay: 1
+  _awakeDestroyDelay: .5
   _findChild: 0
   _namedChild: 
 --- !u!212 &21263872
@@ -154,7 +154,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _awakeDestroyDelay
-      value: 1
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
