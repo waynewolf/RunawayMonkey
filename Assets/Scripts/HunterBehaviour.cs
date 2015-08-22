@@ -72,4 +72,11 @@ public class HunterBehaviour : MonoBehaviour {
 		_catching = true;
 	}
 
+	public void StopCatching () {
+		_catching = false;
+	}
+
+	public void ResumeCatching() {
+		_catching = true;
+	}
 }

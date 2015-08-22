@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class CountDown : MonoBehaviour {
 
 	void OnEnable() {
-		Debug.Log ("OnEnable");
 		StartCoroutine(DoCountDown(GetComponent<Text>(), 3));
 	}
 
@@ -31,5 +30,6 @@ public class CountDown : MonoBehaviour {
 
 	void OnDisable() {
 		Debug.Log ("OnDisable");
+		LevelManager.Instance.ThawCharacters();
 	}
 }

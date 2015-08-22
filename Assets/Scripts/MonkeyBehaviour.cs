@@ -170,11 +170,11 @@ public class MonkeyBehaviour : MonoBehaviour {
 	}
 
 	public void Block() {
-		LevelManager.Instance.StopMoving();
+		LevelManager.Instance.StopSceneScrolling();
 	}
 
 	public void UnBlock() {
-		LevelManager.Instance.ResumeMoving();
+		LevelManager.Instance.ResumeSceneScrolling();
 	}
 
 	public void MoveToHunter (Transform target) {

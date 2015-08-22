@@ -43,7 +43,6 @@ public class LevelManager : MonoBehaviour {
 
 	private float _halfScreenWidthInUnit;
 	private float _currentSpeed;
-
 	private float _elapsedTimeWhenHunterOutOfScreen;
 	private GameObject _shadow;
 	private Vector3 _shadowScale = Vector3.one;
@@ -125,12 +124,26 @@ public class LevelManager : MonoBehaviour {
 		return Player.transform.position.x - Hunter.transform.position.x;
 	}
 
-	public void StopMoving() {
+	// stop the scene scrolling
+	public void StopSceneScrolling() {
 		_currentSpeed = 0;
 	}
 
-	public void ResumeMoving() {
+	public void ResumeSceneScrolling() {
 		_currentSpeed = GameManager.Instance.NormalSpeed;
+	}
+	
+	// Freezes the characters and stop scene scrolling, 
+	// but the character animation continues
+	public void FreezeCharacters() {
+		StopSceneScrolling();
+		Hunter.StopCatching();
+	}
+
+	// Thaw the chracters and restart scene scrolling
+	public void ThawCharacters() {
+		ResumeSceneScrolling();
+		Hunter.ResumeCatching();
 	}
 
 	public void LevelComplete () {
@@ -231,6 +244,7 @@ public class LevelManager : MonoBehaviour {
 			Debug.LogError("No place to stand, need to redesign the level"); 
 		}
 
-		ResumeMoving();
+		ResumeSceneScrolling();
 	}
+	
 }
