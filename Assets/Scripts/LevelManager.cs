@@ -162,7 +162,7 @@ public class LevelManager : MonoBehaviour {
 		GUIManager.Instance.SetLevelComplete(true);
 		GUIManager.Instance.DisableButtons();
 		GUIManager.Instance.DisableHUD ();
-		GameManager.Instance.PauseGame();
+		FreezeCharacters();
 	}
 
 	public void RestartLevel () {
