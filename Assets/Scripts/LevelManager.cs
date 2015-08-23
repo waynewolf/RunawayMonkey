@@ -181,7 +181,7 @@ public class LevelManager : MonoBehaviour {
 		StartCoroutine(ItemSmoothMovement(transform, _hudItemsPlaceHolder));
 		BananaNumber++;
 		GUIManager.Instance.SetBananaNumber(BananaNumber);
-		GameManager.Instance.AddPoints(BANANA_POINTS);
+		GameManager.Instance.AddScore(BANANA_POINTS);
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
 	}
 
@@ -189,7 +189,7 @@ public class LevelManager : MonoBehaviour {
 		StartCoroutine(ItemSmoothMovement(transform, _hudItemsPlaceHolder));
 		StrawberryNumber++;
 		GUIManager.Instance.SetStrawberryNumber(StrawberryNumber);
-		GameManager.Instance.AddPoints(STRAWBERRY_POINTS);
+		GameManager.Instance.AddScore(STRAWBERRY_POINTS);
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
 	}
 
@@ -223,15 +223,18 @@ public class LevelManager : MonoBehaviour {
 
 	public void ReviveScreen() {
 		GUIManager.Instance.DisableButtons();
-		GUIManager.Instance.DisableHUD ();
 		GUIManager.Instance.SetRevive(true);
 		Player.DisablePhysics();
 	}
 
-	public void Revive() {
+	public bool Revive() {
 		GUIManager.Instance.SetRevive(false);
 		GUIManager.Instance.EnableButtons();
-		GUIManager.Instance.EnableHUD();
+		if (GameManager.Instance.Score < 100)
+			return false;
+
+		GameManager.Instance.SubtractScore(100);
+		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
 		Player.transform.position = Vector3.zero;
 		Player.Revived();
 		Hunter.MoveToX(OFFSET_TO_HUNTER);
@@ -262,6 +265,8 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		ResumeSceneScrolling();
+
+		return true;
 	}
 	
 }

@@ -38,13 +38,13 @@ public class GameManager : Singleton<GameManager> {
 		PixelsPerUnit = 100;
 	}
 
-	public void AddPoints(int pointsToAdd) {
-		Score += pointsToAdd;
+	public void AddScore(int score) {
+		Score += score;
 		PlayerPrefs.SetInt("score", Score);
 	}
 
-	public void SetPoints(int points) {
-		Score = points;
+	public void SubtractScore(int score) {
+		Score -= score;
 		PlayerPrefs.SetInt("score", Score);
 	}
 	
