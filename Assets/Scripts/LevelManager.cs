@@ -141,13 +141,21 @@ public class LevelManager : MonoBehaviour {
 	// but the character animation continues
 	public void FreezeCharacters() {
 		StopSceneScrolling();
+		Player.DisablePhysics();
+		Player.PauseAnimation();
 		Hunter.StopCatching();
+		Hunter.DisablePhysics();
+		Hunter.PauseAnimation();
 	}
 
 	// Thaw the chracters and restart scene scrolling
 	public void ThawCharacters() {
 		ResumeSceneScrolling();
+		Hunter.ResumeAnimation();
+		Hunter.EnablePhysics();
 		Hunter.ResumeCatching();
+		Player.ResumeAnimation();
+		Player.EnablePhysics();
 	}
 
 	public void LevelComplete () {
@@ -217,6 +225,7 @@ public class LevelManager : MonoBehaviour {
 		GUIManager.Instance.DisableButtons();
 		GUIManager.Instance.DisableHUD ();
 		GUIManager.Instance.SetRevive(true);
+		Player.DisablePhysics();
 	}
 
 	public void Revive() {

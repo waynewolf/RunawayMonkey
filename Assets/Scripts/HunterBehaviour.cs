@@ -8,10 +8,14 @@ public class HunterBehaviour : MonoBehaviour {
 	private Animator _animator;
 	private bool _catching = true;
 	private Vector2 _jumpForceVector;
+	private Rigidbody2D _rigidbody2D;
+	private BoxCollider2D _boxCollider2D;
 
 	void Awake() {
 		_animator = GetComponent<Animator>();
 		_jumpForceVector = new Vector2(0, _jumpForce);
+		_rigidbody2D = GetComponent<Rigidbody2D>();
+		_boxCollider2D = GetComponent<BoxCollider2D>();
 	}
 
 	public void Forward (float distance) {
@@ -78,5 +82,23 @@ public class HunterBehaviour : MonoBehaviour {
 
 	public void ResumeCatching() {
 		_catching = true;
+	}
+
+	public void EnablePhysics() {
+		_rigidbody2D.isKinematic = false;
+		_boxCollider2D.enabled = true;
+	}
+	
+	public void DisablePhysics() {
+		_rigidbody2D.isKinematic = true;
+		_boxCollider2D.enabled = false;
+	}
+
+	public void PauseAnimation () {
+		_animator.enabled =  false;
+	}
+	
+	public void ResumeAnimation() {
+		_animator.enabled = true;
 	}
 }

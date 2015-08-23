@@ -27,7 +27,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		_boxCollider2D = GetComponent<BoxCollider2D>();
 		_state = State.Falling;
 		_jumpForceVector = new Vector2(0, _jumpForce);
-		ResetPhysics();
+		EnablePhysics();
 	}
 	
 	void FixedUpdate () {
@@ -116,7 +116,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public void JumpOff() {
 		if (_state == State.Hanging) {
-			ResetPhysics();
+			EnablePhysics();
 			_state = State.Falling;
 		}
 	}
@@ -133,7 +133,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	// now this function is called from trigger in BranchTipCheck
 	public void NoHang() {
 		if (_state == State.Hanging) {
-			ResetPhysics();
+			EnablePhysics();
 			_state = State.Falling;
 		}
 	}
@@ -159,14 +159,22 @@ public class MonkeyBehaviour : MonoBehaviour {
 		_animator.SetBool("Attack", false);
 	}
 
-	private void ResetPhysics() {
+	public void EnablePhysics() {
 		_rigidbody2D.isKinematic = false;
 		_boxCollider2D.enabled = true;
 	}
 
-	private void DisablePhysics() {
+	public void DisablePhysics() {
 		_rigidbody2D.isKinematic = true;
 		_boxCollider2D.enabled = false;
+	}
+
+	public void PauseAnimation () {
+		_animator.enabled =  false;
+	}
+
+	public void ResumeAnimation() {
+		_animator.enabled = true;
 	}
 
 	public void Block() {
@@ -203,12 +211,12 @@ public class MonkeyBehaviour : MonoBehaviour {
 	public void Revived () {
 		_animator.SetBool("Caught", false);
 		_animator.SetTrigger("Revived");
-		StartCoroutine(DelayedResumeFunctioning(0.1f));
+		StartCoroutine(DelayedResumeFunctioning(4));
 	}
 
 	private IEnumerator DelayedResumeFunctioning(float delaySecond) {
 		yield return new WaitForSeconds(delaySecond);
-		ResetPhysics();
+		EnablePhysics();
 		yield return null;
 	}
 }
