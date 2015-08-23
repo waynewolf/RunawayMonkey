@@ -38,17 +38,24 @@ public class GUIManager : MonoBehaviour {
 	public void SetLevelComplete (bool state) {
 		ToggleModalDialog(_levelComplete, state);
 		Text animatedScoreText = _levelComplete.transform.Find ("Badge/AnimatedScoreText").GetComponent<Text>();
-		StartCoroutine(ScoreCountUpAnimation(animatedScoreText));
+		StartCoroutine(ScoreCountUpAnimation(animatedScoreText, 2f));
 	}
 
-	private IEnumerator ScoreCountUpAnimation(Text text) {
+	private IEnumerator ScoreCountUpAnimation(Text text, float completeInSecond) {
 		int score = 0;
-		while (score < GameManager.Instance.Score) {
-			text.text = score.ToString();
-			score++;
-			yield return new WaitForSeconds(0.01f);
+		float time = Time.time - 0.016f;
+		while (score <= GameManager.Instance.Score) {
+			float deltaTime = Time.time - time;
+			float step = (deltaTime / completeInSecond) * GameManager.Instance.Score;
+			int countTo = score + (int)step;
+			countTo = Mathf.Min(countTo, GameManager.Instance.Score + 1);
+			for (int i = score; i < countTo; i++) {
+				text.text = i.ToString();
+			}
+			score = countTo;
+			time = Time.time;
+			yield return null;
 		}
-		Debug.Log ("score: " + score);
 		yield return null;
 	}
 
