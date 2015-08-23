@@ -37,6 +37,19 @@ public class GUIManager : MonoBehaviour {
 
 	public void SetLevelComplete (bool state) {
 		ToggleModalDialog(_levelComplete, state);
+		Text animatedScoreText = _levelComplete.transform.Find ("Badge/AnimatedScoreText").GetComponent<Text>();
+		StartCoroutine(ScoreCountUpAnimation(animatedScoreText));
+	}
+
+	private IEnumerator ScoreCountUpAnimation(Text text) {
+		int score = 0;
+		while (score < GameManager.Instance.Score) {
+			text.text = score.ToString();
+			score++;
+			yield return new WaitForSeconds(0.01f);
+		}
+		Debug.Log ("score: " + score);
+		yield return null;
 	}
 
 	public void SetBananaNumber(int number) {
