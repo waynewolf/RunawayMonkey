@@ -8,9 +8,11 @@ public class GUIManager : MonoBehaviour {
 	public GameObject _buttons;
 	public GameObject _revive;
 	public GameObject _countDown;
-	public Text _bananaNumberText;
-	public Text _strawberryNumberText;
-	public Text _scoreText;
+	public GameObject _hud;
+
+	private Text _bananaNumberText;
+	private Text _strawberryNumberText;
+	private Text _scoreText;
 
 	private static GUIManager _instance;
 	private bool _modalDialogAlreadyPoppedUp;
@@ -21,6 +23,12 @@ public class GUIManager : MonoBehaviour {
 				_instance = GameObject.FindObjectOfType<GUIManager>();
 			return _instance;
 		}
+	}
+
+	void Start() {
+		_bananaNumberText = transform.Find ("Canvas/HUD/Banana/BananaNumberText").GetComponent<Text>();
+		_strawberryNumberText = transform.Find ("Canvas/HUD/Strawberry/StrawberryNumberText").GetComponent<Text>();
+		_scoreText = transform.Find ("Canvas/HUD/ScoreText").GetComponent<Text>();
 	}
 
 	public void SetPause(bool state) {
@@ -49,6 +57,14 @@ public class GUIManager : MonoBehaviour {
 
 	public void EnableButtons() {
 		_buttons.SetActive(true);
+	}
+
+	public void DisableHUD() {
+		_hud.SetActive(false);
+	}
+
+	public void EnableHUD () {
+		_hud.SetActive(true);
 	}
 
 	public void SetRevive(bool state) {

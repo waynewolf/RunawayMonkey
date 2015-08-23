@@ -152,6 +152,8 @@ public class LevelManager : MonoBehaviour {
 
 	public void LevelComplete () {
 		GUIManager.Instance.SetLevelComplete(true);
+		GUIManager.Instance.DisableButtons();
+		GUIManager.Instance.DisableHUD ();
 		GameManager.Instance.PauseGame();
 	}
 
@@ -213,12 +215,14 @@ public class LevelManager : MonoBehaviour {
 
 	public void ReviveScreen() {
 		GUIManager.Instance.DisableButtons();
+		GUIManager.Instance.DisableHUD ();
 		GUIManager.Instance.SetRevive(true);
 	}
 
 	public void Revive() {
 		GUIManager.Instance.SetRevive(false);
 		GUIManager.Instance.EnableButtons();
+		GUIManager.Instance.EnableHUD();
 		Player.transform.position = Vector3.zero;
 		Player.Revived();
 		Hunter.MoveToX(OFFSET_TO_HUNTER);
