@@ -47,6 +47,7 @@ public class GUIManager : MonoBehaviour {
 		while (score <= GameManager.Instance.Score) {
 			float deltaTime = Time.time - time;
 			float step = (deltaTime / completeInSecond) * GameManager.Instance.Score;
+			step = Mathf.Max (step, 1);
 			int countTo = score + (int)step;
 			countTo = Mathf.Min(countTo, GameManager.Instance.Score + 1);
 			for (int i = score; i < countTo; i++) {
