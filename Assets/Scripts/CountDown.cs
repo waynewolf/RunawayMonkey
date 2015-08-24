@@ -21,7 +21,7 @@ public class CountDown : MonoBehaviour {
 			else {
 				text.text = i.ToString();
 			}
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(0.5f);
 		}
 
 		GUIManager.Instance.SetCountDown(false);
