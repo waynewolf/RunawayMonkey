@@ -231,34 +231,35 @@ public class LevelManager : MonoBehaviour {
 		Player.DisablePhysics();
 	}
 
-	public bool Revive() {
+	public void Revive() {
 		GUIManager.Instance.SetRevive(false);
 		GUIManager.Instance.EnableButtons();
 		if (GameManager.Instance.Score < 100)
-			return false;
+			LevelManager.Instance.RestartLevel();
 
 		GameManager.Instance.SubtractScore(100);
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
-		Player.transform.position = _playerInitPos;
-		Player.Revived();
 		Hunter.MoveToX(OFFSET_TO_HUNTER);
 		Hunter.MonkeyRunaway();
 
 		// Find a safe place for monkey to stand
 		Vector2 origin = _playerInitPos;
 		bool foundAPlaceToStand = false;
+		float playerYPos = 0;
 		for (float x = 0; x > - 2f * _halfScreenWidthInUnit; x -= 0.5f) {
 			origin.x = x;
 			RaycastHit2D hit = Physics2D.Raycast(origin,
 			                                     Vector2.down, 50f,
 			                                     1 << LayerMask.NameToLayer("Platform"));
 			if (hit && hit.transform.gameObject.tag == "Platform") {
-				// rewind to the center of the hit platform
-				//float newXPos = x - hit.transform.GetComponent<SpriteRenderer>().bounds.size.x;
-				float newXPos = hit.transform.position.x;
+				// rewind to the head of the hit platform
+				float newXPos = hit.transform.position.x - 0.5f * hit.transform.GetComponent<SpriteRenderer>().bounds.size.x;
 				Vector3 newPos = _foreground.transform.position;
 				newPos.x += -newXPos;
 				_foreground.transform.position = newPos;
+				// put the player just on the platform
+				playerYPos = hit.transform.position.y + 0.5f * Player.GetComponent<SpriteRenderer>().bounds.size.y
+					+ 0.5f * hit.transform.GetComponent<SpriteRenderer>().bounds.size.y;
 				foundAPlaceToStand = true;
 				break;
 			}
@@ -266,11 +267,12 @@ public class LevelManager : MonoBehaviour {
 
 		if (!foundAPlaceToStand) {
 			Debug.LogError("No place to stand, need to redesign the level"); 
+		} else {
+			Player.transform.position = new Vector3(0, playerYPos, _playerInitPos.z);
+			Player.Revived();
+			LevelManager.Instance.FreezeCharacters();
+			GUIManager.Instance.SetCountDown(true);
 		}
-
-		ResumeSceneScrolling();
-
-		return true;
 	}
 	
 }

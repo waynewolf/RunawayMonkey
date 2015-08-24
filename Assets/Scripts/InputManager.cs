@@ -55,13 +55,7 @@ public class InputManager : Singleton<InputManager> {
 
 		if (CrossPlatformInputManager.GetButtonUp("Revive")) {
 			GameManager.Instance.ResumeGame ();
-			bool canRevive = LevelManager.Instance.Revive();
-			if (canRevive) {
-				LevelManager.Instance.FreezeCharacters();
-				GUIManager.Instance.SetCountDown(true);
-			} else {
-				LevelManager.Instance.RestartLevel();
-			}
+			LevelManager.Instance.Revive();
 		}
 
 		if (GameManager.Instance.Paused)
