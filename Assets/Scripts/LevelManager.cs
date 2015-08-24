@@ -170,11 +170,14 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void NextLevel () {
-		if (Application.loadedLevel + 1 > GameManager.Instance.UnlockedLevel) {
-			GameManager.Instance.LoadLevel (0);
-		} else {
-			GameManager.Instance.LoadLevel (Application.loadedLevel + 1);
+		int nextLevel = (Application.loadedLevel + 1) % GameManager.Instance.SceneCount;
+		if (nextLevel > GameManager.Instance.UnlockedLevel) {
+			GameManager.Instance.IncUnlockedLevel();
+			if (nextLevel != GameManager.Instance.UnlockedLevel) {
+				Debug.LogWarning("UnlockedLevel logical error, shouldn't happen");
+			}
 		}
+		GameManager.Instance.LoadLevel (nextLevel);
 	}
 
 	public void EatBanana (Transform transform) {

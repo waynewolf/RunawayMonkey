@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager> {
 	public int Score { get; private set; }
 	// 1 <= level <= UnlockedLevel are unlocked, 0 is reserved for Main scene
 	public int UnlockedLevel { get; private set; }
+	public int SceneCount { get; private set; }
 
 	// storage
 	private float _savedTimeScale;
@@ -36,6 +37,7 @@ public class GameManager : Singleton<GameManager> {
 		NormalSpeed = 5f;
 		FastSpeed = 10f;
 		PixelsPerUnit = 100;
+		SceneCount = 3;
 	}
 
 	public void AddScore(int score) {
@@ -74,5 +76,12 @@ public class GameManager : Singleton<GameManager> {
 
 	public void LoadLevel (int level) {
 		Application.LoadLevel (level);
+	}
+
+	public void IncUnlockedLevel() {
+		if (UnlockedLevel + 1 <= SceneCount) {
+			UnlockedLevel++;
+			PlayerPrefs.SetInt("unlockedLevel", UnlockedLevel);
+		}
 	}
 }
