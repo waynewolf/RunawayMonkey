@@ -9,6 +9,8 @@ public class MonkeyBehaviour : MonoBehaviour {
 		WantHang,
 		Hanging,
 		Falling,
+		Caught,
+		Dead,
 	};
 
 	public float _jumpForce = 575f;
@@ -29,7 +31,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		_jumpForceVector = new Vector2(0, _jumpForce);
 		EnablePhysics();
 	}
-	
+
 	void FixedUpdate () {
 		_animator.SetFloat("VSpeed", _rigidbody2D.velocity.y);
 	}
@@ -67,6 +69,10 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public bool IsFalling() {
 		return (_state == State.Falling);
+	}
+
+	public bool IsCaught() {
+		return (_state == State.Caught);
 	}
 	
 	#endregion
@@ -205,13 +211,24 @@ public class MonkeyBehaviour : MonoBehaviour {
 	}
 
 	public void Caught () {
+		_state = State.Caught;
 		_animator.SetBool("Caught", true);
 	}
 
+	public void Dead() {
+		_state = State.Dead;
+	}
+
 	public void Revived () {
-		_animator.SetBool("Caught", false);
-		_animator.SetTrigger("Revived");
-		StartCoroutine(DelayedResumeFunctioning(4));
+		if (_state == State.Caught) {
+			_animator.SetBool("Caught", false);
+			_animator.SetTrigger("Revived");
+			StartCoroutine(DelayedResumeFunctioning(4));
+			_state = State.Falling;
+		} else if (_state == State.Dead) {
+			_state = State.Falling;
+			_animator.Play ("FallOnly");
+		}
 	}
 
 	private IEnumerator DelayedResumeFunctioning(float delaySecond) {
