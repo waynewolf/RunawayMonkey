@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour {
 	private const float BACKGROUND_SPEED_FACTOR = 0.5f;
 	private const int BANANA_POINTS = 2;
 	private const int STRAWBERRY_POINTS = 1;
-	private const int MAX_BACKGROUND_SLOTS = 4;
+	private const int MAX_BACKGROUND_SLOTS = 8;
 
 	// LevelManager is singleton, but it cannot survive from scene switch
 	public static LevelManager Instance { get; private set; }
