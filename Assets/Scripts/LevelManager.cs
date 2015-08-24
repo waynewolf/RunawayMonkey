@@ -48,10 +48,11 @@ public class LevelManager : MonoBehaviour {
 	private Vector3 _shadowScale = Vector3.one;
 	private Vector3 _bgStartPos;
 	private float _bgLayerWidthInUnit;
+	private Vector3 _playerInitPos = new Vector3(0f, 3f, 0f);
 
 	void Awake() {
 		Instance = this;
-		Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity) as MonkeyBehaviour;
+		Player = Instantiate(_playerPrefab, _playerInitPos, Quaternion.identity) as MonkeyBehaviour;
 		Hunter = Instantiate(_hunterPrefab, new Vector3(OFFSET_TO_HUNTER,
 					INIT_HUNTER_Y_OFFSET, 0), Quaternion.identity) as HunterBehaviour;
 		_shadow = Instantiate(_shadowPrefab, new Vector3(0, -3f, 5f), Quaternion.identity) as GameObject;
@@ -238,7 +239,7 @@ public class LevelManager : MonoBehaviour {
 
 		GameManager.Instance.SubtractScore(100);
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
-		Player.transform.position = Vector3.zero;
+		Player.transform.position = _playerInitPos;
 		Player.Revived();
 		Hunter.MoveToX(OFFSET_TO_HUNTER);
 		Hunter.MonkeyRunaway();
