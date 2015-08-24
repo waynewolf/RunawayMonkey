@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager> {
 		NormalSpeed = 5f;
 		FastSpeed = 10f;
 		PixelsPerUnit = 100;
-		SceneCount = 3;
+		SceneCount = 4;
 	}
 
 	public void AddScore(int score) {
