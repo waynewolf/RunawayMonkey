@@ -25,7 +25,7 @@ public class GUIManager : MonoBehaviour {
 		}
 	}
 
-	void Start() {
+	void Awake() {
 		_bananaNumberText = transform.Find ("Canvas/HUD/Banana/BananaNumberText").GetComponent<Text>();
 		_strawberryNumberText = transform.Find ("Canvas/HUD/Strawberry/StrawberryNumberText").GetComponent<Text>();
 		_scoreText = transform.Find ("Canvas/HUD/ScoreText").GetComponent<Text>();
