@@ -48,7 +48,7 @@ public class LevelManager : MonoBehaviour {
 	private Vector3 _shadowScale = Vector3.one;
 	private Vector3 _bgStartPos;
 	private float _bgLayerWidthInUnit;
-	private Vector3 _playerInitPos = new Vector3(0f, 3f, 0f);
+	private Vector3 _playerInitPos = new Vector3(0f, 2.5f, 0f);
 
 	void Awake() {
 		Instance = this;
@@ -245,9 +245,9 @@ public class LevelManager : MonoBehaviour {
 		Hunter.MonkeyRunaway();
 
 		// Find a safe place for monkey to stand
-		Vector2 origin = new Vector2(0f, 10f);
+		Vector2 origin = _playerInitPos;
 		bool foundAPlaceToStand = false;
-		for (float x = 0; x > -_halfScreenWidthInUnit; x -= 0.5f) {
+		for (float x = 0; x > - 2f * _halfScreenWidthInUnit; x -= 0.5f) {
 			origin.x = x;
 			RaycastHit2D hit = Physics2D.Raycast(origin,
 			                                     Vector2.down, 50f,
