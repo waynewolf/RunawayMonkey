@@ -40,8 +40,10 @@ public class MonkeyBehaviour : MonoBehaviour {
 		string otherTag = other.gameObject.tag;
 		if (otherTag == "Platform")
 			Ground();
-		else if (otherTag == "TreeBranch" || otherTag == "Bird")
+		else if (otherTag == "TreeBranch")
 			Hang(other.gameObject.transform);
+		else if (otherTag == "Bird")
+			Hang(other.gameObject.transform, true);
 	}
 
 	void OnCollisionExit2D(Collision2D other) {
@@ -105,7 +107,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		}
 	}
 
-	private void Hang(Transform hangeOn) {
+	private void Hang(Transform hangeOn, bool flyWithBird = false) {
 		// notify hang success only in WantHang state, to avoid 
 		// continuously hang on the hook.
 		if (_state == State.WantHang) {
@@ -117,11 +119,15 @@ public class MonkeyBehaviour : MonoBehaviour {
 			newPos.z = transform.position.z;
 			transform.position = newPos;
 			_state = State.Hanging;
+			if (flyWithBird) {
+				LevelManager.Instance.FastSceneScrolling();
+			}
 		}
 	}
 
 	public void JumpOff() {
 		if (_state == State.Hanging) {
+			LevelManager.Instance.ResumeSceneScrolling();
 			EnablePhysics();
 			_state = State.Falling;
 		}
@@ -139,6 +145,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	// now this function is called from trigger in BranchTipCheck
 	public void NoHang() {
 		if (_state == State.Hanging) {
+			LevelManager.Instance.ResumeSceneScrolling();
 			EnablePhysics();
 			_state = State.Falling;
 		}

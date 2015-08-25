@@ -137,7 +137,11 @@ public class LevelManager : MonoBehaviour {
 	public void ResumeSceneScrolling() {
 		_currentSpeed = GameManager.Instance.NormalSpeed;
 	}
-	
+
+	public void FastSceneScrolling() {
+		_currentSpeed = GameManager.Instance.FastSpeed;
+	}
+
 	// Freezes the characters and stop scene scrolling, 
 	// but the character animation continues
 	public void FreezeCharacters() {
