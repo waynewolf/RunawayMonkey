@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour {
 	public Transform _hudItemsPlaceHolder;
 	public float _catchMonkeyTime = 2f;
 	public int _backgroundLayerWidth;
+	public float _hunterSpeed;
 
 	[HideInInspector]
 	public MonkeyBehaviour Player { get; private set; }
@@ -42,7 +43,7 @@ public class LevelManager : MonoBehaviour {
 	public int StrawberryNumber { get; set; }
 
 	private float _halfScreenWidthInUnit;
-	private float _currentSpeed;
+	private float _currentMonkeySpeed;
 	private float _elapsedTimeWhenHunterOutOfScreen;
 	private GameObject _shadow;
 	private Vector3 _shadowScale = Vector3.one;
@@ -51,13 +52,19 @@ public class LevelManager : MonoBehaviour {
 	private Vector3 _playerInitPos = new Vector3(0f, 2.5f, 0f);
 
 	void Awake() {
+		BananaNumber = 0;
+		StrawberryNumber = 0;
 		Instance = this;
 		Player = Instantiate(_playerPrefab, _playerInitPos, Quaternion.identity) as MonkeyBehaviour;
+		GameManager.Instance.Player = Player;
+
+		_currentMonkeySpeed = GameManager.Instance.NormalSpeed;
 		Hunter = Instantiate(_hunterPrefab, new Vector3(OFFSET_TO_HUNTER,
 					INIT_HUNTER_Y_OFFSET, 0), Quaternion.identity) as HunterBehaviour;
+		Hunter.SetRelativeSpeed(_hunterSpeed - _currentMonkeySpeed);
+
 		_shadow = Instantiate(_shadowPrefab, new Vector3(0, -3f, 5f), Quaternion.identity) as GameObject;
-		GameManager.Instance.Player = Player;
-		_currentSpeed = GameManager.Instance.NormalSpeed;
+
 		_elapsedTimeWhenHunterOutOfScreen = 0f;
 		_halfScreenWidthInUnit = 1.0f * Screen.width / Screen.height * Camera.main.orthographicSize;
 		_bgLayerWidthInUnit = 1.0f * _backgroundLayerWidth / GameManager.Instance.PixelsPerUnit;
@@ -66,8 +73,6 @@ public class LevelManager : MonoBehaviour {
 				backgroundSlot._initPosition = backgroundSlot._layer.position;
 			}
 		}
-		BananaNumber = 0;
-		StrawberryNumber = 0;
 	}
 
 	void Start() {
@@ -90,37 +95,27 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if (_currentSpeed > 0.01f) {
+		if (_currentMonkeySpeed > 0.01f) {
 			// move the foreground
 			Vector3 position = _foreground.transform.position;
-			position.x -= _currentSpeed * Time.deltaTime;
+			position.x -= _currentMonkeySpeed * Time.deltaTime;
 			_foreground.transform.position = position;
 
 			// move the backgrounds with parallax effect. support maximum 4 backgroud layers.
 			for (int i = 0; i < _backgroundSlot.Length; i++) {
 				if (_backgroundSlot[i] != null) {
-					float newPosition = Mathf.Repeat(_currentSpeed * Time.time * _backgroundSlot[i]._speedFactor, _bgLayerWidthInUnit);
+					float newPosition = Mathf.Repeat(_currentMonkeySpeed * Time.time * _backgroundSlot[i]._speedFactor, _bgLayerWidthInUnit);
 					_backgroundSlot[i]._layer.position = _backgroundSlot[i]._initPosition + Vector3.left * newPosition;
 				}
 			}
-
-			// fast scrolling mode, hunter should be far away from monkey
-			if (_currentSpeed == GameManager.Instance.FastSpeed) {
-				// Hunter relative speed is 0 in normal mode, and -5 in fast scrolling mode
-				// Hunter speed equals NormalSpeed in normal mode, but not in FastSpeed mode.
-				float relativeSpeed = GameManager.Instance.FastSpeed - GameManager.Instance.NormalSpeed;
-				Hunter.Backward(relativeSpeed * Time.deltaTime);
-			}
-		} else if (Hunter.IsCatching()) {
-			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
-			float advanceDistance = Mathf.Abs (OFFSET_TO_HUNTER) * Time.deltaTime / _catchMonkeyTime;
-			Hunter.Forward(advanceDistance);
 		}
 
-		// calculate hunter out of screen time only when hunter in normal speed or blocked,
-		// to make sure hunter will never catch up with monkey when flying with bird.
+		Hunter.SetRelativeSpeed(_hunterSpeed - _currentMonkeySpeed);
+
+		// calculate hunter out of screen time only when monkey in normal speed or blocked,
+		// to make sure hunter will never reappear on screen when the monkey is flying with bird.
 		if (MonkeyHunterDistance() > _halfScreenWidthInUnit
-		    && _currentSpeed <= GameManager.Instance.NormalSpeed) {
+		    && _currentMonkeySpeed <= GameManager.Instance.NormalSpeed) {
 			_elapsedTimeWhenHunterOutOfScreen += Time.deltaTime;
 		}
 
@@ -142,15 +137,15 @@ public class LevelManager : MonoBehaviour {
 
 	// stop the scene scrolling
 	public void StopSceneScrolling() {
-		_currentSpeed = 0;
+		_currentMonkeySpeed = 0;
 	}
 
 	public void ResumeSceneScrolling() {
-		_currentSpeed = GameManager.Instance.NormalSpeed;
+		_currentMonkeySpeed = GameManager.Instance.NormalSpeed;
 	}
 
 	public void FastSceneScrolling() {
-		_currentSpeed = GameManager.Instance.FastSpeed;
+		_currentMonkeySpeed = GameManager.Instance.FastSpeed;
 	}
 
 	// Freezes the characters and stop scene scrolling, 
@@ -291,15 +286,15 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	public float CalculateTime (float distance) {
-		if (_currentSpeed > 0.01f) {
-			return distance / _currentSpeed;
+		if (_currentMonkeySpeed > 0.01f) {
+			return distance / _currentMonkeySpeed;
 		} else {
 			return Mathf.Infinity;
 		}
 	}
 
 	public float CurrentSpeed () {
-		return _currentSpeed;
+		return _currentMonkeySpeed;
 	}
 
 	public float ScrollSpeed() {

@@ -10,12 +10,17 @@ public class HunterBehaviour : MonoBehaviour {
 	private Vector2 _jumpForceVector;
 	private Rigidbody2D _rigidbody2D;
 	private BoxCollider2D _boxCollider2D;
+	private float _relativeSpeed;
 
 	void Awake() {
 		_animator = GetComponent<Animator>();
 		_jumpForceVector = new Vector2(0, _jumpForce);
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_boxCollider2D = GetComponent<BoxCollider2D>();
+	}
+
+	public void SetRelativeSpeed(float speed) {
+		_relativeSpeed = speed;
 	}
 
 	public void Forward (float distance) {
@@ -55,6 +60,12 @@ public class HunterBehaviour : MonoBehaviour {
 			monkey.MoveToHunter(transform);
 			monkey.Caught();
 		}
+	}
+
+	void Update() {
+		Vector3 position = transform.position;
+		position.x += _relativeSpeed * Time.deltaTime;
+		transform.position = position;
 	}
 
 	// called by animation event

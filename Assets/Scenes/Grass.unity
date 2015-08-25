@@ -2590,52 +2590,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 451002, guid: 0e62ece991a8c4f2f873cff6f33ff907, type: 2}
   m_PrefabInternal: {fileID: 854814157}
---- !u!1001 &865266928
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 429600, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 479738, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -.75
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 9ab4cbedb391841f59d13def9f387ed3, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &882811736
 Prefab:
   m_ObjectHideFlags: 0
@@ -6735,6 +6689,7 @@ MonoBehaviour:
   _hudItemsPlaceHolder: {fileID: 1173946462}
   _catchMonkeyTime: 2
   _backgroundLayerWidth: 2048
+  _hunterSpeed: 5.00099993
 --- !u!4 &2101581366
 Transform:
   m_ObjectHideFlags: 0
