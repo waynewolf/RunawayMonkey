@@ -275,4 +275,20 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 	
+	public float CalculateTime (float distance) {
+		if (_currentSpeed > 0.01f) {
+			return distance / _currentSpeed;
+		} else {
+			return Mathf.Infinity;
+		}
+	}
+
+	public float CurrentSpeed () {
+		return _currentSpeed;
+	}
+
+	public float ScrollSpeed() {
+		return CurrentSpeed();
+	}
+
 }

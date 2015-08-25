@@ -9,6 +9,8 @@ TagManager:
   - Banana
   - BananaPeel
   - Hunter
+  - ScreenRightEdge
+  - Bird
   layers:
   - Default
   - TransparentFX
