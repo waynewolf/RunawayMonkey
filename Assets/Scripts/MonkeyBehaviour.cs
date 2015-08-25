@@ -49,6 +49,10 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 			Hang(other.gameObject.transform);
 		else if (otherTag == "Bird")
 			Hang(other.gameObject.transform, true);
+		else if (otherTag == "Swamp") {
+			Ground ();
+			Block ();
+		}
 	}
 
 	void OnCollisionExit2D(Collision2D other) {

@@ -11,6 +11,7 @@ TagManager:
   - Hunter
   - ScreenRightEdge
   - Bird
+  - Swamp
   layers:
   - Default
   - TransparentFX
