@@ -40,7 +40,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 		string otherTag = other.gameObject.tag;
 		if (otherTag == "Platform")
 			Ground();
-		else if (otherTag == "TreeBranch")
+		else if (otherTag == "TreeBranch" || otherTag == "Bird")
 			Hang(other.gameObject.transform);
 	}
 
