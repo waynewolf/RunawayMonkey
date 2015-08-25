@@ -6689,7 +6689,7 @@ MonoBehaviour:
   _hudItemsPlaceHolder: {fileID: 1173946462}
   _catchMonkeyTime: 2
   _backgroundLayerWidth: 2048
-  _hunterSpeed: 5.00099993
+  _hunterSpeed: 5.19999981
 --- !u!4 &2101581366
 Transform:
   m_ObjectHideFlags: 0

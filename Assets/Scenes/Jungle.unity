@@ -507,6 +507,7 @@ MonoBehaviour:
   _hudItemsPlaceHolder: {fileID: 0}
   _catchMonkeyTime: 2
   _backgroundLayerWidth: 2048
+  _hunterSpeed: 5.30000019
 --- !u!1001 &1471905620
 Prefab:
   m_ObjectHideFlags: 0
