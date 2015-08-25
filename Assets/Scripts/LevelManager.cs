@@ -50,7 +50,6 @@ public class LevelManager : MonoBehaviour {
 	private Vector3 _shadowScale = Vector3.one;
 	private Vector3 _bgStartPos;
 	private float _bgLayerWidthInUnit;
-	private Vector3 _playerInitPos = new Vector3(0f, 2.5f, 0f);
 	private List<IPauseable> _pauseables;
 	private bool _paused;
 
@@ -58,7 +57,7 @@ public class LevelManager : MonoBehaviour {
 		BananaNumber = 0;
 		StrawberryNumber = 0;
 		Instance = this;
-		Player = Instantiate(_playerPrefab, _playerInitPos, Quaternion.identity) as MonkeyBehaviour;
+		Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity) as MonkeyBehaviour;
 		GameManager.Instance.Player = Player;
 
 		_currentMonkeySpeed = GameManager.Instance.NormalSpeed;
@@ -345,12 +344,12 @@ public class LevelManager : MonoBehaviour {
 		Hunter.MonkeyRunaway();
 		
 		// Find a safe place for monkey to stand
-		Vector2 origin = _playerInitPos;
+		Vector2 castOrigin = new Vector3(0f, 2.5f, 0f);
 		bool foundAPlaceToStand = false;
 		float playerYPos = 0;
 		for (float x = 0; x > - 2f * _halfScreenWidthInUnit; x -= 0.5f) {
-			origin.x = x;
-			RaycastHit2D hit = Physics2D.Raycast(origin,
+			castOrigin.x = x;
+			RaycastHit2D hit = Physics2D.Raycast(castOrigin,
 			                                     Vector2.down, 50f,
 			                                     1 << LayerMask.NameToLayer("Platform"));
 			if (hit && hit.transform.gameObject.tag == "Platform") {
@@ -359,9 +358,10 @@ public class LevelManager : MonoBehaviour {
 				Vector3 newPos = _foreground.transform.position;
 				newPos.x += -newXPos;
 				_foreground.transform.position = newPos;
-				// put the player just on the platform
+				// FIXME: put the player just on the platform, we have to
+				// minus a hardcoded offset, which is relevant to platform size
 				playerYPos = hit.transform.position.y + 0.5f * Player.GetComponent<SpriteRenderer>().bounds.size.y
-					+ 0.5f * hit.transform.GetComponent<SpriteRenderer>().bounds.size.y;
+					+ 0.5f * hit.transform.GetComponent<SpriteRenderer>().bounds.size.y - 0.3f;
 				foundAPlaceToStand = true;
 				break;
 			}
@@ -370,7 +370,7 @@ public class LevelManager : MonoBehaviour {
 		if (!foundAPlaceToStand) {
 			Debug.LogError("No place to stand, need to redesign the level"); 
 		} else {
-			Player.transform.position = new Vector3(0, playerYPos, _playerInitPos.z);
+			Player.transform.position = new Vector3(0, playerYPos, 0);
 			Player.Revived();
 			GUIManager.Instance.SetCountDown(true);
 		}
