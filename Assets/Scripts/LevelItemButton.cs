@@ -6,7 +6,7 @@ public class LevelItemButton : MonoBehaviour {
 
 	public void ItemClicked(int level) {
 		if (level <= GameManager.Instance.UnlockedLevel) {
-			GameManager.Instance.LoadLevel(level);
+			LevelManager.LoadLevel(level);
 		}
 	}
 }

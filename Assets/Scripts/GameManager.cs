@@ -59,23 +59,19 @@ public class GameManager : Singleton<GameManager> {
 		Time.timeScale = _savedTimeScale;
 	}
 	
-//	public void PauseGame() {
-//		// if time is not already stopped		
-//		if (!Paused) {
-//			SetTimeScale(0.0f);
-//			Paused = true;
-//		}
-//	}
-//
-//	public void ResumeGame() {
-//		if (Paused) {
-//			ResetTimeScale();	
-//			Paused = false;
-//		}
-//	}
+	public void PauseGame() {
+		// if time is not already stopped		
+		if (!Paused) {
+			SetTimeScale(0.0f);
+			Paused = true;
+		}
+	}
 
-	public void LoadLevel (int level) {
-		Application.LoadLevel (level);
+	public void ResumeGame() {
+		if (Paused) {
+			ResetTimeScale();	
+			Paused = false;
+		}
 	}
 
 	public void IncUnlockedLevel() {

@@ -68,11 +68,8 @@ public class HunterBehaviour : MonoBehaviour, IPauseable {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Player") {
 			_catching = false;
-			LevelManager.Instance.OnMonkeyCaught();
 			_animator.SetBool("Catch", true);
-			MonkeyBehaviour monkey = other.gameObject.GetComponent<MonkeyBehaviour>();
-			monkey.MoveToHunter(transform);
-			monkey.Caught();
+			LevelManager.Instance.OnMonkeyCaught();
 		}
 	}
 

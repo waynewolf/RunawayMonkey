@@ -162,21 +162,6 @@ public class LevelManager : MonoBehaviour {
 		_currentMonkeySpeed = GameManager.Instance.FastSpeed;
 	}
 
-	public void RestartLevel () {
-		GameManager.Instance.LoadLevel(Application.loadedLevel);
-	}
-
-	public void NextLevel () {
-		int nextLevel = (Application.loadedLevel + 1) % GameManager.Instance.SceneCount;
-		if (nextLevel > GameManager.Instance.UnlockedLevel) {
-			GameManager.Instance.IncUnlockedLevel();
-			if (nextLevel != GameManager.Instance.UnlockedLevel) {
-				Debug.LogWarning("UnlockedLevel logical error, shouldn't happen");
-			}
-		}
-		GameManager.Instance.LoadLevel (nextLevel);
-	}
-
 	public void EatBanana (Transform transform) {
 		StartCoroutine(ItemSmoothMovement(transform, _hudItemsPlaceHolder));
 		BananaNumber++;
@@ -256,6 +241,8 @@ public class LevelManager : MonoBehaviour {
 
 		// In this exceptional case, hunter and monkey animation is enabled
 		Player.ResumeAnimation();
+		Player.MoveToHunter(Hunter.transform);
+		Player.Caught();
 		Hunter.ResumeAnimation();
 
 		GUIManager.Instance.DisableButtons();
@@ -305,7 +292,7 @@ public class LevelManager : MonoBehaviour {
 		//	}
 		//	_paused = false;
 
-		GameManager.Instance.LoadLevel(0);
+		LoadLevel(0);
 	}
 	
 	public void OnRestartButtonClicked () {
@@ -314,7 +301,7 @@ public class LevelManager : MonoBehaviour {
 		GUIManager.Instance.SetRevive(false);
 		GUIManager.Instance.SetLevelComplete(false);
 
-		LevelManager.Instance.RestartLevel();
+		RestartLevel();
 	}
 	
 	public void OnResumeButtonClicked () {
@@ -334,7 +321,7 @@ public class LevelManager : MonoBehaviour {
 		GUIManager.Instance.EnableButtons();
 
 		if (GameManager.Instance.Score < 100) {
-			LevelManager.Instance.RestartLevel();
+			RestartLevel();
 			return;
 		}
 
@@ -385,6 +372,29 @@ public class LevelManager : MonoBehaviour {
 		}
 		_paused = false;
 		ResumeSceneScrolling();
+	}
+
+	#endregion
+
+	#region scene swithment stuff
+
+	public static void LoadLevel (int level) {
+		Application.LoadLevel(level);
+	}
+
+	public static void RestartLevel () {
+		LevelManager.LoadLevel(Application.loadedLevel);
+	}
+	
+	public static void NextLevel () {
+		int nextLevel = (Application.loadedLevel + 1) % GameManager.Instance.SceneCount;
+		if (nextLevel > GameManager.Instance.UnlockedLevel) {
+			GameManager.Instance.IncUnlockedLevel();
+			if (nextLevel != GameManager.Instance.UnlockedLevel) {
+				Debug.LogWarning("UnlockedLevel logical error, shouldn't happen");
+			}
+		}
+		LevelManager.LoadLevel (nextLevel);
 	}
 
 	#endregion
