@@ -103,13 +103,24 @@ public class LevelManager : MonoBehaviour {
 					_backgroundSlot[i]._layer.position = _backgroundSlot[i]._initPosition + Vector3.left * newPosition;
 				}
 			}
+
+			// fast scrolling mode, hunter should be far away from monkey
+			if (_currentSpeed == GameManager.Instance.FastSpeed) {
+				// Hunter relative speed is 0 in normal mode, and -5 in fast scrolling mode
+				// Hunter speed equals NormalSpeed in normal mode, but not in FastSpeed mode.
+				float relativeSpeed = GameManager.Instance.FastSpeed - GameManager.Instance.NormalSpeed;
+				Hunter.Backward(relativeSpeed * Time.deltaTime);
+			}
 		} else if (Hunter.IsCatching()) {
 			// The monkey is blocked, hunter will catch the monkey in catchMonkeyTime seconds
 			float advanceDistance = Mathf.Abs (OFFSET_TO_HUNTER) * Time.deltaTime / _catchMonkeyTime;
 			Hunter.Forward(advanceDistance);
 		}
 
-		if (MonkeyHunterDistance() > _halfScreenWidthInUnit) {
+		// calculate hunter out of screen time only when hunter in normal speed or blocked,
+		// to make sure hunter will never catch up with monkey when flying with bird.
+		if (MonkeyHunterDistance() > _halfScreenWidthInUnit
+		    && _currentSpeed <= GameManager.Instance.NormalSpeed) {
 			_elapsedTimeWhenHunterOutOfScreen += Time.deltaTime;
 		}
 
