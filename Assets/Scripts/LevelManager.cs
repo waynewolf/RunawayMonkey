@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class BackgroundSlot {
@@ -50,6 +51,8 @@ public class LevelManager : MonoBehaviour {
 	private Vector3 _bgStartPos;
 	private float _bgLayerWidthInUnit;
 	private Vector3 _playerInitPos = new Vector3(0f, 2.5f, 0f);
+	private List<IPauseable> _pauseables;
+	private bool _paused;
 
 	void Awake() {
 		BananaNumber = 0;
@@ -73,17 +76,27 @@ public class LevelManager : MonoBehaviour {
 				backgroundSlot._initPosition = backgroundSlot._layer.position;
 			}
 		}
+
+		_pauseables = new List<IPauseable>();
+		_pauseables.Add(Player);
+		_pauseables.Add(Hunter);
 	}
 
 	void Start() {
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
-		// whenever the level starts, free the characters, stop scene scrolling
-		// show the count down timer, to give the user some time to prepare
-		FreezeCharacters();
-		GUIManager.Instance.SetCountDown(true);
+
+		// make sure everything is paused
+		foreach(IPauseable pause in _pauseables) {
+			pause.OnPause();
+		}
+		_paused = true;
+
+		OnShowCountDownDialog();
 	}
 
 	void FixedUpdate() {
+		if (_paused) return;
+
 		RaycastHit2D hit = Physics2D.Raycast(Player.transform.position, Vector2.down, Mathf.Infinity,
 		                                     1 << LayerMask.NameToLayer("Platform"));
 		if (hit && hit.transform.gameObject.tag == "Platform") {
@@ -95,6 +108,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	void Update() {
+		if (_paused) return;
+
 		if (_currentMonkeySpeed > 0.01f) {
 			// move the foreground
 			Vector3 position = _foreground.transform.position;
@@ -146,34 +161,6 @@ public class LevelManager : MonoBehaviour {
 
 	public void FastSceneScrolling() {
 		_currentMonkeySpeed = GameManager.Instance.FastSpeed;
-	}
-
-	// Freezes the characters and stop scene scrolling, 
-	// but the character animation continues
-	public void FreezeCharacters() {
-		StopSceneScrolling();
-		Player.DisablePhysics();
-		Player.PauseAnimation();
-		Hunter.StopCatching();
-		Hunter.DisablePhysics();
-		Hunter.PauseAnimation();
-	}
-
-	// Thaw the chracters and restart scene scrolling
-	public void ThawCharacters() {
-		ResumeSceneScrolling();
-		Hunter.ResumeAnimation();
-		Hunter.EnablePhysics();
-		Hunter.ResumeCatching();
-		Player.ResumeAnimation();
-		Player.EnablePhysics();
-	}
-
-	public void LevelComplete () {
-		GUIManager.Instance.SetLevelComplete(true);
-		GUIManager.Instance.DisableButtons();
-		GUIManager.Instance.DisableHUD ();
-		FreezeCharacters();
 	}
 
 	public void RestartLevel () {
@@ -235,23 +222,128 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
-	public void ReviveScreen() {
-		GUIManager.Instance.DisableButtons();
-		GUIManager.Instance.SetRevive(true);
-		Player.DisablePhysics();
+	public float CalculateTime (float distance) {
+		if (_currentMonkeySpeed > 0.01f) {
+			return distance / _currentMonkeySpeed;
+		} else {
+			return Mathf.Infinity;
+		}
 	}
 
-	public void Revive() {
+	public float CurrentSpeed () {
+		return _currentMonkeySpeed;
+	}
+
+	public float ScrollSpeed() {
+		return CurrentSpeed();
+	}
+
+	#region event handling code from different sources
+
+	public void OnShowPauseDialog () {
+		foreach(IPauseable pause in _pauseables) {
+			pause.OnPause();
+		}
+		_paused = true;
+
+		GUIManager.Instance.SetPause(true);
+	}
+
+	public void OnMonkeyCaught() {
+		foreach(IPauseable pause in _pauseables) {
+			pause.OnPause();
+		}
+		_paused = true;
+
+		// In this exceptional case, hunter and monkey animation is enabled
+		Player.ResumeAnimation();
+		Hunter.ResumeAnimation();
+
+		GUIManager.Instance.DisableButtons();
+		GUIManager.Instance.SetRevive(true);
+	}
+	
+	public void OnMonkeyGoingToDie () {
+		foreach(IPauseable pause in _pauseables) {
+			pause.OnPause();
+		}
+		_paused = true;
+		
+		Player.Dead ();
+
+		GUIManager.Instance.DisableButtons();
+		GUIManager.Instance.SetRevive(true);
+	}
+
+	public void OnShowLevelCompleteDialog () {
+		foreach(IPauseable pause in _pauseables) {
+			pause.OnPause();
+		}
+		_paused = true;
+
+		GUIManager.Instance.DisableButtons();
+		GUIManager.Instance.DisableHUD ();
+		GUIManager.Instance.SetLevelComplete(true);
+	}
+
+	public void OnShowCountDownDialog() {
+		// don't need to call OnPause on each IPauseable because
+		// we make sure everything is paused before entering this method.
+		Debug.Assert(_paused);
+
+		GUIManager.Instance.SetCountDown(true);
+	}
+
+	public void OnMainScreenButtonClicked () {
+		// Only pause dialog and level complete dialog have main screen button,
+		// So we disable them all, no matter whichever is currently shown on screen.
+		GUIManager.Instance.SetPause(false);
+		GUIManager.Instance.SetLevelComplete(false);
+
+		// don't need to resume because we're going to restart the level
+		//	foreach(IPauseable pause in _pauseables) {
+		//		pause.OnResume();
+		//	}
+		//	_paused = false;
+
+		GameManager.Instance.LoadLevel(0);
+	}
+	
+	public void OnRestartButtonClicked () {
+		// Disable all the possible dialoug that is currently shown on screen.
+		GUIManager.Instance.SetPause(false);
+		GUIManager.Instance.SetRevive(false);
+		GUIManager.Instance.SetLevelComplete(false);
+
+		LevelManager.Instance.RestartLevel();
+	}
+	
+	public void OnResumeButtonClicked () {
+		// Don't need to call OnResume on the Pauseables,
+		// OnResume will be called after Count Down Timer expiers
+		GUIManager.Instance.SetPause(false);
+		GUIManager.Instance.SetCountDown(true);
+	}
+
+	public void OnNextLevelButtonClicked () {
+		GUIManager.Instance.SetLevelComplete(false);
+		NextLevel();
+	}
+
+	public void OnRevivieButtonClicked () {
 		GUIManager.Instance.SetRevive(false);
 		GUIManager.Instance.EnableButtons();
-		if (GameManager.Instance.Score < 100)
+
+		if (GameManager.Instance.Score < 100) {
 			LevelManager.Instance.RestartLevel();
+			return;
+		}
 
 		GameManager.Instance.SubtractScore(100);
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
 		Hunter.MoveToX(OFFSET_TO_HUNTER);
 		Hunter.MonkeyRunaway();
-
+		
 		// Find a safe place for monkey to stand
 		Vector2 origin = _playerInitPos;
 		bool foundAPlaceToStand = false;
@@ -274,31 +366,26 @@ public class LevelManager : MonoBehaviour {
 				break;
 			}
 		}
-
+		
 		if (!foundAPlaceToStand) {
 			Debug.LogError("No place to stand, need to redesign the level"); 
 		} else {
 			Player.transform.position = new Vector3(0, playerYPos, _playerInitPos.z);
 			Player.Revived();
-			LevelManager.Instance.FreezeCharacters();
 			GUIManager.Instance.SetCountDown(true);
 		}
 	}
 	
-	public float CalculateTime (float distance) {
-		if (_currentMonkeySpeed > 0.01f) {
-			return distance / _currentMonkeySpeed;
-		} else {
-			return Mathf.Infinity;
+	public void OnCountDownExpired () {
+		GUIManager.Instance.SetCountDown(false);
+
+		// Finally resume here !
+		foreach(IPauseable pauseable in _pauseables) {
+			pauseable.OnResume();
 		}
+		_paused = false;
+		ResumeSceneScrolling();
 	}
 
-	public float CurrentSpeed () {
-		return _currentMonkeySpeed;
-	}
-
-	public float ScrollSpeed() {
-		return CurrentSpeed();
-	}
-
+	#endregion
 }

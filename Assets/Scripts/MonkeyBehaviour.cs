@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MonkeyBehaviour : MonoBehaviour {
+public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 
 	public enum State {
 		Running,
@@ -22,6 +22,7 @@ public class MonkeyBehaviour : MonoBehaviour {
 	private Rigidbody2D _rigidbody2D;
 	private BoxCollider2D _boxCollider2D;
 	private Vector2 _jumpForceVector;
+	private bool _paused;
 
 	void Awake () {
 		_animator = GetComponent<Animator>();
@@ -29,7 +30,11 @@ public class MonkeyBehaviour : MonoBehaviour {
 		_boxCollider2D = GetComponent<BoxCollider2D>();
 		_state = State.Falling;
 		_jumpForceVector = new Vector2(0, _jumpForce);
-		EnablePhysics();
+		_paused = true;
+	}
+
+	void Start() {
+		OnPause ();
 	}
 
 	void FixedUpdate () {
@@ -75,6 +80,10 @@ public class MonkeyBehaviour : MonoBehaviour {
 
 	public bool IsCaught() {
 		return (_state == State.Caught);
+	}
+
+	public bool IsDead() {
+		return (_state == State.Dead);
 	}
 	
 	#endregion
@@ -242,5 +251,17 @@ public class MonkeyBehaviour : MonoBehaviour {
 		yield return new WaitForSeconds(delaySecond);
 		EnablePhysics();
 		yield return null;
+	}
+
+	public void OnPause() {
+		DisablePhysics();
+		PauseAnimation();
+		_paused = true;
+	}
+
+	public void OnResume() {
+		ResumeAnimation();
+		EnablePhysics();
+		_paused = false;
 	}
 }

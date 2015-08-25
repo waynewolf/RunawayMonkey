@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class MainSetup : MonoBehaviour {
-
+	public GameObject _monkey;
+	public GameObject _hunter;
 	public GameObject _levelItemContainer;
 
 	void Start() {
@@ -14,6 +15,10 @@ public class MainSetup : MonoBehaviour {
 				lockImage.SetActive(false);
 			}
 		}
+
+		// We need this because now everything is paused by default
+		_monkey.GetComponent<MonkeyBehaviour>().OnResume();
+		_hunter.GetComponent<HunterBehaviour>().OnResume();
 	}
 	
 }

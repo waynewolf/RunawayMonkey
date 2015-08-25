@@ -24,8 +24,7 @@ public class CountDown : MonoBehaviour {
 			yield return new WaitForSeconds(0.5f);
 		}
 
-		GUIManager.Instance.SetCountDown(false);
-		LevelManager.Instance.ThawCharacters();
+		LevelManager.Instance.OnCountDownExpired();
 
 		yield return null;
 	}

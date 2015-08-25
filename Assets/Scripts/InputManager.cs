@@ -31,39 +31,30 @@ public class InputManager : Singleton<InputManager> {
 		// 2. Set both PointerDown and PointerUp event type in event trigger script
 		// 3. Call CrossPlatformInputManager.GetButtonUp, not GetButtonDown.
 		if (CrossPlatformInputManager.GetButtonUp ("MainScreen")) {
-			GameManager.Instance.ResumeGame();
-			GameManager.Instance.LoadLevel(0);
+			LevelManager.Instance.OnMainScreenButtonClicked();
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Restart")) {
-			GameManager.Instance.ResumeGame ();
-			GUIManager.Instance.SetPause(false);
-			LevelManager.Instance.RestartLevel();
+			LevelManager.Instance.OnRestartButtonClicked();
 		}
 		
 		if (CrossPlatformInputManager.GetButtonUp("Resume")) {
-			GameManager.Instance.ResumeGame ();
-			GUIManager.Instance.SetPause(false);
-			LevelManager.Instance.FreezeCharacters();
-			GUIManager.Instance.SetCountDown(true);
+			LevelManager.Instance.OnResumeButtonClicked();
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("NextLevel")) {
-			GameManager.Instance.ResumeGame();
-			LevelManager.Instance.NextLevel();
+			LevelManager.Instance.OnNextLevelButtonClicked();
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("Revive")) {
-			GameManager.Instance.ResumeGame ();
-			LevelManager.Instance.Revive();
+			LevelManager.Instance.OnRevivieButtonClicked();
 		}
 
 		if (GameManager.Instance.Paused)
 			return;	
 
 		if (CrossPlatformInputManager.GetButtonUp("Pause")) {
-			GUIManager.Instance.SetPause(true);
-			GameManager.Instance.PauseGame();
+			LevelManager.Instance.OnShowPauseDialog();
 		}
 
 		if (CrossPlatformInputManager.GetButtonDown("Attack")) {

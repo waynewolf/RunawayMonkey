@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HunterBehaviour : MonoBehaviour {
+public class HunterBehaviour : MonoBehaviour, IPauseable {
 	public GameObject _attackedEffect;
 	public float _jumpForce = 800f;
 
@@ -11,12 +11,26 @@ public class HunterBehaviour : MonoBehaviour {
 	private Rigidbody2D _rigidbody2D;
 	private BoxCollider2D _boxCollider2D;
 	private float _relativeSpeed;
+	private bool _paused;
 
 	void Awake() {
 		_animator = GetComponent<Animator>();
 		_jumpForceVector = new Vector2(0, _jumpForce);
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_boxCollider2D = GetComponent<BoxCollider2D>();
+		_paused = true;
+	}
+
+	void Start() {
+		OnPause ();
+	}
+	
+	void Update() {
+		if (!_paused) {
+			Vector3 position = transform.position;
+			position.x += _relativeSpeed * Time.deltaTime;
+			transform.position = position;
+		}
 	}
 
 	public void SetRelativeSpeed(float speed) {
@@ -54,18 +68,12 @@ public class HunterBehaviour : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Player") {
 			_catching = false;
-			LevelManager.Instance.ReviveScreen();
+			LevelManager.Instance.OnMonkeyCaught();
 			_animator.SetBool("Catch", true);
 			MonkeyBehaviour monkey = other.gameObject.GetComponent<MonkeyBehaviour>();
 			monkey.MoveToHunter(transform);
 			monkey.Caught();
 		}
-	}
-
-	void Update() {
-		Vector3 position = transform.position;
-		position.x += _relativeSpeed * Time.deltaTime;
-		transform.position = position;
 	}
 
 	// called by animation event
@@ -111,5 +119,19 @@ public class HunterBehaviour : MonoBehaviour {
 	
 	public void ResumeAnimation() {
 		_animator.enabled = true;
+	}
+
+	public void OnPause() {
+		DisablePhysics();
+		PauseAnimation();
+		StopCatching();
+		_paused = true;
+	}
+	
+	public void OnResume() {
+		ResumeAnimation();
+		EnablePhysics();
+		ResumeCatching();
+		_paused = false;
 	}
 }
