@@ -19,7 +19,6 @@ public class LevelManager : MonoBehaviour {
 	private const float BACKGROUND_SPEED_FACTOR = 0.5f;
 	private const int BANANA_POINTS = 2;
 	private const int STRAWBERRY_POINTS = 1;
-	private const int MAX_BACKGROUND_SLOTS = 8;
 
 	// LevelManager is singleton, but it cannot survive from scene switch
 	public static LevelManager Instance { get; private set; }
@@ -28,7 +27,7 @@ public class LevelManager : MonoBehaviour {
 	public HunterBehaviour _hunterPrefab;
 	public GameObject _shadowPrefab;
 	public GameObject _foreground;
-	public BackgroundSlot[] _backgroundSlot = new BackgroundSlot[MAX_BACKGROUND_SLOTS];
+	public List<BackgroundSlot> _backgroundSlot;
 	public List<GameObject> _recreateObjects;
 	public Transform _hudItemsPlaceHolder;
 	public float _catchMonkeyTime = 2f;
@@ -117,11 +116,9 @@ public class LevelManager : MonoBehaviour {
 			_foreground.transform.position = position;
 
 			// move the backgrounds with parallax effect. support maximum 4 backgroud layers.
-			for (int i = 0; i < _backgroundSlot.Length; i++) {
-				if (_backgroundSlot[i] != null) {
-					float newPosition = Mathf.Repeat(_currentMonkeySpeed * Time.time * _backgroundSlot[i]._speedFactor, _bgLayerWidthInUnit);
-					_backgroundSlot[i]._layer.position = _backgroundSlot[i]._initPosition + Vector3.left * newPosition;
-				}
+			for (int i = 0; i < _backgroundSlot.Count; i++) {
+				float newPosition = Mathf.Repeat(_currentMonkeySpeed * Time.time * _backgroundSlot[i]._speedFactor, _bgLayerWidthInUnit);
+				_backgroundSlot[i]._layer.position = _backgroundSlot[i]._initPosition + Vector3.left * newPosition;
 			}
 		}
 
