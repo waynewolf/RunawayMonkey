@@ -24,6 +24,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 	private Vector2 _jumpForceVector;
 	private bool _paused;
 	private bool _stuckInSwamp;
+	private GameObject _bridgeCurrentlyStandOn;
 
 	void Awake () {
 		_animator = GetComponent<Animator>();
@@ -45,8 +46,9 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		string otherTag = other.gameObject.tag;
-		if (otherTag == "Platform")
+		if (otherTag == "Platform") {
 			Ground();
+		}
 		else if (otherTag == "TreeBranch")
 			Hang(other.gameObject.transform);
 		else if (otherTag == "Bird")
@@ -57,15 +59,22 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 			_stuckInSwamp = true;
 		} else if (otherTag == "Bridge") {
 			Ground ();
+			_bridgeCurrentlyStandOn = other.gameObject;
 		}
 	}
 
 	void OnCollisionExit2D(Collision2D other) {
 		string otherTag = other.gameObject.tag;
-		if (otherTag == "Platform")
+		// FIXME: If exit platform and the monkey is not standing on a bridge, then Fall(). 
+		// This is an ugly hack that an extra Fall animation will be played if the platform
+		// and a bridge stitched together. Also, bridge collider must be put on top and 
+		// overlapped with platform colliders.
+		if (otherTag == "Platform" && !_bridgeCurrentlyStandOn) {
 			Fall();
-		else if (otherTag == "Bridge")
-			other.gameObject.SetActive(false);
+		}
+		else if (otherTag == "Bridge") {
+			_bridgeCurrentlyStandOn = null;
+		}
 	}
 
 	#region state queries
@@ -106,6 +115,13 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 			_animator.SetBool("Ground", false);
 			_animator.SetTrigger ("Jump");
 			_state = State.Floating;
+
+			// FIXME: If we jump from bridge, bridge will be broken.
+			// This is an ugly hack, need to rearchitect the monkey state machine.
+			if (_bridgeCurrentlyStandOn != null) {
+				_bridgeCurrentlyStandOn.SetActive(false);
+				_bridgeCurrentlyStandOn = null;
+			}
 		}
 	}
 
