@@ -23,6 +23,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 	private BoxCollider2D _boxCollider2D;
 	private Vector2 _jumpForceVector;
 	private bool _paused;
+	private bool _stuckInSwamp;
 
 	void Awake () {
 		_animator = GetComponent<Animator>();
@@ -31,6 +32,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 		_state = State.Falling;
 		_jumpForceVector = new Vector2(0, _jumpForce);
 		_paused = true;
+		_stuckInSwamp = false;
 	}
 
 	void Start() {
@@ -52,6 +54,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 		else if (otherTag == "Swamp") {
 			Ground ();
 			Block ();
+			_stuckInSwamp = true;
 		} else if (otherTag == "Bridge") {
 			Ground ();
 		}
@@ -98,7 +101,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 
 	#region state transitions
 	public void ShortJump() {
-		if (_state == State.Running) {
+		if (_state == State.Running && !_stuckInSwamp) {
 			_rigidbody2D.AddForce(_jumpForceVector);
 			_animator.SetBool("Ground", false);
 			_animator.SetTrigger ("Jump");
