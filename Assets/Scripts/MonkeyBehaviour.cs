@@ -65,7 +65,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 		if (otherTag == "Platform")
 			Fall();
 		else if (otherTag == "Bridge")
-			Destroy (other.gameObject);
+			other.gameObject.SetActive(false);
 	}
 
 	#region state queries

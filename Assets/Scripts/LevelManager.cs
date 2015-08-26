@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour {
 	public GameObject _shadowPrefab;
 	public GameObject _foreground;
 	public BackgroundSlot[] _backgroundSlot = new BackgroundSlot[MAX_BACKGROUND_SLOTS];
+	public List<GameObject> _recreateObjects;
 	public Transform _hudItemsPlaceHolder;
 	public float _catchMonkeyTime = 2f;
 	public int _backgroundLayerWidth;
@@ -222,6 +223,13 @@ public class LevelManager : MonoBehaviour {
 		return CurrentSpeed();
 	}
 
+	void RecreateObjects () {
+		foreach (GameObject obj in _recreateObjects) {
+			if (!obj.activeInHierarchy)
+				obj.SetActive(true);
+		}
+	}
+
 	#region event handling code from different sources
 
 	public void OnShowPauseDialog () {
@@ -329,7 +337,8 @@ public class LevelManager : MonoBehaviour {
 		GUIManager.Instance.RefreshScore(GameManager.Instance.Score);
 		Hunter.MoveToX(OFFSET_TO_HUNTER);
 		Hunter.MonkeyRunaway();
-		
+		RecreateObjects();
+
 		// Find a safe place for monkey to stand
 		Vector2 castOrigin = new Vector3(0f, 2.5f, 0f);
 		bool foundAPlaceToStand = false;
