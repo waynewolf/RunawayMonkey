@@ -52,6 +52,8 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 		else if (otherTag == "Swamp") {
 			Ground ();
 			Block ();
+		} else if (otherTag == "Bridge") {
+			Ground ();
 		}
 	}
 
@@ -59,6 +61,8 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 		string otherTag = other.gameObject.tag;
 		if (otherTag == "Platform")
 			Fall();
+		else if (otherTag == "Bridge")
+			Destroy (other.gameObject);
 	}
 
 	#region state queries

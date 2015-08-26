@@ -12,6 +12,7 @@ TagManager:
   - ScreenRightEdge
   - Bird
   - Swamp
+  - Bridge
   layers:
   - Default
   - TransparentFX
