@@ -287,6 +287,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 	}
 
 	public void OnResume() {
+		_stuckInSwamp = false;
 		ResumeAnimation();
 		EnablePhysics();
 		_paused = false;
