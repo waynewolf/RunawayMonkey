@@ -47,7 +47,7 @@ public class InputManager : Singleton<InputManager> {
 		}
 
 		if (CrossPlatformInputManager.GetButtonUp("Revive")) {
-			LevelManager.Instance.OnRevivieButtonClicked();
+			LevelManager.Instance.OnReviveButtonClicked();
 		}
 
 		if (GameManager.Instance.Paused)

@@ -321,7 +321,7 @@ public class LevelManager : MonoBehaviour {
 		NextLevel();
 	}
 
-	public void OnRevivieButtonClicked () {
+	public void OnReviveButtonClicked () {
 		GUIManager.Instance.SetRevive(false);
 		GUIManager.Instance.EnableButtons();
 
