@@ -17,6 +17,8 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 	public GameObject _bananaPeelPrefab;
 	public GameObject _longJumpEffectPrefab;
 	public GameObject _bridgeBurstEffectPrefab;
+	public AudioClip _jumpSoundEffect;
+	public AudioClip _attackSoundEffect;
 
 	private State _state;
 	private Animator _animator;
@@ -121,6 +123,8 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 			_animator.SetTrigger ("Jump");
 			_state = State.Floating;
 
+			SoundManager.Instance.PlaySound(_jumpSoundEffect, transform.position);
+
 			// FIXME: If we jump from bridge, bridge will be broken.
 			// This is an ugly hack, need to rearchitect the monkey state machine.
 			if (_bridgeCurrentlyStandOn != null) {
@@ -139,6 +143,8 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 			Vector3 position = transform.position;
 			position.y -= 1f;
 			Instantiate(_longJumpEffectPrefab, position, Quaternion.identity);
+
+			SoundManager.Instance.PlaySound(_jumpSoundEffect, transform.position);
 		}
 	}
 	
@@ -205,6 +211,9 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 				GameObject bananaPeel = Instantiate(_bananaPeelPrefab, bananaSpawnPos, Quaternion.identity) as GameObject;
 				bananaPeel.GetComponent<BananaPeelItem>().Throw(LevelManager.Instance.Hunter.gameObject);
 				LevelManager.Instance.AttackWithBananaPeel();
+
+				// play sound only when the monkey have some banana peels
+				SoundManager.Instance.PlaySound(_attackSoundEffect, transform.position);
 			}
 		}
 	}

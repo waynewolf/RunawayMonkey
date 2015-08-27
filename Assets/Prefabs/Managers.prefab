@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 430388}
   - 114: {fileID: 11491866}
   - 114: {fileID: 11400640}
+  - 114: {fileID: 11472002}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -40,6 +41,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847b3b8addbe94757a557883a30969db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11472002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df753c43136dc4033aba46594f5b4ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _musicOn: 1
+  _soundEffectOn: 1
+  _musicVolume: .300000012
+  _soundEffectVolume: 1
 --- !u!114 &11491866
 MonoBehaviour:
   m_ObjectHideFlags: 1

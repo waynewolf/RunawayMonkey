@@ -95,6 +95,8 @@ MonoBehaviour:
     type: 2}
   _bridgeBurstEffectPrefab: {fileID: 100000, guid: 2dcb18a2d945542cdbc5a7ab4548cdcb,
     type: 2}
+  _jumpSoundEffect: {fileID: 8300000, guid: 4eb4a514681fb440fb5b97bcacd11a71, type: 3}
+  _attackSoundEffect: {fileID: 8300000, guid: 2a57414676df64e209f4aff59160b350, type: 3}
 --- !u!212 &21257168
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -181,6 +183,14 @@ Prefab:
       propertyPath: _bridgeBurstEffectPrefab
       value: 
       objectReference: {fileID: 100000, guid: 2dcb18a2d945542cdbc5a7ab4548cdcb, type: 2}
+    - target: {fileID: 0}
+      propertyPath: _jumpSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 4eb4a514681fb440fb5b97bcacd11a71, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _attackSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a57414676df64e209f4aff59160b350, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196994}

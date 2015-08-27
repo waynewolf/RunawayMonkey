@@ -4,6 +4,7 @@ using System.Collections;
 public class HunterBehaviour : MonoBehaviour, IPauseable {
 	public GameObject _attackedEffect;
 	public float _jumpForce = 800f;
+	public AudioClip _hitSoundEffect;
 
 	private Animator _animator;
 	private bool _catching = true;
@@ -62,6 +63,7 @@ public class HunterBehaviour : MonoBehaviour, IPauseable {
 			Instantiate(_attackedEffect, spawnPos, Quaternion.identity);
 			_animator.SetBool("Hit", true);
 			LevelManager.Instance.HunterHit();
+			SoundManager.Instance.PlaySound(_hitSoundEffect, transform.position);
 		}
 	}
 
