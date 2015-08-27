@@ -33,6 +33,7 @@ public class LevelManager : MonoBehaviour {
 	public float _catchMonkeyTime = 2f;
 	public int _backgroundLayerWidth;
 	public float _hunterSpeed;
+	public AudioClip _buttonClickedSoundEffect;
 
 	[HideInInspector]
 	public MonkeyBehaviour Player { get; private set; }
@@ -230,6 +231,7 @@ public class LevelManager : MonoBehaviour {
 	#region event handling code from different sources
 
 	public void OnShowPauseDialog () {
+		SoundManager.Instance.PlaySound(_buttonClickedSoundEffect, transform.position);
 		foreach(IPauseable pause in _pauseables) {
 			pause.OnPause();
 		}
@@ -286,6 +288,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void OnMainScreenButtonClicked () {
+		SoundManager.Instance.PlaySound(_buttonClickedSoundEffect, transform.position);
+
 		// Only pause dialog and level complete dialog have main screen button,
 		// So we disable them all, no matter whichever is currently shown on screen.
 		GUIManager.Instance.SetPause(false);
@@ -301,6 +305,8 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	public void OnRestartButtonClicked () {
+		SoundManager.Instance.PlaySound(_buttonClickedSoundEffect, transform.position);
+
 		// Disable all the possible dialoug that is currently shown on screen.
 		GUIManager.Instance.SetPause(false);
 		GUIManager.Instance.SetRevive(false);
@@ -310,6 +316,8 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	public void OnResumeButtonClicked () {
+		SoundManager.Instance.PlaySound(_buttonClickedSoundEffect, transform.position);
+
 		// Don't need to call OnResume on the Pauseables,
 		// OnResume will be called after Count Down Timer expiers
 		GUIManager.Instance.SetPause(false);
@@ -317,11 +325,15 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void OnNextLevelButtonClicked () {
+		SoundManager.Instance.PlaySound(_buttonClickedSoundEffect, transform.position);
+
 		GUIManager.Instance.SetLevelComplete(false);
 		NextLevel();
 	}
 
 	public void OnReviveButtonClicked () {
+		SoundManager.Instance.PlaySound(_buttonClickedSoundEffect, transform.position);
+
 		GUIManager.Instance.SetRevive(false);
 		GUIManager.Instance.EnableButtons();
 

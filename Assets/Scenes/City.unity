@@ -2241,6 +2241,8 @@ MonoBehaviour:
   _catchMonkeyTime: 2
   _backgroundLayerWidth: 2048
   _hunterSpeed: 5.0999999
+  _buttonClickedSoundEffect: {fileID: 8300000, guid: 72b62b112a7c24a19a8719f9e80980fd,
+    type: 3}
 --- !u!1001 &684273085
 Prefab:
   m_ObjectHideFlags: 0
