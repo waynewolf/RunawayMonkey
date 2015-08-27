@@ -16,6 +16,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 	public float _jumpForce = 575f;
 	public GameObject _bananaPeelPrefab;
 	public GameObject _longJumpEffectPrefab;
+	public GameObject _bridgeBurstEffectPrefab;
 
 	private State _state;
 	private Animator _animator;
@@ -120,6 +121,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 			// This is an ugly hack, need to rearchitect the monkey state machine.
 			if (_bridgeCurrentlyStandOn != null) {
 				_bridgeCurrentlyStandOn.SetActive(false);
+				Instantiate(_bridgeBurstEffectPrefab, _bridgeCurrentlyStandOn.transform.position, Quaternion.identity);
 				_bridgeCurrentlyStandOn = null;
 			}
 		}

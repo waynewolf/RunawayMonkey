@@ -93,6 +93,8 @@ MonoBehaviour:
   _bananaPeelPrefab: {fileID: 147026, guid: 96691297ceee64548880c5294fc635e3, type: 2}
   _longJumpEffectPrefab: {fileID: 106254, guid: 3a4b4aae91520405da06ee39b403e1c1,
     type: 2}
+  _bridgeBurstEffectPrefab: {fileID: 100000, guid: 2dcb18a2d945542cdbc5a7ab4548cdcb,
+    type: 2}
 --- !u!212 &21257168
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -175,6 +177,10 @@ Prefab:
       propertyPath: _jumpForce
       value: 575
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _bridgeBurstEffectPrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 2dcb18a2d945542cdbc5a7ab4548cdcb, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196994}

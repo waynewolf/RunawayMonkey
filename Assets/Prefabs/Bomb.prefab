@@ -54,6 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2b2c0c5f7dd44e4943b2b61632d438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bombExplosionEffectPrefab: {fileID: 100000, guid: 10074d7bfd491458295b02d5bb61bdf7,
+    type: 2}
 --- !u!212 &21277052
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -91,6 +93,10 @@ Prefab:
       propertyPath: m_TagString
       value: Bomb
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _bombExplosionEffectPrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 10074d7bfd491458295b02d5bb61bdf7, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 131586}

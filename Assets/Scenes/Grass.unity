@@ -6686,6 +6686,7 @@ MonoBehaviour:
   - _layer: {fileID: 1692747691}
     _speedFactor: .699999988
     _initPosition: {x: 0, y: 0, z: 0}
+  _recreateObjects: []
   _hudItemsPlaceHolder: {fileID: 1173946462}
   _catchMonkeyTime: 2
   _backgroundLayerWidth: 2048
