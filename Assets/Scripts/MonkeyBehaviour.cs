@@ -54,11 +54,7 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 			Hang(other.gameObject.transform);
 		else if (otherTag == "Bird")
 			Hang(other.gameObject.transform, true);
-		else if (otherTag == "Swamp") {
-			Ground ();
-			Block ();
-			_stuckInSwamp = true;
-		} else if (otherTag == "Bridge") {
+		else if (otherTag == "Bridge") {
 			Ground ();
 			_bridgeCurrentlyStandOn = other.gameObject;
 		}
@@ -76,6 +72,14 @@ public class MonkeyBehaviour : MonoBehaviour, IPauseable {
 		else if (otherTag == "Bridge") {
 			_bridgeCurrentlyStandOn = null;
 		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.tag == "Swamp") {
+			Ground ();
+			Block ();
+			_stuckInSwamp = true;
+		} 
 	}
 
 	#region state queries
