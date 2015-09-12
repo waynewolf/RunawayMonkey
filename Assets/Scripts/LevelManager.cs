@@ -80,11 +80,6 @@ public class LevelManager : MonoBehaviour {
 		_pauseables = new List<IPauseable>();
 		_pauseables.Add(Player);
 		_pauseables.Add(Hunter);
-
-		// FIXME: delete me, for level design only
-		Vector3 pos = _foreground.transform.position;
-		//pos.x -= 300;
-		_foreground.transform.position = pos;
 	}
 
 	void Start() {
