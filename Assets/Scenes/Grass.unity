@@ -37,9 +37,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
---- !u!127 &3
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -68,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
@@ -4640,6 +4638,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114256, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132558, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 153760, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10819d379ec1f40d2b669a6031af4cf4, type: 2}
   m_IsPrefabParent: 0
@@ -9019,7 +9029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2510ea83f891c4df09906f184de224a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundClip: {fileID: 8300000, guid: 5f8ddbbcd2786486aac5a232207f40e2, type: 3}
+  _soundClip: {fileID: 8300000, guid: d3247b03513b740409317c55be6ff652, type: 3}
 --- !u!4 &1452770563
 Transform:
   m_ObjectHideFlags: 0
@@ -12431,6 +12441,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
